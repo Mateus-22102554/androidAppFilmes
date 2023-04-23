@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group>
+        <item
+            android:id="@+id/nav_dashboard"
+            android:icon="@drawable/ic_dashboard"
+            android:title="@string/dashboard"/>
+        <item
+            android:id="@+id/nav_registo"
+            android:icon="@drawable/ic_registo"
+            android:title="@string/registo_filme"/>
+        <item
+            android:id="@+id/nav_lista"
+            android:icon="@drawable/ic_search"
+            android:title="@string/list_filmes"/>
+        <item
+            android:id="@+id/nav_mapa"
+            android:icon="@drawable/ic_map"
+            android:title="@string/mapa"/>
+
+    </group>
+
+</menu>

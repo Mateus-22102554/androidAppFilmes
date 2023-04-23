@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <!-- TODO: Update blank fragment layout -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:orientation="vertical">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_nome_filme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/titulo_filme" />
+
+            <AutoCompleteTextView
+                android:id="@+id/nome_filme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="ex: Avatar"
+                android:inputType="text"
+                android:completionThreshold="1" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_cinema_filme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/titulo_Cinema" />
+
+            <AutoCompleteTextView
+                android:id="@+id/cinema_filme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="ex: Cinema São Jorge"
+                android:inputType="text"
+                android:completionThreshold="1"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_avaliacao_filme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/avaliacao_filme" />
+
+            <SeekBar
+                android:id="@+id/bar_avaliacao_filme"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:max="10"
+                android:min="1" />
+
+            <TextView
+                android:id="@+id/valor_avaliacao_filme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="start"
+                android:text="1"
+                android:textSize="20sp"
+                app:drawableStartCompat="@drawable/ic_avaliacao_star" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/data_vista_filme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/data_vista_filme" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_data"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="@string/select_date" />
+
+                <TextView
+                    android:id="@+id/data_select"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:padding="16dp"
+                    android:text=""
+                    android:textAlignment="center"
+                    android:textSize="20sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/imgs_filme"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/foto_filme" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_img"
+                    android:layout_width="140dp"
+                    android:layout_height="wrap_content"
+                    android:padding="16dp"
+                    android:text="@string/select_foto" />
+
+
+
+                <ImageView
+                    android:id="@+id/img"
+                    android:layout_width="100dp"
+                    android:layout_height="match_parent"
+
+                    />
+
+                <TextView
+                    android:id="@+id/imgs_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:gravity="center_horizontal"
+                    android:textSize="20sp"
+                    android:text="" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/title_obs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/obs" />
+
+                <EditText
+                    android:id="@+id/obs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="text" />
+
+            </LinearLayout>
+
+        <Button
+            android:id="@+id/button_submit"
+            android:layout_width="140dp"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:text="@string/submit" />
+
+    </LinearLayout>
+</ScrollView>

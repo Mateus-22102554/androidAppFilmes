@@ -1,0 +1,59 @@
+<resources>
+    <string name="app_name">Dashboard</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="titulo_filme">Nom du film</string>
+    <string name="title_activity_nav_manager">NavManager</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="titulo_Cinema">Cinéma où le film a été projeté</string>
+    <string name="avaliacao_filme">Note sur une échelle de 1 à 10</string>
+    <string name="data_vista_filme">Date à laquelle le film a été vu</string>
+    <string name="select_date">date</string>
+    <string name="foto_filme">Photographies sur film (facultatif)</string>
+    <string name="select_foto">Caméra</string>
+    <string name="obs">Remarques (facultatif)</string>
+    <string name="submit">soumettre</string>
+    <string name="title_activity_menu">menu</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+
+
+    <!-- Drawer -->
+    <string name="registo_filme">Registraire Filme</string>
+    <string name="list_filmes">Liste de films</string>
+    <string name="mapa">Carte</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="drawer_open">Aberto</string>
+    <string name="drawer_close">Fechado</string>
+    <string name="detalhe">Détail</string>
+
+    <!-- Detalhes -->
+    <string name="info_nome_filme">Nom du film</string>
+    <string name="info_genero">Genre:</string>
+    <string name="info_data_lancamento">Date de sortie:</string>
+    <string name="info_avalicacao_imdb">Note IMDB:</string>
+    <string name="info_detalhes">Voir les détails</string>
+    <string name="info_cinema">Cinéma:</string>
+    <string name="info_avaliacao">Évaluation:</string>
+    <string name="info_data">Date de visionnage:</string>
+    <string name="info_foto">Photographies:</string>
+    <string name="info_obs">Commentaires:</string>
+
+    <!-- Dashboard -->
+    <string name="top" >Top 5 - Meilleurs Films</string>
+    <string name="voice">Dites le film que vous souhaitez rechercher:</string>
+    <string name="num_filmes_visualizados">Nombre de films visionnés</string>
+
+</resources>
