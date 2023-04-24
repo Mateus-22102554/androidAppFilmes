@@ -1,15 +1,15 @@
 ## Dados de aluno
 
-Nome: Bruno Mateus
-Número: a22102554
-Nome: Diogo Moreira
-Número: a22103941
+Nome: Bruno Mateus <br />
+Número: a22102554 <br />
+Nome: Diogo Moreira <br />
+Número: a22103941 <br />
 
 ## Filmes hardcoded:
-John Wick 4
-Avatar 2
-Shazam
-Homem-Aranha 3
+John Wick 4 <br />
+Avatar 2 <br />
+Shazam <br />
+Homem-Aranha 3 <br />
 
 | Critério                                           | Funcionalidades                                                                                                                                                                       |
 |----------------------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -30,74 +30,74 @@ Homem-Aranha 3
 ## Classes de Lógica de Negócio 
 
 #### Classe Filme:
-- Atributos:
--- nome - String
--- cinema - String
--- avaliacao - Int
--- dataVisualizacao - Calendar
--- fotos - List<File>
--- observacoes - String
--- listImgGet - List<File>
-- Métodos:
--- listImgGet() : List<File>
+- Atributos: <br />
+-- nome - String <br />
+-- cinema - String <br />
+-- avaliacao - Int <br />
+-- dataVisualizacao - Calendar <br />
+-- fotos - List<File> <br />
+-- observacoes - String <br />
+-- listImgGet - List<File> <br />
+- Métodos: <br />
+-- listImgGet() : List<File> <br />
 
 #### Classe Filmes:
-- Atributos:
--- listImg - mutableListOf<File>
--- listImgGet - List
--- history - mutableListOf<Filme>
-- Métodos:
--- listImgGet() : List<File>
--- imagemSet(imgFile : File)
--- imagensListClear()
--- history() : List<Filme>
--- historySet (nome:String, cinema:String, avaliacao:Int, data: Calendar, imgList: List<File>, obs:String):Int
--- top5Filmes() : List<Filme>
--- countFilmes() : Int
+- Atributos: <br />
+-- listImg - mutableListOf<File> <br />
+-- listImgGet - List <br />
+-- history - mutableListOf<Filme> <br />
+- Métodos: <br />
+-- listImgGet() : List<File> <br />
+-- imagemSet(imgFile : File) <br />
+-- imagensListClear() <br />
+-- history() : List<Filme> <br />
+-- historySet (nome:String, cinema:String, avaliacao:Int, data: Calendar, imgList: List<File>, obs:String):Int <br />
+-- top5Filmes() : List<Filme> <br />
+-- countFilmes() : Int <br />
 
 #### Classe Cinema:
-- Atributos:
--- cinemaName - String
+- Atributos: <br />
+-- cinemaName - String <br />
 
 #### Classe Cinemas:
-- Atributos:
--- cinema1 - Cinema
--- cinema2 - Cinema
--- cinema3 - Cinema
--- cinema4 - Cinema
--- cinema5 - Cinema
--- cinema6 - Cinema
--- cinema7 - Cinema
--- cinema8 - Cinema
--- cinema9 - Cinema
--- cinema10 - Cinema
--- cinema11 - Cinema
--- listCinemas - mutableListOf<Cinema>
--- getListCinemas - List<Cinema>
-- Métodos:
--- getListCinemas : List<Cinema>
--- nomesCinemasGet : List<String>
+- Atributos: <br />
+-- cinema1 - Cinema <br />
+-- cinema2 - Cinema <br />
+-- cinema3 - Cinema <br />
+-- cinema4 - Cinema <br />
+-- cinema5 - Cinema <br />
+-- cinema6 - Cinema <br />
+-- cinema7 - Cinema <br />
+-- cinema8 - Cinema <br />
+-- cinema9 - Cinema <br />
+-- cinema10 - Cinema <br />
+-- cinema11 - Cinema <br />
+-- listCinemas - mutableListOf<Cinema> <br />
+-- getListCinemas - List<Cinema> <br />
+- Métodos: <br />
+-- getListCinemas : List<Cinema> <br />
+-- nomesCinemasGet : List<String> <br />
 
 #### Classe FilmeIMDB:
-- Atributos:
--- nomeImdb - String
--- generoImdb - String
--- dataImdb - String
--- avaliacaoImdb - String
--- imgImdb - String
--- sinopse - String
+- Atributos: <br />
+-- nomeImdb - String <br />
+-- generoImdb - String <br />
+-- dataImdb - String <br />
+-- avaliacaoImdb - String <br />
+-- imgImdb - String <br />
+-- sinopse - String <br />
 
 #### Classe FilmesIMDB:
-- Atributos:
--- filme1 - FilmeIMDB
--- filme2 - FilmeIMDB
--- filme3 - FilmeIMDB
--- filme4 - FilmeIMDB
--- listFilmesImdb - mutableListOf<FilmeIMDB>
--- getListFilmesImdb - List<FilmeIMDB>
-- Métodos:
--- getListFilmesImdb : List<FilmeIMDB>
--- nomesFilmesGet : List<String>
+- Atributos: <br />
+-- filme1 - FilmeIMDB <br />
+-- filme2 - FilmeIMDB <br />
+-- filme3 - FilmeIMDB <br />
+-- filme4 - FilmeIMDB <br />
+-- listFilmesImdb - mutableListOf<FilmeIMDB> <br />
+-- getListFilmesImdb - List<FilmeIMDB> <br />
+- Métodos: <br />
+-- getListFilmesImdb : List<FilmeIMDB> <br />
+-- nomesFilmesGet : List<String> <br />
 
 ## Idioma gerado pelo Chat GPT assim como os screenshots das prompts:
 
