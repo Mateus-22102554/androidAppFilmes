@@ -5,12 +5,12 @@ Número: a22102554 <br />
 Nome: Diogo Moreira <br />
 Número: a22103941 <br />
 
-### Ecrãs:
+## Ecrãs:
 
-#### Dashboard
+### Dashboard
 <img src="img/dashboard.png" height="50%" width="50%">
 
-#### Registo
+### Registo
 <img src="img/registoFilme1.png" height="50%" width="50%">
 <img src="img/registoFilme2.png" height="50%" width="50%">
 <img src="img/erroCamposObg.png" height="50%" width="50%">
@@ -19,18 +19,18 @@ Número: a22103941 <br />
 <img src="img/popupData.png" height="50%" width="50%">
 <img src="img/popupData.png" height="50%" width="50%">
 
-#### Lista Filmes
+### Lista Filmes
 <img src="img/listaFilmes.png" height="50%" width="50%">
 <img src="img/rodarEcra.png" height="50%" width="50%">
 
-#### Detalhe do Filme
+### Detalhe do Filme
 <img src="img/detalheFilme1.png" height="50%" width="50%">
 <img src="img/detalheFilme2.png" height="50%" width="50%">
 
-#### Mapa
+### Mapa
 <img src="img/mapa.png" height="50%" width="50%">
 
-#### Pesquisa de voz
+### Pesquisa de voz
 <img src="img/voice.png" height="50%" width="50%">
 
 ## Filmes hardcoded:
