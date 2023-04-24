@@ -104,11 +104,11 @@ Homem-Aranha 3 <br />
 - Inglês:
 <img src="img/ingles1.png" height="50%" width="50%">
 <img src="img/ingles2.png" height="50%" width="50%">
-- <img src="img/ingles3.png" height="50%" width="50%">
+<img src="img/ingles3.png" height="50%" width="50%">
 - Francês:
 <img src="img/frances1.png" height="50%" width="50%">
 <img src="img/frances2.png" height="50%" width="50%">
-- <img src="img/frances3.png" height="50%" width="50%">
+<img src="img/frances3.png" height="50%" width="50%">
 
 ## Fontes de informação:
 - Chat GPT
