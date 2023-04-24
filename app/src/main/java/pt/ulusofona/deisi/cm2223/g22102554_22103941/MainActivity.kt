@@ -5,6 +5,7 @@ package pt.ulusofona.deisi.cm2223.g22102554_22103941
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
+import android.view.Gravity
 import android.view.MenuItem
 import android.widget.AutoCompleteTextView
 import android.widget.RatingBar
@@ -15,6 +16,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.GravityCompat
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.databinding.ActivityMainBinding
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AlertDialog
 import java.util.*
 
 
@@ -32,40 +34,38 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        if(!screenRotated(savedInstanceState)) {
+        if (!screenRotated(savedInstanceState)) {
             NavigationManager.goToDashboardFragment(supportFragmentManager)
 
         }
 
         binding.vozButton.setOnClickListener {
 
+
+            val builder = AlertDialog.Builder(this)
+            builder.setMessage(R.string.voice)
+
+            val popupText = TextView(this)
+            popupText.textSize = 30f
+            popupText.gravity = Gravity.CENTER
+            builder.setView(popupText)
+
+            val alert = builder.create()
+            alert.show()
+
+            // Calcular o tempo restante em segundos.
             object : CountDownTimer(10000, 1000) {
-                override fun onTick(millisUntilFinished: Long) {
-                    // Calcular o tempo restante em segundos.
-                    val seconds = millisUntilFinished / 1000
-                    // Exibir o Toast com o tempo restante em segundos.
-                    Toast.makeText(applicationContext, "${getString(R.string.voice)} $seconds", Toast.LENGTH_SHORT).show()
+                override fun onTick(milisSegundos: Long) {
+                    popupText.text = "${milisSegundos / 1000}"
                 }
 
                 override fun onFinish() {
-
+                    alert.dismiss()
                 }
+
             }.start()
         }
-        /*if (savedInstanceState == null) {
-            NavigationManager.goToListaFilmesFragment(supportFragmentManager)
-        } else {
-            isDataLoaded = savedInstanceState.getBoolean("isDataLoaded")
-            // Use the value of isDataLoaded to restore the state of the fragment
-        }*/
-
     }
-
-
-    /*override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putBoolean("isDataLoaded", isDataLoaded)
-    }*/
 
     override fun onStart() {
         super.onStart()

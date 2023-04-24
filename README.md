@@ -5,6 +5,34 @@ Número: a22102554 <br />
 Nome: Diogo Moreira <br />
 Número: a22103941 <br />
 
+### Ecrãs:
+
+#### Dashboard
+<img src="img/dashboard.png" height="50%" width="50%">
+
+#### Registo
+<img src="img/registoFilme1.png" height="50%" width="50%">
+<img src="img/registoFilme2.png" height="50%" width="50%">
+<img src="img/erroCamposObg.png" height="50%" width="50%">
+<img src="img/autoCompleteFilme.png" height="50%" width="50%">
+<img src="img/autoCompleteCinema.png" height="50%" width="50%">
+<img src="img/popupData.png" height="50%" width="50%">
+<img src="img/popupData.png" height="50%" width="50%">
+
+#### Lista Filmes
+<img src="img/listaFilmes.png" height="50%" width="50%">
+<img src="img/rodarEcra.png" height="50%" width="50%">
+
+#### Detalhe do Filme
+<img src="img/detalheFilme1.png" height="50%" width="50%">
+<img src="img/detalheFilme2.png" height="50%" width="50%">
+
+#### Mapa
+<img src="img/mapa.png" height="50%" width="50%">
+
+#### Pesquisa de voz
+<img src="img/voice.png" height="50%" width="50%">
+
 ## Filmes hardcoded:
 John Wick 4 <br />
 Avatar 2 <br />
@@ -101,14 +129,10 @@ Homem-Aranha 3 <br />
 
 ## Idioma gerado pelo Chat GPT assim como os screenshots das prompts:
 
-- Inglês:
-<img src="img/ingles1.png" height="50%" width="50%">
-<img src="img/ingles2.png" height="50%" width="50%">
-<img src="img/ingles3.png" height="50%" width="50%">
-- Francês:
-<img src="img/frances1.png" height="50%" width="50%">
-<img src="img/frances2.png" height="50%" width="50%">
-<img src="img/frances3.png" height="50%" width="50%">
+
+<img src="img/inglesFrances1.png" height="50%" width="50%">
+<img src="img/inglesFrances2.png" height="50%" width="50%">
+
 
 ## Fontes de informação:
 - Chat GPT
