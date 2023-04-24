@@ -58,4 +58,21 @@
     <string name="top" >Top 5 - Best Films</string>
     <string name="voice">Say the movie you want to search for:</string>
     <string name="num_filmes_visualizados">Number of Films Viewed</string>
+
+    <!-- Aviso -->
+    <string name="erroOBG">Mandatory field!</string>
+    <string name="erroObgData">The date field is mandatory!</string>
+
+    <string name="erroDataInf">The date must be earlier than the current date</string>
+
+    <string name="erroFilmeAv">Error: This movie has already been rated!</string>
+    <string name="erroFilmeNaoExiste">This movie does not exist</string>
+
+    <string name="erroCinemaNaoExiste">This cinema does not exist</string>
+
+    <string name="confirRegisto">Confirm Registration</string>
+
+    <string name="prentendeRegistar">Do you want to register the movie</string>
+    <string name="confirmar">Confirm</string>
+    <string name="cancelar">Cancel</string>
 </resources>

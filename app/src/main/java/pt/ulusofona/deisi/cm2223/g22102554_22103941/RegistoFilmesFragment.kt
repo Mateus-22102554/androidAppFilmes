@@ -6,10 +6,10 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
-import android.content.ClipData
+
 import android.content.DialogInterface
 import android.content.Intent
-import android.graphics.Bitmap
+
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -27,14 +27,14 @@ import pt.ulusofona.deisi.cm2223.g22102554_22103941.databinding.FragmentRegistoF
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlin.math.log
+
 
 
 class RegistoFilmesFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private lateinit var binding: FragmentRegistoFilmesBinding
-    private lateinit var dateButton: Button
-    private lateinit var dataText: TextView
+
+
     private lateinit var photoFile: File
     private lateinit var adapterFilmes: ArrayAdapter<String>
     private lateinit var adapterCinemas: ArrayAdapter<String>
@@ -118,19 +118,19 @@ class RegistoFilmesFragment : Fragment() {
         binding.buttonSubmit.setOnClickListener {
 
             if (binding.nomeFilme.text.isEmpty()) {
-                binding.nomeFilme.error = "Campo obrigatório!"
+                binding.nomeFilme.error = getString(R.string.erroOBG)
             }
 
             if (binding.cinemaFilme.text.isEmpty()) {
-                binding.cinemaFilme.error = "Campo obrigatório!"
+                binding.cinemaFilme.error = getString(R.string.erroOBG)
             }
 
             if (binding.dataSelect.text.isEmpty()) {
-                Toast.makeText(context, "O campo data é obrigatório", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.erroObgData), Toast.LENGTH_SHORT).show()
             } else if (calendario.after(Calendar.getInstance())) {
                 Toast.makeText(
                     context,
-                    "A data tem de ser inferior à data atual",
+                    getString(R.string.erroDataInf),
                     Toast.LENGTH_SHORT
                 ).show()
                 binding.dataSelect.text = ""
@@ -141,9 +141,9 @@ class RegistoFilmesFragment : Fragment() {
                 )
             ) {
                 AlertDialog.Builder(context)
-                    .setTitle("Confirmar Registo")
-                    .setMessage("Pretende registar o filme ${binding.nomeFilme.text}?")
-                    .setPositiveButton("Confirmar",
+                    .setTitle(getString(R.string.confirRegisto))
+                    .setMessage(getString(R.string.prentendeRegistar)+" ${binding.nomeFilme.text}?")
+                    .setPositiveButton(R.string.confirmar,
                         DialogInterface.OnClickListener { dialog, which ->
 
                             val result = Filmes.historySet(
@@ -159,15 +159,15 @@ class RegistoFilmesFragment : Fragment() {
 
                                 Toast.makeText(
                                     context,
-                                    "Erro: Este filme já foi avaliado!",
+                                    getString(R.string.erroFilmeAv),
                                     Toast.LENGTH_SHORT
                                 ).show()
 
                             } else if (result == 1) {
-                                Log.i("", "ola")
-                                binding.nomeFilme.error = "Filme Não Existe"
+
+                                binding.nomeFilme.error = getString(R.string.erroFilmeNaoExiste)
                             } else if (result == 3) {
-                                binding.cinemaFilme.error = "Não Existe o Cinema"
+                                binding.cinemaFilme.error = getString(R.string.erroCinemaNaoExiste)
                             } else {
                                 binding.nomeFilme.text.clear()
                                 binding.cinemaFilme.text.clear()
@@ -183,7 +183,7 @@ class RegistoFilmesFragment : Fragment() {
                             getString(R.string.registo_filme)
 
                         })
-                    .setNegativeButton("Cancelar", null)
+                    .setNegativeButton(getString(R.string.cancelar), null)
                     .show()
             }
         }

@@ -58,5 +58,25 @@
     <string name="voice">Diga o filme que quer pesquisar:</string>
     <string name="num_filmes_visualizados">Numero de Filmes Visualizados</string>
 
+    <!-- Aviso -->
+    <string name="erroOBG">Campo obrigatório!</string>
+    <string name="erroObgData">O campo data é obrigatório!</string>
+
+    <string name="erroDataInf">A data tem de ser inferior à data atual</string>
+
+    <string name="erroFilmeAv">Erro: Este filme já foi avaliado!</string>
+    <string name="erroFilmeNaoExiste">Este filme não existe</string>
+
+    <string name="erroCinemaNaoExiste">Este Cinema não existe</string>
+
+    <string name="confirRegisto">Confirmar Registo</string>
+
+    <string name="prentendeRegistar">Pretende registar o filme</string>
+    <string name="confirmar">Confirmar</string>
+    <string name="cancelar">Cancelar</string>
+
+
+
+
 
 </resources>
