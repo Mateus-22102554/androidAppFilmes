@@ -1,9 +1,9 @@
 package pt.ulusofona.deisi.cm2223.g22102554_22103941.data
 
 import androidx.room.Dao
-import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.Query
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.entidades.FilmeDB
 
 @Dao
 interface Operations {

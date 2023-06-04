@@ -23,6 +23,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.Repository
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.databinding.FragmentRegistoFilmesBinding
 import java.io.File
 import java.text.SimpleDateFormat
@@ -33,7 +34,7 @@ import java.util.*
 class RegistoFilmesFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private lateinit var binding: FragmentRegistoFilmesBinding
-
+    private val model = Repository.getInstance
 
     private lateinit var photoFile: File
     private lateinit var adapterFilmes: ArrayAdapter<String>

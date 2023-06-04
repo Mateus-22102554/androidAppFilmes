@@ -1,29 +1,39 @@
 package pt.ulusofona.deisi.cm2223.g22102554_22103941.data
 
-import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Filme
-import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Filmes
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.entidades.FilmeDB
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Avaliacao
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.FilmeIMDB
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.FilmesIMDB
 
 class Room (
     private val dao: Operations
-) : Filmes() {
-    override fun getAllFilmes(onFinished: (Result<List<Filme>>) -> Unit) {
+) : FilmesIMDB() {
+    override fun getAllFilmes(onFinished: (Result<List<FilmeIMDB>>) -> Unit) {
         dao.getAllFilmes()
     }
 
-    override fun inserirFilme(filme: Filme, onFinished: () -> Unit) {
-        val filmeDB = FilmeDB(
-            filme.id,
-            filme.nome, filme.cinema, filme.avaliacao,
-            filme.dataVisualizacao, filme.fotos, filme.observacoes
-        )
-        dao.inserirFilme(filmeDB)
+    override fun inserirFilme(filme: FilmeIMDB, onFinished: () -> Unit) {
+        val filmeDB = filme.sinopse?.let {
+            FilmeDB(
+                filme.id,
+                filme.nomeImdb,
+                filme.generoImdb,
+                filme.dataImdb,
+                filme.avaliacaoImdb,
+                filme.imgImdb,
+                filme.sinopse
+            )
+        }
+        if (filmeDB != null) {
+            dao.inserirFilme(filmeDB)
+        }
         onFinished()
     }
-    override fun getFilme(id : String, onFinished: (Result<Filme>) -> Unit) {
+    override fun getFilme(id : String, onFinished: (Result<FilmeIMDB>) -> Unit) {
         dao.getFilme(id)
     }
 
-    override fun deleteFilme(id : String, onFinished: (Result<Filme>) -> Unit) {
+    override fun deleteFilme(id : String, onFinished: (Result<FilmeIMDB>) -> Unit) {
         dao.deleteFilme(id)
     }
 
