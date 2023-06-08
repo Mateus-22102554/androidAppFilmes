@@ -23,6 +23,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.Repository
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.databinding.FragmentRegistoFilmesBinding
 import java.io.File
@@ -34,7 +37,7 @@ import java.util.*
 class RegistoFilmesFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private lateinit var binding: FragmentRegistoFilmesBinding
-    private val model = Repository.getInstance
+    private val model = Repository.getInstance()
 
     private lateinit var photoFile: File
     private lateinit var adapterFilmes: ArrayAdapter<String>
@@ -147,16 +150,35 @@ class RegistoFilmesFragment : Fragment() {
                     .setPositiveButton(R.string.confirmar,
                         DialogInterface.OnClickListener { dialog, which ->
 
-                            val result = Filmes.historySet(
+                            /*val result = Filmes.historySet(
                                 binding.nomeFilme.text.toString(),
                                 binding.cinemaFilme.text.toString(),
                                 binding.valorAvaliacaoFilme.text.toString().toInt(),
                                 calendario,
                                 Filmes.listImgGet,
                                 binding.obs.text.toString()
-                            )
+                            )*/
+                            var filme: String = binding.nomeFilme.text.toString()
 
-                            if (result == 2) {
+                            CoroutineScope(Dispatchers.IO).launch {
+
+                                model.getFilme(filme) {
+                                    if(it.isSuccess) {
+                                        NavigationManager.goToListaFilmesFragment(parentFragmentManager)
+
+                                    } else {
+                                        // Apresenta o erro num Toast
+                                        Toast.makeText(
+                                            requireContext(),
+                                            it.exceptionOrNull()?.message,
+                                            Toast.LENGTH_LONG)
+                                            .show()
+                                    }
+                                }
+                            }
+
+
+                            if (0 == 2) {
 
                                 Toast.makeText(
                                     context,
@@ -164,10 +186,10 @@ class RegistoFilmesFragment : Fragment() {
                                     Toast.LENGTH_SHORT
                                 ).show()
 
-                            } else if (result == 1) {
+                            } else if (0 == 1) {
 
                                 binding.nomeFilme.error = getString(R.string.erroFilmeNaoExiste)
-                            } else if (result == 3) {
+                            } else if (0 == 3) {
                                 binding.cinemaFilme.error = getString(R.string.erroCinemaNaoExiste)
                             } else {
                                 binding.nomeFilme.text.clear()

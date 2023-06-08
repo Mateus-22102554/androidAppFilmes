@@ -6,7 +6,7 @@ import java.io.File
 import java.util.*
 
 @Entity(tableName = "avaliacoes")
-class AvaliacaoDB(
+data class AvaliacaoDB(
     @PrimaryKey val id: String,
     val nome: String,
     val cinema: String,

@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.entidades.AvaliacaoDB
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.entidades.FilmeDB
 
 @Database(entities = [FilmeDB::class], version = 1)

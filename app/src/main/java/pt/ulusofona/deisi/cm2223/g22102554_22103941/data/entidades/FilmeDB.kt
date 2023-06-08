@@ -7,7 +7,7 @@ import java.io.File
 import java.util.*
 
 @Entity(tableName = "filmes")
-class FilmeDB(
+data class FilmeDB(
     @PrimaryKey val id: String,
     val nome: String,
     val genero: String,

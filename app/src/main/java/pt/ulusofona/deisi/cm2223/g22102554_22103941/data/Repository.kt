@@ -6,6 +6,7 @@ import pt.ulusofona.deisi.cm2223.g22102554_22103941.ConnectivityUtil
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Avaliacao
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.FilmeIMDB
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.FilmesIMDB
+import kotlin.Result
 
 class Repository (
     private val context: Context,
@@ -13,32 +14,33 @@ class Repository (
     private val remote: FilmesIMDB
     ) : FilmesIMDB(){
     override fun getAllFilmes(onFinished: (Result<List<FilmeIMDB>>) -> Unit) {
-        TODO("Not yet implemented")
+        throw Exception("Illegal operation")
     }
 
     override fun inserirFilme(filme: FilmeIMDB, onFinished: () -> Unit) {
-        TODO("Not yet implemented")
+        throw Exception("Illegal operation")
     }
 
     override fun getFilme(id: String, onFinished: (Result<FilmeIMDB>) -> Unit) {
         if (ConnectivityUtil.isOnline(context)) {
             // Se tenho acesso à Internet, vou buscar os registos ao web service
             // e atualizo a base de dados com os novos registos eliminando os
-            // antigos, porque podem ter eliminado personagens do web service
+            // antigos, porque podem ter eliminado o filme do web service
 
             remote.getFilme(id) { result ->
+
                 if (result.isSuccess) {
                     result.getOrNull()?.let { filme ->
                         // Se tiver personagens para apresentar entra aqui
                         Log.i("APP", "Got ${filme} characters from the server")
                         // Retirar esta linha quando forem fazer o exercício 1 da ficha
                         //onFinished(Result.success(characters))
-                        local.deleteFilme(id) {
-                            Log.i("APP", "Cleared DB")
-                            local.inserirFilme(filme) {
-                                onFinished(Result.success(filme))
-                            }
+
+                        Log.i("APP", "Cleared DB")
+                        local.inserirFilme(filme) {
+                            onFinished(Result.success(filme))
                         }
+
                     }
                 } else {
                     Log.w("APP", "Error getting characters from server")

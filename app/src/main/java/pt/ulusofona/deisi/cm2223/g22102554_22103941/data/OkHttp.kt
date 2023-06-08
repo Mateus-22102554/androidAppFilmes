@@ -4,13 +4,15 @@ import android.util.Log
 import org.json.JSONObject
 import java.io.IOException
 import okhttp3.*
-import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Avaliacao
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.IMDB_API_BASE_URL
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.IMDB_API_TOKEN
+
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.FilmeIMDB
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.FilmesIMDB
 
 class OkHttp (
-    private val baseUrl: String,
-    private val apiKey: String,
+    val baseUrl: String = IMDB_API_BASE_URL,
+    private val apiKey: String = IMDB_API_TOKEN,
     private val client: OkHttpClient
 ) : FilmesIMDB() {
 
@@ -29,8 +31,9 @@ class OkHttp (
 
         // Aqui estamos a preparar o pedido. Precisamos da apiKey e do url
         val request: Request = Request.Builder()
-            .url("$baseUrl/character")
-            .addHeader("Authorization", "Bearer $apiKey")
+            .url("$baseUrl/?type=movie&t=$id&apikey=$apiKey")
+
+            //.addHeader("Authorization", "Bearer $apiKey")
             .build()
 
         // Nesta linha executamos o pedido ao servidor
