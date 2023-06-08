@@ -28,6 +28,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.Repository
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.databinding.FragmentRegistoFilmesBinding
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Avaliacao
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
@@ -158,14 +159,28 @@ class RegistoFilmesFragment : Fragment() {
                                 Filmes.listImgGet,
                                 binding.obs.text.toString()
                             )*/
+
+                            val avaliacao = Avaliacao(
+                                UUID.randomUUID().toString(),
+                                binding.nomeFilme.text.toString(),
+                                binding.cinemaFilme.text.toString(),
+                                binding.valorAvaliacaoFilme.text.toString().toInt(),
+                                calendario,
+                                Filmes.listImgGet,
+                                binding.obs.text.toString()
+                            )
+
                             var filme: String = binding.nomeFilme.text.toString()
 
                             CoroutineScope(Dispatchers.IO).launch {
 
-                                model.getFilme(filme) {
+                                model.getFilme(filme, avaliacao) {
                                     if(it.isSuccess) {
+                                        it.getOrNull()
+                                            ?.let { it1 -> model.inserirAvaliacao(avaliacao, it1.id) {
+                                                
+                                            } }
                                         NavigationManager.goToListaFilmesFragment(parentFragmentManager)
-
                                     } else {
                                         // Apresenta o erro num Toast
                                         Toast.makeText(
@@ -174,7 +189,9 @@ class RegistoFilmesFragment : Fragment() {
                                             Toast.LENGTH_LONG)
                                             .show()
                                     }
+
                                 }
+
                             }
 
 

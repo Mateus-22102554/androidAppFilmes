@@ -4,13 +4,14 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.entidades.AvaliacaoDB
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.entidades.FilmeDB
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.entidades.AvaliacaoDB
 
-@Database(entities = [FilmeDB::class], version = 1)
+@Database(entities = [FilmeDB::class, AvaliacaoDB::class], version = 1)
 abstract class CinemaDatabase: RoomDatabase() {
 
-    abstract fun Operations(): Operations
+    abstract fun filmeDao(): FilmeDao
+    abstract fun avaliacaoDao(): AvaliacaoDao
 
     companion object {
         private var instance: CinemaDatabase? = null

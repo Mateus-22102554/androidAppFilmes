@@ -1,5 +1,4 @@
 package pt.ulusofona.deisi.cm2223.g22102554_22103941.data
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.ConnectivityUtil
@@ -21,13 +20,23 @@ class Repository (
         throw Exception("Illegal operation")
     }
 
-    override fun getFilme(id: String, onFinished: (Result<FilmeIMDB>) -> Unit) {
+    override fun inserirAvaliacao(
+        avaliacao: Avaliacao,
+        idImdb: String,
+        onFinished: (Result<Avaliacao>) -> Unit
+    ) {
+        local.inserirAvaliacao(avaliacao,idImdb) {
+            onFinished(Result.success(avaliacao))
+        }
+    }
+
+    override fun getFilme(id: String, avaliacao: Avaliacao, onFinished: (Result<FilmeIMDB>) -> Unit) {
         if (ConnectivityUtil.isOnline(context)) {
             // Se tenho acesso à Internet, vou buscar os registos ao web service
             // e atualizo a base de dados com os novos registos eliminando os
             // antigos, porque podem ter eliminado o filme do web service
 
-            remote.getFilme(id) { result ->
+            remote.getFilme(id, avaliacao) { result ->
 
                 if (result.isSuccess) {
                     result.getOrNull()?.let { filme ->
@@ -52,13 +61,15 @@ class Repository (
             // O que fazer se não houver Internet?
             // Devolver os personagens que estão guardados na base de dados
             Log.i("APP", "App is offline. Getting characters from the database")
-            local.getFilme(id, onFinished)
+            local.getFilme(id,avaliacao, onFinished)
         }
     }
 
     override fun deleteFilme(id: String, onFinished: (Result<FilmeIMDB>) -> Unit) {
         TODO("Not yet implemented")
     }
+
+
 
     companion object {
 

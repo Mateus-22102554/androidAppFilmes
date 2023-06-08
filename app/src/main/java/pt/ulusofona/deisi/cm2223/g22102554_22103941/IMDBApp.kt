@@ -11,11 +11,23 @@ import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.Room
 class IMDBApp : Application(){
         override fun onCreate() {
             super.onCreate()
-            Repository.init(
-                local = Room(CinemaDatabase.getInstance(this).Operations()),
-                remote = OkHttp(client = OkHttpClient()),
-                context = this
-            )
+            Repository.init(initRoom(), initOkHttp(), this)
             Log.i("APP", "Initialized repository")
         }
+
+    private fun initOkHttp(): OkHttp {
+        return OkHttp(
+            "https://www.omdbapi.com",
+            "8284a743",
+            OkHttpClient()
+        )
+    }
+
+    // TODO substituir aqui a inicialização do Room
+    private fun initRoom(): Room {
+        return Room(
+            CinemaDatabase.getInstance(applicationContext).filmeDao(),
+            CinemaDatabase.getInstance(applicationContext).avaliacaoDao()
+        )
+    }
 }

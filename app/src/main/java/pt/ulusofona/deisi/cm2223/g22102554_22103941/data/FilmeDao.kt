@@ -6,7 +6,7 @@ import androidx.room.Query
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.entidades.FilmeDB
 
 @Dao
-interface Operations {
+interface FilmeDao {
     @Insert
     fun inserirFilme(filme: FilmeDB)
 

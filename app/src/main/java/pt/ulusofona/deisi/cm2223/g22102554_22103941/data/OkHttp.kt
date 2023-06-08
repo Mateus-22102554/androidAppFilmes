@@ -6,6 +6,7 @@ import java.io.IOException
 import okhttp3.*
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.IMDB_API_BASE_URL
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.IMDB_API_TOKEN
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Avaliacao
 
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.FilmeIMDB
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.FilmesIMDB
@@ -27,7 +28,11 @@ class OkHttp (
         Log.e("APP", "web service is not able to clear all characters")
     }
 
-    override fun getFilme(id: String, onFinished: (Result<FilmeIMDB>) -> Unit) {
+    override fun inserirAvaliacao(avaliacao: Avaliacao, idImdb: String, onFinished: (Result<Avaliacao>) -> Unit) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getFilme(id: String, avaliacao: Avaliacao, onFinished: (Result<FilmeIMDB>) -> Unit) {
 
         // Aqui estamos a preparar o pedido. Precisamos da apiKey e do url
         val request: Request = Request.Builder()

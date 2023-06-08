@@ -1,18 +1,37 @@
 package pt.ulusofona.deisi.cm2223.g22102554_22103941.data
 
-import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.entidades.AvaliacaoDB
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.entidades.FilmeDB
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Avaliacao
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Avaliacoes
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.FilmeIMDB
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.FilmesIMDB
 
 class Room (
-    private val dao: Operations
+    private val filmeDao: FilmeDao,
+    private val avaliacaoDao: AvaliacaoDao
 ) : FilmesIMDB() {
     override fun getAllFilmes(onFinished: (Result<List<FilmeIMDB>>) -> Unit) {
-        dao.getAllFilmes()
+        filmeDao.getAllFilmes()
+    }
+
+    override fun inserirAvaliacao(avaliacao: Avaliacao, idImdb: String, onFinished: (Result<Avaliacao>) -> Unit) {
+        val avaliacaoDB = avaliacao.let {
+            AvaliacaoDB(
+                id = avaliacao.id,
+                nome = avaliacao.nome,
+                avaliacao = avaliacao.avaliacao,
+                dataVisualizacao = avaliacao.dataVisualizacao.toString(),
+                observacoes = avaliacao.observacoes,
+                idImdb = idImdb,
+                idFotos = null,
+                idCinema = null
+            )
+        }
+        avaliacaoDao.inserirAvaliacao(avaliacaoDB)
     }
 
     override fun inserirFilme(filme: FilmeIMDB, onFinished: () -> Unit) {
@@ -28,7 +47,7 @@ class Room (
             )
         }
         if (filmeDB != null) {
-            dao.inserirFilme(filmeDB)
+            filmeDao.inserirFilme(filmeDB)
         }
 
         /*CoroutineScope(Dispatchers.IO).launch {
@@ -56,10 +75,10 @@ class Room (
             onFinished()
         }*/
     }
-     override fun getFilme(id : String, onFinished: (Result<FilmeIMDB>) -> Unit) {
+     override fun getFilme(id : String, avaliacao: Avaliacao, onFinished: (Result<FilmeIMDB>) -> Unit) {
 
          CoroutineScope(Dispatchers.IO).launch {
-             val filme = dao.getFilme(id)
+             val filme = filmeDao.getFilme(id)
              val filmeIMDB = FilmeIMDB(
                  filme.id,
                  filme.nome,
@@ -75,7 +94,7 @@ class Room (
     }
 
     override fun deleteFilme(id : String, onFinished: (Result<FilmeIMDB>) -> Unit) {
-        dao.deleteFilme(id)
+        filmeDao.deleteFilme(id)
     }
 
    /* override fun getFilme(id : String, onFinished: (Result<FilmeIMDB>) -> Unit) {
