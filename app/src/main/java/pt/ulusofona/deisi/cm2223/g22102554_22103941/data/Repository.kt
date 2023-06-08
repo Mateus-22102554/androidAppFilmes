@@ -16,7 +16,7 @@ class Repository (
         throw Exception("Illegal operation")
     }
 
-    override fun inserirFilme(filme: FilmeIMDB, onFinished: () -> Unit) {
+    override fun inserirFilme(filme: FilmeIMDB, avaliacao: Avaliacao, onFinished: () -> Unit) {
         throw Exception("Illegal operation")
     }
 
@@ -46,7 +46,7 @@ class Repository (
                         //onFinished(Result.success(characters))
 
                         Log.i("APP", "Cleared DB")
-                        local.inserirFilme(filme) {
+                        local.inserirFilme(filme, avaliacao) {
                             onFinished(Result.success(filme))
                         }
 

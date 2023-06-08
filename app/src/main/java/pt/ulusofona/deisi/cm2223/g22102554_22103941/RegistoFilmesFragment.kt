@@ -176,10 +176,6 @@ class RegistoFilmesFragment : Fragment() {
 
                                 model.getFilme(filme, avaliacao) {
                                     if(it.isSuccess) {
-                                        it.getOrNull()
-                                            ?.let { it1 -> model.inserirAvaliacao(avaliacao, it1.id) {
-                                                
-                                            } }
                                         NavigationManager.goToListaFilmesFragment(parentFragmentManager)
                                     } else {
                                         // Apresenta o erro num Toast

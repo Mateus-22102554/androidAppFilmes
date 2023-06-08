@@ -34,7 +34,7 @@ class Room (
         avaliacaoDao.inserirAvaliacao(avaliacaoDB)
     }
 
-    override fun inserirFilme(filme: FilmeIMDB, onFinished: () -> Unit) {
+    override fun inserirFilme(filme: FilmeIMDB, avaliacao: Avaliacao, onFinished: () -> Unit) {
         val filmeDB = filme.sinopse?.let {
             FilmeDB(
                 id = filme.id,
@@ -48,6 +48,17 @@ class Room (
         }
         if (filmeDB != null) {
             filmeDao.inserirFilme(filmeDB)
+            val avaliacaoDb = AvaliacaoDB(
+                id = avaliacao.id,
+                nome = avaliacao.nome,
+                avaliacao = avaliacao.avaliacao,
+                dataVisualizacao = avaliacao.dataVisualizacao.toString(),
+                observacoes = avaliacao.observacoes,
+                idImdb = filmeDB.id,
+                idFotos = null,
+                idCinema = null
+            )
+            avaliacaoDao.inserirAvaliacao(avaliacaoDb)
         }
 
         /*CoroutineScope(Dispatchers.IO).launch {

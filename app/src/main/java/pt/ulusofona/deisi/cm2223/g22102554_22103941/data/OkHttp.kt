@@ -20,7 +20,7 @@ class OkHttp (
     override fun getAllFilmes(onFinished: (Result<List<FilmeIMDB>>) -> Unit) {
     }
 
-    override fun inserirFilme(filme: FilmeIMDB, onFinished: () -> Unit) {
+    override fun inserirFilme(filme: FilmeIMDB, avaliacao: Avaliacao, onFinished: () -> Unit) {
         Log.e("APP", "web service is not able to insert characters")
     }
 
