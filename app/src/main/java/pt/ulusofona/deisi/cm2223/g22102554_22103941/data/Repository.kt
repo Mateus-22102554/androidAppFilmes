@@ -20,15 +20,6 @@ class Repository (
         throw Exception("Illegal operation")
     }
 
-    override fun inserirAvaliacao(
-        avaliacao: Avaliacao,
-        idImdb: String,
-        onFinished: (Result<Avaliacao>) -> Unit
-    ) {
-        local.inserirAvaliacao(avaliacao,idImdb) {
-            onFinished(Result.success(avaliacao))
-        }
-    }
 
     override fun getFilme(id: String, avaliacao: Avaliacao, onFinished: (Result<FilmeIMDB>) -> Unit) {
         if (ConnectivityUtil.isOnline(context)) {

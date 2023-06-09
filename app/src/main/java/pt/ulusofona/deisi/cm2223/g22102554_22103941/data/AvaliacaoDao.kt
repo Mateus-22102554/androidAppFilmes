@@ -8,7 +8,7 @@ import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.entidades.AvaliacaoDB
 @Dao
 interface AvaliacaoDao {
     @Insert
-    fun inserirAvaliacao(avalicao: AvaliacaoDB)
+    fun inserirAvaliacao(avaliacao: AvaliacaoDB)
 
     @Query("SELECT * FROM avaliacoes")
     fun getAllAvaliacoes() : List<AvaliacaoDB>

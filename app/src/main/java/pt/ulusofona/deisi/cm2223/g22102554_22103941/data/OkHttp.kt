@@ -28,10 +28,6 @@ class OkHttp (
         Log.e("APP", "web service is not able to clear all characters")
     }
 
-    override fun inserirAvaliacao(avaliacao: Avaliacao, idImdb: String, onFinished: (Result<Avaliacao>) -> Unit) {
-        TODO("Not yet implemented")
-    }
-
     override fun getFilme(id: String, avaliacao: Avaliacao, onFinished: (Result<FilmeIMDB>) -> Unit) {
 
         // Aqui estamos a preparar o pedido. Precisamos da apiKey e do url
@@ -71,7 +67,7 @@ class OkHttp (
                             jsonObject.getString("imdbRating"),
                             jsonObject.getString("Poster"),
                             jsonObject.getString("Plot")
-                                )
+                        )
 
 
 

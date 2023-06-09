@@ -6,9 +6,10 @@ import kotlinx.coroutines.launch
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.entidades.AvaliacaoDB
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.entidades.FilmeDB
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Avaliacao
-import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Avaliacoes
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.FilmeIMDB
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.FilmesIMDB
+import java.io.File
+import java.util.Calendar
 
 class Room (
     private val filmeDao: FilmeDao,
@@ -17,21 +18,26 @@ class Room (
     override fun getAllFilmes(onFinished: (Result<List<FilmeIMDB>>) -> Unit) {
         filmeDao.getAllFilmes()
     }
+    override fun getAllAvaliacoes(onFinished: (Result<List<Avaliacao>>) -> Unit){
+        avaliacaoDao.getAllAvaliacoes()
 
-    override fun inserirAvaliacao(avaliacao: Avaliacao, idImdb: String, onFinished: (Result<Avaliacao>) -> Unit) {
-        val avaliacaoDB = avaliacao.let {
-            AvaliacaoDB(
-                id = avaliacao.id,
-                nome = avaliacao.nome,
-                avaliacao = avaliacao.avaliacao,
-                dataVisualizacao = avaliacao.dataVisualizacao.toString(),
-                observacoes = avaliacao.observacoes,
-                idImdb = idImdb,
-                idFotos = null,
-                idCinema = null
-            )
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val avaliacaoDB = avaliacaoDao.getAllAvaliacoes().map {
+                Avaliacao(
+                    id = it.id,
+                    nome = it.nome,
+                    cinema = "cinema",
+                    avaliacao = it.avaliacao,
+                    dataVisualizacao = Calendar.getInstance(),
+                    fotos = null ,
+                    observacoes = it.observacoes
+                )
+            }
+
+            onFinished(Result.success(avaliacaoDB))
         }
-        avaliacaoDao.inserirAvaliacao(avaliacaoDB)
+
     }
 
     override fun inserirFilme(filme: FilmeIMDB, avaliacao: Avaliacao, onFinished: () -> Unit) {

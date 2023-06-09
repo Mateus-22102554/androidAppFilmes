@@ -10,6 +10,6 @@ data class Avaliacao (
     val cinema : String,
     val avaliacao : Int = 0,
     val dataVisualizacao : Calendar,
-    val fotos: List<File>,
+    val fotos: List<File>? = null,
     val observacoes : String
     ) : Serializable
