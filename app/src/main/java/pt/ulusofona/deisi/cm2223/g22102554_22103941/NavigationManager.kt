@@ -2,7 +2,7 @@ package pt.ulusofona.deisi.cm2223.g22102554_22103941
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
-//import pt.ulusofona.deisi.cm2223.RegistoFilmesFragment.RegistoFilmesFragment
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Avaliacao
 
 object NavigationManager {
     private fun placeFragment(fm: FragmentManager, fragment: Fragment) {
@@ -19,8 +19,8 @@ object NavigationManager {
         placeFragment(fm, ApresentacaoFilmesFragment())
     }
 
-    fun goToDetalheFilmeFragment(fm: FragmentManager, filme: Filme) {
-        placeFragment(fm, DetalheFilmeFragment(filme))
+    fun goToDetalheFilmeFragment(fm: FragmentManager, avaliacao: Avaliacao) {
+        placeFragment(fm, DetalheFilmeFragment(avaliacao))
     }
 
     fun goToMapaFragment(fm: FragmentManager) {

@@ -6,8 +6,9 @@ import androidx.recyclerview.widget.RecyclerView
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.databinding.ItemDashboardBinding
 import java.util.*
 import kotlin.reflect.KFunction1
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Avaliacao
 
-class DashboardAdapter(private val onOperationClick: KFunction1<Filme, Unit>, private var itemsTop: List<Filme> = listOf()) : RecyclerView.Adapter<DashboardAdapter.HistoryViewHolder>() {
+class DashboardAdapter(private val onOperationClick: KFunction1<Avaliacao, Unit>, private var itemsTop: List<Avaliacao> = listOf()) : RecyclerView.Adapter<DashboardAdapter.HistoryViewHolder>() {
 
     class HistoryViewHolder(val binding: ItemDashboardBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -24,7 +25,7 @@ class DashboardAdapter(private val onOperationClick: KFunction1<Filme, Unit>, pr
 
     override fun getItemCount() = itemsTop.size
 
-    fun updateItems(items: List<Filme>) {
+    fun updateItems(items: List<Avaliacao>) {
         this.itemsTop = items
         notifyDataSetChanged()
     }
@@ -33,10 +34,10 @@ class DashboardAdapter(private val onOperationClick: KFunction1<Filme, Unit>, pr
 
     override fun onBindViewHolder(holder: DashboardAdapter.HistoryViewHolder, position: Int) {
         holder.itemView.setOnClickListener { onOperationClick(itemsTop[position]) }
-        holder.binding.filme.text = itemsTop[position].nome
+        holder.binding.filme.text = itemsTop[position].filme.nomeImdb
         holder.binding.dataVistaFilme.text = itemsTop[position].dataVisualizacao.get(Calendar.YEAR).toString() + "/" + (itemsTop[position].dataVisualizacao.get(
             Calendar.MONTH) + 1) + "/" + itemsTop[position].dataVisualizacao.get(Calendar.DAY_OF_MONTH).toString()
-        holder.binding.cinema.text = itemsTop[position].cinema
+        holder.binding.cinema.text = itemsTop[position].cinema.nome
         holder.binding.avaliacao.text = itemsTop[position].avaliacao.toString()
 
 

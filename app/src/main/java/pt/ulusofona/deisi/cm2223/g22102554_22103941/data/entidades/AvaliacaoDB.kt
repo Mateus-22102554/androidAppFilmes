@@ -8,13 +8,12 @@ import java.util.*
 @Entity(tableName = "avaliacoes")
 data class AvaliacaoDB(
     @PrimaryKey val id: String,
-    val nome: String,
     val avaliacao: Int,
     val dataVisualizacao: String, //ADAPTAR PARA LONG
     val observacoes: String,
     val idImdb: String,
     val idFotos: String? = null,
-    val idCinema: String? = null
+    val idCinema: Int
 )
 
 

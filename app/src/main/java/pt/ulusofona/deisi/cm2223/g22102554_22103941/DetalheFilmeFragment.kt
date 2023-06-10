@@ -10,12 +10,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.databinding.FragmentDetalheFilmeBinding
 import java.io.File
 import java.util.Calendar
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Avaliacao
 
-
-class DetalheFilmeFragment(filme: Filme) : Fragment() {
+class DetalheFilmeFragment(avaliacao: Avaliacao) : Fragment() {
     
     private lateinit var binding: FragmentDetalheFilmeBinding
-    val filme = filme
+    val avaliacao = avaliacao
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +34,7 @@ class DetalheFilmeFragment(filme: Filme) : Fragment() {
 
     private fun onOperationClick(img: File){
         val activity= view?.context as AppCompatActivity
-        NavigationManager.goToDetalheFilmeFragment(activity.supportFragmentManager, filme)
+        NavigationManager.goToDetalheFilmeFragment(activity.supportFragmentManager, avaliacao)
     }
 
 
@@ -42,7 +42,7 @@ class DetalheFilmeFragment(filme: Filme) : Fragment() {
     override fun onStart() {
         super.onStart()
 
-            for(filmeImdb in FilmesIMDB.getListFilmesImdb){
+            /*for(filmeImdb in FilmesIMDBParte1.getListFilmesImdb){
                 if(filmeImdb.nomeImdb == filme.nome){
                     binding.generoValor.text  = filmeImdb.generoImdb
                     binding.dataLancamentoValor.text  = filmeImdb.dataImdb
@@ -69,7 +69,7 @@ class DetalheFilmeFragment(filme: Filme) : Fragment() {
 
         binding.rvHistory.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
         binding.rvHistory?.adapter = adapter
-        adapter.updateItems(filme.listImgGet)
+        adapter.updateItems(filme.listImgGet)*/
 
 
     }

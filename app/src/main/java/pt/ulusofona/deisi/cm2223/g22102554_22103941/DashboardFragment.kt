@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.databinding.FragmentDashboardBinding
-
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Avaliacao
 
 class DashboardFragment : Fragment() {
     private lateinit var binding: FragmentDashboardBinding
@@ -26,23 +26,23 @@ class DashboardFragment : Fragment() {
     }
     private var adapter = DashboardAdapter(::onOperationClick)
 
-    private fun onOperationClick(filme: Filme){
+    private fun onOperationClick(filme: Avaliacao){
         val activity= view?.context as AppCompatActivity
         NavigationManager.goToDetalheFilmeFragment(activity.supportFragmentManager, filme)
     }
 
     override fun onStart() {
         super.onStart()
-        val builder = StringBuilder()
-        val history = Filmes.history
+        /*val builder = StringBuilder()
+        val history = FilmesParte1.history
 
 
         history.forEach {builder.append("${it.nome} ${it.cinema}\n")}
         //binding.tvHistory.text = builder.toString()
         binding.rvHistory.layoutManager = LinearLayoutManager(requireContext())
         binding.rvHistory?.adapter = adapter
-        adapter.updateItems(Filmes.top5Filmes)
-        binding.count.text = Filmes.countFilmes.toString()
+        adapter.updateItems(FilmesParte1.top5Filmes)
+        binding.count.text = FilmesParte1.countFilmes.toString()*/
 
     }
 

@@ -11,7 +11,7 @@ data class FilmeDB(
     @PrimaryKey val id: String,
     val nome: String,
     val genero: String,
-    val data: String,
+    val data: Long,
     val avaliacao: String,
     val poster: String,
     val sinopse: String

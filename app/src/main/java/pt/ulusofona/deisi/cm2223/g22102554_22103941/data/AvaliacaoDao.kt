@@ -16,6 +16,7 @@ interface AvaliacaoDao {
     @Query("SELECT * FROM avaliacoes WHERE id=:id")
     fun getAvaliacao(id:String) : AvaliacaoDB
 
+
     @Query("DELETE FROM avaliacoes WHERE id=:id")
     fun deleteAvaliacao(id:String)
 

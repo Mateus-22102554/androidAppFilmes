@@ -7,28 +7,37 @@ import okhttp3.*
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.IMDB_API_BASE_URL
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.IMDB_API_TOKEN
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Avaliacao
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Filme
 
-import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.FilmeIMDB
-import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.FilmesIMDB
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Operacoes
 
 class OkHttp (
     val baseUrl: String = IMDB_API_BASE_URL,
     private val apiKey: String = IMDB_API_TOKEN,
     private val client: OkHttpClient
-) : FilmesIMDB() {
+) : Operacoes() {
 
-    override fun getAllFilmes(onFinished: (Result<List<FilmeIMDB>>) -> Unit) {
+    override fun getAllFilmes(onFinished: (Result<List<Avaliacao>>) -> Unit) {
     }
 
-    override fun inserirFilme(filme: FilmeIMDB, avaliacao: Avaliacao, onFinished: () -> Unit) {
+    override fun inserirFilme(filme: Filme, avaliacao: Avaliacao, onFinished: () -> Unit) {
         Log.e("APP", "web service is not able to insert characters")
     }
 
-    override fun deleteFilme(id: String, onFinished: (Result<FilmeIMDB>) -> Unit) {
-        Log.e("APP", "web service is not able to clear all characters")
+    override fun getAllAvaliacoes(onFinished: (Result<List<Avaliacao>>) -> Unit) {
+        Log.e("APP", "web service is not able to insert characters")
     }
 
-    override fun getFilme(id: String, avaliacao: Avaliacao, onFinished: (Result<FilmeIMDB>) -> Unit) {
+    override fun inserirAvaliacao(id: String, avaliacao: Avaliacao, onFinished: (Result<Filme>) -> Unit) {
+        Log.e("APP", "web service is not able to insert characters")
+    }
+
+
+    override fun getFilme(id: String, onFinished: (Result<Avaliacao>) -> Unit) {
+        Log.e("APP", "web service is not able to insert characters")
+    }
+
+    override fun getFilmeIMDB(id: String, onFinished: (Result<Filme>) -> Unit) {
 
         // Aqui estamos a preparar o pedido. Precisamos da apiKey e do url
         val request: Request = Request.Builder()
@@ -59,11 +68,11 @@ class OkHttp (
                         // Aqui vamos guardar o array ainda em formato json dos personagens
 
 
-                        val filme = FilmeIMDB(
+                        val filme = Filme(
                             jsonObject.getString("imdbID"),
                             jsonObject.getString("Title"),
                             jsonObject.getString("Genre"),
-                            jsonObject.optString("Year"),
+                            jsonObject.optString("Year").toLong(),
                             jsonObject.getString("imdbRating"),
                             jsonObject.getString("Poster"),
                             jsonObject.getString("Plot")

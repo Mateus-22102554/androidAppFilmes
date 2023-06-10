@@ -1,33 +1,59 @@
 package pt.ulusofona.deisi.cm2223.g22102554_22103941.data
 import android.content.Context
 import android.util.Log
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.ConnectivityUtil
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Avaliacao
-import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.FilmeIMDB
-import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.FilmesIMDB
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Filme
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Operacoes
 import kotlin.Result
 
 class Repository (
     private val context: Context,
-    private val local: FilmesIMDB,
-    private val remote: FilmesIMDB
-    ) : FilmesIMDB(){
-    override fun getAllFilmes(onFinished: (Result<List<FilmeIMDB>>) -> Unit) {
+    private val local: Operacoes,
+    private val remote: Operacoes
+    ) : Operacoes(){
+    override fun getAllFilmes(onFinished: (Result<List<Avaliacao>>) -> Unit) {
         throw Exception("Illegal operation")
     }
 
-    override fun inserirFilme(filme: FilmeIMDB, avaliacao: Avaliacao, onFinished: () -> Unit) {
+    override fun inserirFilme(filme: Filme, avaliacao: Avaliacao, onFinished: () -> Unit) {
+        throw Exception("Illegal operation")
+    }
+
+    override fun getFilmeIMDB(nome: String, onFinished: (Result<Filme>) -> Unit) {
+
+        CoroutineScope(Dispatchers.IO).launch {
+         remote.getFilmeIMDB(nome){
+             onFinished(it)
+         }
+
+        }
+    }
+
+    override fun getAllAvaliacoes(onFinished: (Result<List<Avaliacao>>) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            local.getAllAvaliacoes(){
+                onFinished(it)
+            }
+
+        }
+    }
+
+    override fun getFilme(id: String, onFinished: (Result<Avaliacao>) -> Unit) {
         throw Exception("Illegal operation")
     }
 
 
-    override fun getFilme(id: String, avaliacao: Avaliacao, onFinished: (Result<FilmeIMDB>) -> Unit) {
+    override fun inserirAvaliacao(id: String, avaliacao: Avaliacao, onFinished: (Result<Filme>) -> Unit) {
         if (ConnectivityUtil.isOnline(context)) {
             // Se tenho acesso à Internet, vou buscar os registos ao web service
             // e atualizo a base de dados com os novos registos eliminando os
             // antigos, porque podem ter eliminado o filme do web service
 
-            remote.getFilme(id, avaliacao) { result ->
+            remote.getFilmeIMDB(id) { result ->
 
                 if (result.isSuccess) {
                     result.getOrNull()?.let { filme ->
@@ -52,13 +78,11 @@ class Repository (
             // O que fazer se não houver Internet?
             // Devolver os personagens que estão guardados na base de dados
             Log.i("APP", "App is offline. Getting characters from the database")
-            local.getFilme(id,avaliacao, onFinished)
+            local.getFilmeIMDB(id, onFinished)
         }
     }
 
-    override fun deleteFilme(id: String, onFinished: (Result<FilmeIMDB>) -> Unit) {
-        TODO("Not yet implemented")
-    }
+
 
 
 
@@ -67,7 +91,7 @@ class Repository (
         private var instance: Repository? = null
 
         // Temos de executar o init antes do getInstance
-        fun init(local: FilmesIMDB, remote: FilmesIMDB, context: Context) {
+        fun init(local: Operacoes, remote: Operacoes, context: Context) {
             if (instance == null) {
                 instance = Repository(context, local, remote)
             }

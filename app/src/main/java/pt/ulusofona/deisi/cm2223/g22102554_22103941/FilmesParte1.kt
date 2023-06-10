@@ -1,14 +1,13 @@
 package pt.ulusofona.deisi.cm2223.g22102554_22103941
 
-import android.app.Activity
-import android.util.Log
-import android.widget.Toast
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Operacoes
 import java.io.File
-import java.util.*
 
-object Filmes {
+object FilmesParte1 {
 
     private val _listImg = mutableListOf<File>()
+    private lateinit var operacoes: Operacoes
+    private val _listAvaliacao = mutableListOf<Operacoes>()
 
     val listImgGet get() = _listImg.toList()
 
@@ -20,17 +19,37 @@ object Filmes {
         _listImg.clear()
     }
 
-    private val _history = mutableListOf<Filme>(
+ /*  private val _history = mutableListOf<Filme>(
         Filme("John Wick 4","Cinema São Jorge",8 , Calendar.getInstance(), listOf(), ""), Filme("Avatar 2", "Cinema do Parque", 7, Calendar.getInstance(),listOf(),"")
-    )
+    )*/
 
-    val history get() = _history.toList()
 
-    fun historySet (nome:String, cinema:String, avaliacao:Int, data: Calendar, imgList: List<File>, obs:String):Int{
+//    val history get() = _history
+    val avaliacoes = operacoes.getAllAvaliacoes {
+        it.getOrNull()?.forEach {
+
+            /*Filme(
+                it.nome,
+                it.cinema,
+                it.avaliacao,
+                it.dataVisualizacao,
+                it.fotos.
+
+
+            )*/
+        }
+    }
+
+
+
+
+
+
+    /*fun historySet (nome:String, cinema:String, avaliacao:Int, data: Calendar, imgList: List<File>, obs:String):Int{
         var sizeFilme = 0
         var sizeCinema = 0
 
-        for(filmeImdb in FilmesIMDB.getListFilmesImdb){
+        for(filmeImdb in FilmesIMDBParte1.getListFilmesImdb){
             if(filmeImdb.nomeImdb == nome) {
                 for (filme in _history){
                     sizeFilme +=1
@@ -56,14 +75,14 @@ object Filmes {
             }
         }
 
-        /*Log.i("", Filmes._history[2].nome)
+        *//*Log.i("", Filmes._history[2].nome)
         Log.i("", Filmes._history[2].cinema)
         Log.i("", Filmes._history[2].avaliacao.toString())
         Log.i("", Filmes._history[2].dataVisualizacao.toString())
-        Log.i("", Filmes._history[2].observacoes)*/
+        Log.i("", Filmes._history[2].observacoes)*//*
 
         return 1
-    }
+    }*/
 
     /*fun historyUpgrade (nome:String, cinema:String, avaliacao:Int, data: Calendar, obs:String){
 
@@ -91,10 +110,10 @@ object Filmes {
         Log.i("", _history[1].countAvaliacoes.toString())
         Log.i("", _history[1].dataVisualizacao.toString())
         Log.i("", _history[1].observacoes)
-    }*/
+    }
 
     val top5Filmes get() = _history.sortedByDescending { it.avaliacao }.take(5)
 
-    val countFilmes get() = _history.size
+    val countFilmes get() = _history.size*/
 
 }

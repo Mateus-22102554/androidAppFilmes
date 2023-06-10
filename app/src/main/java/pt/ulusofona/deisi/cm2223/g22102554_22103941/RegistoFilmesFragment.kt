@@ -6,10 +6,8 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
-
 import android.content.DialogInterface
 import android.content.Intent
-
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -32,7 +30,9 @@ import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Avaliacao
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
-
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Operacoes
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Cinema
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Filme
 
 
 class RegistoFilmesFragment : Fragment() {
@@ -43,6 +43,8 @@ class RegistoFilmesFragment : Fragment() {
     private lateinit var photoFile: File
     private lateinit var adapterFilmes: ArrayAdapter<String>
     private lateinit var adapterCinemas: ArrayAdapter<String>
+    private lateinit var operacoes: Operacoes
+
 
 
     @SuppressLint("SetTextI18n")
@@ -76,10 +78,10 @@ class RegistoFilmesFragment : Fragment() {
 
         })
 
-        adapterFilmes = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, FilmesIMDB.nomesFilmesGet())
+      /*  adapterFilmes = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, *//*Filme.nomesFilmesGet()*//* operacoes.getAllAvaliacoesNomes { it.getOrNull() })
         binding.nomeFilme.setAdapter(adapterFilmes)
-        adapterCinemas = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, Cinemas.nomesCinemasGet())
-        binding.cinemaFilme.setAdapter(adapterCinemas)
+        adapterCinemas = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, Cinema.nomesCinemasGet())
+        binding.cinemaFilme.setAdapter(adapterCinemas)*/
 
 
         //DATA
@@ -160,23 +162,37 @@ class RegistoFilmesFragment : Fragment() {
                                 binding.obs.text.toString()
                             )*/
 
-                            val avaliacao = Avaliacao(
-                                UUID.randomUUID().toString(),
-                                binding.nomeFilme.text.toString(),
-                                binding.cinemaFilme.text.toString(),
-                                binding.valorAvaliacaoFilme.text.toString().toInt(),
-                                calendario,
-                                Filmes.listImgGet,
-                                binding.obs.text.toString()
-                            )
+
 
                             var filme: String = binding.nomeFilme.text.toString()
 
                             CoroutineScope(Dispatchers.IO).launch {
 
-                                model.getFilme(filme, avaliacao) {
+                                model.getFilmeIMDB(filme) {
                                     if(it.isSuccess) {
-                                        NavigationManager.goToListaFilmesFragment(parentFragmentManager)
+                                        it.onSuccess {
+                                        val filmeSucesso =
+                                            Filme(
+                                                it.id,
+                                                it.nomeImdb,
+                                                it.generoImdb,
+                                                it.dataImdb,
+                                                it.avaliacaoImdb,
+                                                it.imgImdb,
+                                                it.sinopse
+                                            )
+                                            val avaliacao = Avaliacao(
+                                                UUID.randomUUID().toString(),
+                                                filmeSucesso,
+                                                Cinema(123,"Colombo"),
+                                                binding.valorAvaliacaoFilme.text.toString().toInt(),
+                                                calendario,
+                                                null,
+                                                binding.obs.text.toString()
+                                            )
+                                        }
+
+
                                     } else {
                                         // Apresenta o erro num Toast
                                         Toast.makeText(
@@ -188,7 +204,9 @@ class RegistoFilmesFragment : Fragment() {
 
                                 }
 
+
                             }
+                            //Log.i("", Filmes.getAvaliacao.toString())
 
 
                             if (0 == 2) {
@@ -214,7 +232,7 @@ class RegistoFilmesFragment : Fragment() {
                                 binding.obs.text.clear()
                                 binding.imgsCount.text = ""
                                 binding.img.setImageResource(0)
-                                Filmes.imagensListClear()
+                                //FilmesParte1.imagensListClear()
                             }
                             getString(R.string.registo_filme)
 
@@ -257,8 +275,8 @@ class RegistoFilmesFragment : Fragment() {
 
                 // Use a URI para exibir a imagem capturada
                 binding.img.setImageURI(uri)
-                Filmes.imagemSet(photoFile)
-                binding.imgsCount.text = Filmes.listImgGet.size.toString()
+                FilmesParte1.imagemSet(photoFile)
+                binding.imgsCount.text = FilmesParte1.listImgGet.size.toString()
             }
         }
 

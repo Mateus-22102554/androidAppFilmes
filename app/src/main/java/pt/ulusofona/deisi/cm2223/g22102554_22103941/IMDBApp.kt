@@ -27,7 +27,8 @@ class IMDBApp : Application(){
     private fun initRoom(): Room {
         return Room(
             CinemaDatabase.getInstance(applicationContext).filmeDao(),
-            CinemaDatabase.getInstance(applicationContext).avaliacaoDao()
+            CinemaDatabase.getInstance(applicationContext).avaliacaoDao(),
+            CinemaDatabase.getInstance(applicationContext).cinemaDao()
         )
     }
 }

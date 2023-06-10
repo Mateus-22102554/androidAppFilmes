@@ -7,12 +7,16 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.Repository
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.databinding.FragmentApresentacaoFilmesBinding
-
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Avaliacao
 
 class ApresentacaoFilmesFragment : Fragment() {
     private lateinit var binding: FragmentApresentacaoFilmesBinding
-
+    private val model = Repository.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -29,20 +33,27 @@ class ApresentacaoFilmesFragment : Fragment() {
 
     private var adapter = ApresentacaoFilmesAdapter(::onOperationClick)
 
-    private fun onOperationClick(filme: Filme){
+
+    private fun onOperationClick(avaliacao: Avaliacao){
         val activity= view?.context as AppCompatActivity
-        NavigationManager.goToDetalheFilmeFragment(activity.supportFragmentManager, filme)
+        NavigationManager.goToDetalheFilmeFragment(activity.supportFragmentManager, avaliacao)
     }
 
     override fun onStart() {
         super.onStart()
         val builder = StringBuilder()
-        val history = Filmes.history
-        history.forEach {builder.append("${it.nome} ${it.cinema}\n")}
+
+        CoroutineScope(Dispatchers.IO).launch {
+            var history : List<Avaliacao>? = null
+                model.getAllAvaliacoes { history = it.getOrNull()!! }
+            binding.rvHistory.layoutManager = LinearLayoutManager(requireContext())
+            binding.rvHistory?.adapter = adapter
+            history?.let { adapter.updateItems(it) }
+
+        }
+
         //binding.tvHistory.text = builder.toString()
-        binding.rvHistory.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvHistory?.adapter = adapter
-        adapter.updateItems(Filmes.history)
+
 
     }
 }

@@ -5,7 +5,7 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "cinemas")
 class CinemaDB(
-    @PrimaryKey val id: String,
+    @PrimaryKey val id: Int,
     val nome: String,
 )
 

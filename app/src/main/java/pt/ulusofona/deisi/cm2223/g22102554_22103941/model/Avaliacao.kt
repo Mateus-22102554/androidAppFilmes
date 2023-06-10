@@ -5,9 +5,9 @@ import java.util.*
 import java.io.Serializable
 
 data class Avaliacao (
-    val id : String,
-    val nome : String,
-    val cinema : String,
+    val id : String = UUID.randomUUID().toString(),
+    val filme : Filme,
+    val cinema : Cinema,
     val avaliacao : Int = 0,
     val dataVisualizacao : Calendar,
     val fotos: List<File>? = null,
