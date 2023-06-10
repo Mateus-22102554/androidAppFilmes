@@ -41,7 +41,19 @@ class OkHttp (
         TODO("Not yet implemented")
     }
 
+    override fun getCinemaByNome(cinema: String, onFinished: (Result<Cinema>) -> Unit) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getCinemaById(idCinema: Int, onFinished: (Result<Cinema>) -> Unit) {
+        TODO("Not yet implemented")
+    }
+
     override fun getAllCinemasNomes(onFinished: (Result<List<String>>) -> Unit) {
+        TODO("Not yet implemented")
+    }
+
+    override fun clearAllCinemas(onFinished: () -> Unit) {
         TODO("Not yet implemented")
     }
 

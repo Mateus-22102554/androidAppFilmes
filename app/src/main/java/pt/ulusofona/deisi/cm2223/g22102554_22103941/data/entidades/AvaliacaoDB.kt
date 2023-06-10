@@ -9,7 +9,7 @@ import java.util.*
 data class AvaliacaoDB(
     @PrimaryKey val id: String,
     val avaliacao: Int,
-    val dataVisualizacao: String, //ADAPTAR PARA LONG
+    val dataVisualizacao: Long,
     val observacoes: String,
     val idImdb: String,
     val idFotos: String? = null,

@@ -2,7 +2,6 @@ package pt.ulusofona.deisi.cm2223.g22102554_22103941.data
 import android.content.Context
 import android.util.Base64InputStream
 import android.util.Log
-import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -63,6 +62,7 @@ class Repository (
 
     override fun getCinemasJSON(onFinished: (Result<List<Cinema>>) -> Unit) {
         //var cinemaDao : CinemaDao? = null
+
         val stringBuilder = StringBuilder()
         var line: String? = bufferedReader.readLine()
         while (line != null){
@@ -82,20 +82,32 @@ class Repository (
                     cinema["cinema_id"].toString().toInt(),
                     cinema["cinema_name"].toString(),
 
-                )
+                    )
             )
         }
 
-        local.inserirCinemas(cinemas) {
-            onFinished(Result.success(cinemas))
+        local.clearAllCinemas {
+            local.inserirCinemas(cinemas) {
+                onFinished(Result.success(cinemas))
+            }
         }
-
-
 
     }
 
     override fun inserirCinemas(cinemas: List<Cinema>, onFinished: () -> Unit) {
         TODO("Not yet implemented")
+    }
+
+    override fun getCinemaById(idCinema: Int, onFinished: (Result<Cinema>) -> Unit) {
+        local.getCinemaById(idCinema) {
+            onFinished(it)
+        }
+    }
+
+    override fun getCinemaByNome(cinema: String, onFinished: (Result<Cinema>) -> Unit) {
+        local.getCinemaByNome(cinema) {
+            onFinished(it)
+        }
     }
 
     override fun getAllCinemasNomes(onFinished: (Result<List<String>>) -> Unit) {
@@ -104,9 +116,18 @@ class Repository (
         }
     }
 
+    override fun clearAllCinemas(onFinished: () -> Unit) {
+        TODO("Not yet implemented")
+    }
+
 
     override fun inserirAvaliacao(filme: Filme, avaliacao: Avaliacao, onFinished: (Result<Filme>) -> Unit) {
-        if (ConnectivityUtil.isOnline(context)) {
+
+        local.inserirFilme(filme, avaliacao) {
+            onFinished(Result.success(filme))
+        }
+
+        /*if (ConnectivityUtil.isOnline(context)) {
             // Se tenho acesso à Internet, vou buscar os registos ao web service
             // e atualizo a base de dados com os novos registos eliminando os
             // antigos, porque podem ter eliminado o filme do web service
@@ -115,7 +136,7 @@ class Repository (
                 onFinished(Result.success(filme))
             }
 
-            /*remote.getFilmeIMDB(id) { result ->
+            *//*remote.getFilmeIMDB(id) { result ->
 
                 if (result.isSuccess) {
                     result.getOrNull()?.let { filme ->
@@ -134,14 +155,14 @@ class Repository (
                     Log.w("APP", "Error getting characters from server")
                     onFinished(result)  // propagate the remote failure
                 }
-            }*/
+            }*//*
 
         } else {
             // O que fazer se não houver Internet?
             // Devolver os personagens que estão guardados na base de dados
             Log.i("APP", "App is offline. Getting characters from the database")
             local.getFilme(filme.id, onFinished)
-        }
+        }*/
     }
 
 

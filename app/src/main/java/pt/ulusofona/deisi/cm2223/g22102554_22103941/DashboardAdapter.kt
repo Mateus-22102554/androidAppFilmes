@@ -35,8 +35,7 @@ class DashboardAdapter(private val onOperationClick: KFunction1<Avaliacao, Unit>
     override fun onBindViewHolder(holder: DashboardAdapter.HistoryViewHolder, position: Int) {
         holder.itemView.setOnClickListener { onOperationClick(itemsTop[position]) }
         holder.binding.filme.text = itemsTop[position].filme.nomeImdb
-        holder.binding.dataVistaFilme.text = itemsTop[position].dataVisualizacao.get(Calendar.YEAR).toString() + "/" + (itemsTop[position].dataVisualizacao.get(
-            Calendar.MONTH) + 1) + "/" + itemsTop[position].dataVisualizacao.get(Calendar.DAY_OF_MONTH).toString()
+        holder.binding.dataVistaFilme.text = itemsTop[position].dataVisualizacao.toString()
         holder.binding.cinema.text = itemsTop[position].cinema.cinema_name
         holder.binding.avaliacao.text = itemsTop[position].avaliacao.toString()
 

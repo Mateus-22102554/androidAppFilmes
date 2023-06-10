@@ -14,7 +14,11 @@ interface CinemaDao {
     fun getAllCinema() : List<CinemaDB>
 
     @Query("SELECT * FROM cinemas WHERE id=:id")
-    fun getCinema(id:Int) : CinemaDB
+    fun getCinemaById(id:Int) : CinemaDB
 
+    @Query("SELECT * FROM cinemas WHERE nome=:nome")
+    fun getCinemaByNome(nome: String) : CinemaDB
 
+    @Query("DELETE FROM cinemas")
+    fun deleteAll()
 }

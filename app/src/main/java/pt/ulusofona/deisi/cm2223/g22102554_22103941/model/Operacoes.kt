@@ -23,8 +23,11 @@ abstract class Operacoes {
 
     abstract fun inserirCinemas(cinemas : List<Cinema>, onFinished: () -> Unit)
 
-    abstract fun getCinema(cinema : String, onFinished: (Cinema) -> Unit)
+    abstract fun getCinemaByNome(cinema : String, onFinished: (Result<Cinema>) -> Unit)
+    abstract fun getCinemaById(idCinema : Int, onFinished: (Result<Cinema>) -> Unit)
 
     abstract fun getAllCinemasNomes(onFinished: (Result<List<String>>) -> Unit)
+
+    abstract fun clearAllCinemas(onFinished: () -> Unit)
 
 }

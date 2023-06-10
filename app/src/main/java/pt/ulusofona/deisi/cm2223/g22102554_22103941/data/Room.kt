@@ -1,7 +1,6 @@
 package pt.ulusofona.deisi.cm2223.g22102554_22103941.data
 
 import android.content.Context
-import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -33,7 +32,7 @@ class Room (
 
         CoroutineScope(Dispatchers.IO).launch {
             val avaliacaoDB = avaliacaoDao.getAllAvaliacoes().map {
-                val cinema = Cinema(123,"Colombo")//cinemaDao.getCinema(it.idCinema).let { Cinema(it.id, it.nome) }
+                val cinema = cinemaDao.getCinemaById(it.idCinema).let { Cinema(it.id, it.nome) }
                 val filme = filmeDao.getFilme(it.idImdb).let {
                     Filme(
                         it.id,
@@ -51,7 +50,7 @@ class Room (
                     filme = filme,
                     cinema = cinema,
                     avaliacao = it.avaliacao,
-                    dataVisualizacao = Calendar.getInstance(),
+                    dataVisualizacao = it.dataVisualizacao,
                     fotos = null ,
                     observacoes = it.observacoes
                 )
@@ -84,6 +83,21 @@ class Room (
         }
     }
 
+    override fun getCinemaByNome(cinema: String, onFinished: (Result<Cinema>) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val cinemaDB = cinemaDao.getCinemaByNome(cinema)
+            val cinema = Cinema(
+                cinema_id = cinemaDB.id,
+                cinema_name = cinemaDB.nome
+            )
+            onFinished(Result.success(cinema))
+        }
+    }
+
+    override fun getCinemaById(idCinema: Int, onFinished: (Result<Cinema>) -> Unit) {
+        TODO("Not yet implemented")
+    }
+
 
     override fun getAllCinemasNomes(onFinished: (Result<List<String>>) -> Unit) {
         val nomeCinema = mutableListOf<String>()
@@ -100,6 +114,13 @@ class Room (
 
             onFinished(Result.success(nomeCinema))
 
+        }
+    }
+
+    override fun clearAllCinemas(onFinished: () -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            cinemaDao.deleteAll()
+            onFinished()
         }
     }
 
@@ -136,7 +157,7 @@ class Room (
             val avaliacaoDb = AvaliacaoDB(
                 id = avaliacao.id,
                 avaliacao = avaliacao.avaliacao,
-                dataVisualizacao = avaliacao.dataVisualizacao.toString(),
+                dataVisualizacao = avaliacao.dataVisualizacao,
                 observacoes = avaliacao.observacoes,
                 idImdb = filmeDB.id,
                 idFotos = null,

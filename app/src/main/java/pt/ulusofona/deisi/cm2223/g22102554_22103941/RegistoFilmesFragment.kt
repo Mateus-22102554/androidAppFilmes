@@ -175,7 +175,12 @@ class RegistoFilmesFragment : Fragment() {
                                 Filmes.listImgGet,
                                 binding.obs.text.toString()
                             )*/
-                            var filme: String = binding.nomeFilme.text.toString()
+
+                            val filme: String = binding.nomeFilme.text.toString()
+                            val nomeCinema: String = binding.cinemaFilme.text.toString()
+                            val avaliacaoFilme = binding.valorAvaliacaoFilme.text.toString().toInt()
+                            val calendarioLong: Long = calendario.timeInMillis
+                            val observacoes = binding.obs.text.toString()
 
                             CoroutineScope(Dispatchers.IO).launch {
 
@@ -193,26 +198,34 @@ class RegistoFilmesFragment : Fragment() {
                                                     it.sinopse
                                                 )
 
+                                            var cinema : Cinema
+                                            model.getCinemaByNome(nomeCinema){ resultCinema ->
+                                                resultCinema.onSuccess {cinemaSuccess ->
+                                                    cinema = Cinema(
+                                                        cinemaSuccess.cinema_id,
+                                                        cinemaSuccess.cinema_name
+                                                    )
 
-
-                                            val avaliacao = Avaliacao(
-                                                UUID.randomUUID().toString(),
-                                                filmeSucesso,
-                                                Cinema(123, "Colombo"),
-                                                binding.valorAvaliacaoFilme.text.toString().toInt(),
-                                                calendario,
-                                                null,
-                                                binding.obs.text.toString()
-                                            )
-                                            model.inserirAvaliacao(filmeSucesso, avaliacao) { result ->
-                                                if (result.isSuccess) {
-                                                    NavigationManager.goToListaFilmesFragment(parentFragmentManager)
-                                                } else {
-                                                    Toast.makeText(
-                                                        requireContext(),
-                                                        result.exceptionOrNull()?.message,
-                                                        Toast.LENGTH_LONG
-                                                    ).show()
+                                                    val avaliacao = Avaliacao(
+                                                        UUID.randomUUID().toString(),
+                                                        filmeSucesso,
+                                                        cinema,
+                                                        avaliacaoFilme,
+                                                        calendarioLong,
+                                                        null,
+                                                        observacoes
+                                                    )
+                                                    model.inserirAvaliacao(filmeSucesso, avaliacao) { result ->
+                                                        if (result.isSuccess) {
+                                                            NavigationManager.goToListaFilmesFragment(parentFragmentManager)
+                                                        } else {
+                                                            Toast.makeText(
+                                                                requireContext(),
+                                                                result.exceptionOrNull()?.message,
+                                                                Toast.LENGTH_LONG
+                                                            ).show()
+                                                        }
+                                                    }
                                                 }
                                             }
                                         }

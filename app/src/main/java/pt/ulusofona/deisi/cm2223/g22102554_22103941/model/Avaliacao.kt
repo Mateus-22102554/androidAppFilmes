@@ -8,8 +8,8 @@ data class Avaliacao (
     val id : String = UUID.randomUUID().toString(),
     val filme : Filme,
     val cinema : Cinema,
-    val avaliacao : Int = 0,
-    val dataVisualizacao : Calendar,
+    val avaliacao : Int,
+    val dataVisualizacao : Long,
     val fotos: List<File>? = null,
     val observacoes : String
     ) : Serializable
