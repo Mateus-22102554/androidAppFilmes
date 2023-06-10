@@ -19,4 +19,8 @@ interface FilmeDao {
     @Query("DELETE FROM filmes WHERE id=:id")
     fun deleteFilme(id:String)
 
+    @Query("SELECT * FROM filmes WHERE nome=:nome")
+    fun verificarFilme(nome:String) : Boolean
+
+
 }

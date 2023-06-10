@@ -186,51 +186,60 @@ class RegistoFilmesFragment : Fragment() {
 
                                 model.getFilmeIMDB(filme) {
                                     if (it.isSuccess) {
-                                        it.onSuccess {
-                                            val filmeSucesso =
-                                                Filme(
-                                                    it.id,
-                                                    it.nomeImdb,
-                                                    it.generoImdb,
-                                                    it.dataImdb,
-                                                    it.avaliacaoImdb,
-                                                    it.imgImdb,
-                                                    it.sinopse
-                                                )
+                                        model.verificarFilme(filme){existe ->
+                                            if(!existe){
+                                                it.onSuccess {
+                                                    val filmeSucesso =
+                                                        Filme(
+                                                            it.id,
+                                                            it.nomeImdb,
+                                                            it.generoImdb,
+                                                            it.dataImdb,
+                                                            it.avaliacaoImdb,
+                                                            it.imgImdb,
+                                                            it.sinopse
+                                                        )
 
-                                            var cinema : Cinema
-                                            model.getCinemaByNome(nomeCinema){ resultCinema ->
-                                                resultCinema.onSuccess {cinemaSuccess ->
-                                                    cinema = Cinema(
-                                                        cinemaSuccess.cinema_id,
-                                                        cinemaSuccess.cinema_name
-                                                    )
+                                                    var cinema : Cinema
+                                                    model.getCinemaByNome(nomeCinema){ resultCinema ->
+                                                        resultCinema.onSuccess {cinemaSuccess ->
+                                                            cinema = Cinema(
+                                                                cinemaSuccess.cinema_id,
+                                                                cinemaSuccess.cinema_name
+                                                            )
 
-                                                    val avaliacao = Avaliacao(
-                                                        UUID.randomUUID().toString(),
-                                                        filmeSucesso,
-                                                        cinema,
-                                                        avaliacaoFilme,
-                                                        calendarioLong,
-                                                        null,
-                                                        observacoes
-                                                    )
-                                                    model.inserirAvaliacao(filmeSucesso, avaliacao) { result ->
-                                                        if (result.isSuccess) {
-                                                            NavigationManager.goToListaFilmesFragment(parentFragmentManager)
-                                                        } else {
-                                                            Toast.makeText(
-                                                                requireContext(),
-                                                                result.exceptionOrNull()?.message,
-                                                                Toast.LENGTH_LONG
-                                                            ).show()
+                                                            val avaliacao = Avaliacao(
+                                                                UUID.randomUUID().toString(),
+                                                                filmeSucesso,
+                                                                cinema,
+                                                                avaliacaoFilme,
+                                                                calendarioLong,
+                                                                null,
+                                                                observacoes
+                                                            )
+                                                            model.inserirAvaliacao(filmeSucesso, avaliacao) { result ->
+                                                                if (result.isSuccess) {
+                                                                    NavigationManager.goToListaFilmesFragment(parentFragmentManager)
+                                                                } else {
+                                                                    Toast.makeText(
+                                                                        requireContext(),
+                                                                        result.exceptionOrNull()?.message,
+                                                                        Toast.LENGTH_LONG
+                                                                    ).show()
+                                                                }
+                                                            }
                                                         }
                                                     }
                                                 }
+                                            }else{
+                                                Toast.makeText(
+                                                    context,
+                                                    getString(R.string.erroFilmeAv),
+                                                    Toast.LENGTH_SHORT
+                                                ).show()
                                             }
+
                                         }
-
-
 
                                     } else {
                                         // Apresenta o erro num Toast
@@ -249,15 +258,7 @@ class RegistoFilmesFragment : Fragment() {
                             //Log.i("", Filmes.getAvaliacao.toString())
 
 
-                            if (0 == 2) {
-
-                                Toast.makeText(
-                                    context,
-                                    getString(R.string.erroFilmeAv),
-                                    Toast.LENGTH_SHORT
-                                ).show()
-
-                            } else if (0 == 1) {
+                         if (0 == 1) {
 
                                 binding.nomeFilme.error = getString(R.string.erroFilmeNaoExiste)
                             } else if (0 == 3) {

@@ -60,6 +60,12 @@ class Repository (
         }
     }
 
+    override fun verificarFilme(nome: String, onFinished: (Boolean) -> Unit) {
+        local.verificarFilme(nome){
+            onFinished(it)
+        }
+    }
+
     override fun getCinemasJSON(onFinished: (Result<List<Cinema>>) -> Unit) {
         //var cinemaDao : CinemaDao? = null
 

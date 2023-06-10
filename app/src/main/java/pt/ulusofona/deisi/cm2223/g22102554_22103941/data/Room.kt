@@ -140,6 +140,14 @@ class Room (
         }
     }
 
+    override fun verificarFilme(nome: String, onFinished: (Boolean) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val verificarFilme = filmeDao.verificarFilme(nome)
+            onFinished(verificarFilme)
+        }
+
+    }
+
     override fun inserirFilme(filme: Filme, avaliacao: Avaliacao, onFinished: () -> Unit) {
         val filmeDB = filme.sinopse?.let {
             FilmeDB(

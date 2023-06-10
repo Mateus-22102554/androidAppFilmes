@@ -62,6 +62,10 @@ class OkHttp (
         Log.e("APP", "web service is not able to insert characters")
     }
 
+    override fun verificarFilme(nome: String, onFinished: (Boolean) -> Unit) {
+        TODO("Not yet implemented")
+    }
+
     override fun getFilmeIMDB(id: String, onFinished: (Result<Filme>) -> Unit) {
 
         // Aqui estamos a preparar o pedido. Precisamos da apiKey e do url

@@ -9,6 +9,8 @@ abstract class Operacoes {
 
     abstract fun getFilme(id: String, onFinished: (Result<Filme>) -> Unit)
 
+    abstract fun verificarFilme(nome: String, onFinished: (Boolean) -> Unit)
+
 
 
     //Avaliações
