@@ -1,5 +1,6 @@
 package pt.ulusofona.deisi.cm2223.g22102554_22103941
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -39,6 +40,7 @@ class ApresentacaoFilmesFragment : Fragment() {
         NavigationManager.goToDetalheFilmeFragment(activity.supportFragmentManager, avaliacao)
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onStart() {
         super.onStart()
         val builder = StringBuilder()
@@ -55,9 +57,6 @@ class ApresentacaoFilmesFragment : Fragment() {
 
                 }
         }
-
-        //binding.tvHistory.text = builder.toString()
-
 
     }
 }

@@ -34,7 +34,7 @@ class ApresentacaoFilmesAdapter(private val onOperationClick: (Avaliacao) -> Uni
         holder.itemView.setOnClickListener { onOperationClick(items[position]) }
         holder.binding.filme.text = items[position].filme.nomeImdb
         holder.binding.dataVistaFilme.text = items[position].dataVisualizacao.get(Calendar.YEAR).toString() + "/" + (items[position].dataVisualizacao.get(Calendar.MONTH) + 1) + "/" + items[position].dataVisualizacao.get(Calendar.DAY_OF_MONTH).toString()
-        holder.binding.cinema.text = items[position].cinema.nome
+        holder.binding.cinema.text = items[position].cinema.cinema_name
         holder.binding.avaliacao.text = items[position].avaliacao.toString()
         holder.binding.infoObs?.text = items[position].observacoes
 

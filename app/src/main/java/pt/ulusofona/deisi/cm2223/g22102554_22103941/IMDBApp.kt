@@ -7,12 +7,15 @@ import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.CinemaDatabase
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.OkHttp
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.Repository
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.Room
+import java.io.InputStream
+
 
 class IMDBApp : Application(){
         override fun onCreate() {
             super.onCreate()
             Repository.init(initRoom(), initOkHttp(), this)
             Log.i("APP", "Initialized repository")
+
         }
 
     private fun initOkHttp(): OkHttp {
@@ -29,6 +32,7 @@ class IMDBApp : Application(){
             CinemaDatabase.getInstance(applicationContext).filmeDao(),
             CinemaDatabase.getInstance(applicationContext).avaliacaoDao(),
             CinemaDatabase.getInstance(applicationContext).cinemaDao()
+
         )
     }
 }

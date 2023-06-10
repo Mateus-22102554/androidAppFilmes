@@ -55,4 +55,7 @@ dependencies {
 // integração das coroutines do kotlin, é opcional mas vamos utilizar
     implementation "androidx.room:room-ktx:2.4.2"
 
+    //JSON
+    implementation 'com.google.code.gson:gson:2.8.7'
+
 }

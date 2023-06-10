@@ -1,5 +1,7 @@
 package pt.ulusofona.deisi.cm2223.g22102554_22103941.data
 
+import android.content.Context
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -10,12 +12,19 @@ import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Avaliacao
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Cinema
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Filme
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Operacoes
+import java.io.BufferedReader
+import java.io.InputStream
+import java.io.InputStreamReader
 import java.util.Calendar
 
 class Room (
+
     private val filmeDao: FilmeDao,
     private val avaliacaoDao: AvaliacaoDao,
-    private val cinemaDao: CinemaDao
+    private val cinemaDao: CinemaDao,
+
+
+
 ) : Operacoes() {
     override fun getAllFilmes(onFinished: (Result<List<Avaliacao>>) -> Unit) {
 
@@ -57,28 +66,42 @@ class Room (
         TODO("Not yet implemented")
     }
 
-/*    override fun getAllAvaliacoesNomes(onFinished: (Result<List<String>>) -> Unit) {
-        val nomeAvaliacao = mutableListOf<String>()
+    override fun getCinemasJSON(onFinished: (Result<List<Cinema>>) -> Unit) {
+        TODO("Not yet implemented")
+    }
+
+    override fun inserirCinemas(cinemas: List<Cinema>, onFinished: () -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            cinemas.map {
+                CinemaDB(
+                    id = it.cinema_id,
+                    nome = it.cinema_name
+                )
+            }.forEach {
+                cinemaDao.inserirCinema(it)
+            }
+            onFinished()
+        }
+    }
+
+
+    override fun getAllCinemasNomes(onFinished: (Result<List<String>>) -> Unit) {
+        val nomeCinema = mutableListOf<String>()
         CoroutineScope(Dispatchers.IO).launch {
 
-            val avaliacaoDB = avaliacaoDao.getAllAvaliacoes().map {
-                Avaliacao(
-                    id = it.id,
-                    nome = it.nome,
-                    cinema = "cinema",
-                    avaliacao = it.avaliacao,
-                    dataVisualizacao = Calendar.getInstance(),
-                    fotos = null,
-                    observacoes = it.observacoes
+            val cinemaDB = cinemaDao.getAllCinema().map {
+                Cinema(
+                    it.id,
+                    it.nome,
                 )
             }.forEach{
-                nomeAvaliacao.add(it.nome)
+                nomeCinema.add(it.cinema_name)
             }
 
-            onFinished(Result.success(nomeAvaliacao))
+            onFinished(Result.success(nomeCinema))
 
         }
-    }*/
+    }
 
     override fun getFilme(id: String, onFinished: (Result<Filme>) -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
@@ -117,7 +140,7 @@ class Room (
                 observacoes = avaliacao.observacoes,
                 idImdb = filmeDB.id,
                 idFotos = null,
-                idCinema = avaliacao.cinema.id
+                idCinema = avaliacao.cinema.cinema_id.toInt()
             )
             avaliacaoDao.inserirAvaliacao(avaliacaoDb)
         }

@@ -2,11 +2,13 @@ package pt.ulusofona.deisi.cm2223.g22102554_22103941
 
 
 
+import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.util.Log
 import android.view.Gravity
 import android.view.MenuItem
+import android.view.View
 import android.widget.AutoCompleteTextView
 import android.widget.RatingBar
 import android.widget.TextView
@@ -17,6 +19,11 @@ import androidx.core.view.GravityCompat
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.databinding.ActivityMainBinding
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.Repository
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Operacoes
 import java.util.*
 
 
@@ -26,13 +33,14 @@ class MainActivity : AppCompatActivity() {
     private var tView: TextView? = null
     private var textViewYourCurrentRating: TextView? = null
     private var isDataLoaded = false
+    private lateinit var model : Operacoes
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
+        model = Repository.getInstance()
 
         if (!screenRotated(savedInstanceState)) {
             NavigationManager.goToDashboardFragment(supportFragmentManager)
@@ -71,7 +79,13 @@ class MainActivity : AppCompatActivity() {
         super.onStart()
         setSupportActionBar(binding.toolbar)
         setupDrawerMenu()
+
         //NavigationManager.goToDashboardFragment(supportFragmentManager)
+
+        CoroutineScope(Dispatchers.IO).launch {
+            // call getCharacters on the "IO Thread"
+            model.getCinemasJSON { it.getOrNull() }
+        }
 
 
 

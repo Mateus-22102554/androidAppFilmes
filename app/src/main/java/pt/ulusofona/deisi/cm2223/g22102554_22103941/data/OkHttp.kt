@@ -7,6 +7,7 @@ import okhttp3.*
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.IMDB_API_BASE_URL
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.IMDB_API_TOKEN
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Avaliacao
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Cinema
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Filme
 
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Operacoes
@@ -30,6 +31,18 @@ class OkHttp (
 
     override fun inserirAvaliacao(filme: Filme, avaliacao: Avaliacao, onFinished: (Result<Filme>) -> Unit) {
         Log.e("APP", "web service is not able to insert characters")
+    }
+
+    override fun getCinemasJSON(onFinished: (Result<List<Cinema>>) -> Unit) {
+        TODO("Not yet implemented")
+    }
+
+    override fun inserirCinemas(cinemas : List<Cinema>, onFinished: () -> Unit) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getAllCinemasNomes(onFinished: (Result<List<String>>) -> Unit) {
+        TODO("Not yet implemented")
     }
 
 

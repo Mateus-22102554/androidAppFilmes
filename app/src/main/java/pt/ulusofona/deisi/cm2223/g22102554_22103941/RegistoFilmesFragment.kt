@@ -33,6 +33,7 @@ import java.util.*
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Operacoes
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Cinema
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Filme
+import java.io.InputStream
 
 
 class RegistoFilmesFragment : Fragment() {
@@ -41,10 +42,8 @@ class RegistoFilmesFragment : Fragment() {
     private val model = Repository.getInstance()
 
     private lateinit var photoFile: File
-    private lateinit var adapterFilmes: ArrayAdapter<String>
     private lateinit var adapterCinemas: ArrayAdapter<String>
     private lateinit var operacoes: Operacoes
-
 
 
     @SuppressLint("SetTextI18n")
@@ -53,13 +52,14 @@ class RegistoFilmesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-
+        operacoes = Repository.getInstance()
 
         (requireActivity() as AppCompatActivity).supportActionBar?.title =
             getString(R.string.registo_filme)
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_registo_filmes, container, false)
         binding = FragmentRegistoFilmesBinding.bind(view)
+
 
         //scroll bar avaliação do Filme
         binding.barAvaliacaoFilme.setOnSeekBarChangeListener(object :
@@ -78,10 +78,24 @@ class RegistoFilmesFragment : Fragment() {
 
         })
 
+
+
       /*  adapterFilmes = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, *//*Filme.nomesFilmesGet()*//* operacoes.getAllAvaliacoesNomes { it.getOrNull() })
-        binding.nomeFilme.setAdapter(adapterFilmes)
-        adapterCinemas = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, Cinema.nomesCinemasGet())
-        binding.cinemaFilme.setAdapter(adapterCinemas)*/
+        binding.nomeFilme.setAdapter(adapterFilmes)*/
+
+        CoroutineScope(Dispatchers.IO).launch {
+            var cinemasNomes = listOf<String>()
+                operacoes.getAllCinemasNomes{
+                    cinemasNomes = it.getOrNull()!!
+                }
+            CoroutineScope(Dispatchers.Main).launch {
+                adapterCinemas = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, cinemasNomes)
+                binding.cinemaFilme.setAdapter(adapterCinemas)
+
+            }
+        }
+        //adapterCinemas = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, operacoes.getAllCinemasNomes { it.getOrNull() })
+        //binding.cinemaFilme.setAdapter(adapterCinemas)
 
 
         //DATA
@@ -161,57 +175,64 @@ class RegistoFilmesFragment : Fragment() {
                                 Filmes.listImgGet,
                                 binding.obs.text.toString()
                             )*/
-
-
-
                             var filme: String = binding.nomeFilme.text.toString()
 
                             CoroutineScope(Dispatchers.IO).launch {
 
                                 model.getFilmeIMDB(filme) {
-                                    if(it.isSuccess) {
+                                    if (it.isSuccess) {
                                         it.onSuccess {
-                                        val filmeSucesso =
-                                            Filme(
-                                                it.id,
-                                                it.nomeImdb,
-                                                it.generoImdb,
-                                                it.dataImdb,
-                                                it.avaliacaoImdb,
-                                                it.imgImdb,
-                                                it.sinopse
-                                            )
+                                            val filmeSucesso =
+                                                Filme(
+                                                    it.id,
+                                                    it.nomeImdb,
+                                                    it.generoImdb,
+                                                    it.dataImdb,
+                                                    it.avaliacaoImdb,
+                                                    it.imgImdb,
+                                                    it.sinopse
+                                                )
+
+
+
                                             val avaliacao = Avaliacao(
                                                 UUID.randomUUID().toString(),
                                                 filmeSucesso,
-                                                Cinema(123,"Colombo"),
+                                                Cinema(123, "Colombo"),
                                                 binding.valorAvaliacaoFilme.text.toString().toInt(),
                                                 calendario,
                                                 null,
                                                 binding.obs.text.toString()
                                             )
-                                            model.inserirAvaliacao(filmeSucesso, avaliacao) {result ->
-                                                if(result.isSuccess) {
+                                            model.inserirAvaliacao(filmeSucesso, avaliacao) { result ->
+                                                if (result.isSuccess) {
                                                     NavigationManager.goToListaFilmesFragment(parentFragmentManager)
                                                 } else {
-                                                    Toast.makeText(requireContext(), result.exceptionOrNull()?.message, Toast.LENGTH_LONG).show()
+                                                    Toast.makeText(
+                                                        requireContext(),
+                                                        result.exceptionOrNull()?.message,
+                                                        Toast.LENGTH_LONG
+                                                    ).show()
                                                 }
                                             }
                                         }
+
+
 
                                     } else {
                                         // Apresenta o erro num Toast
                                         Toast.makeText(
                                             requireContext(),
                                             it.exceptionOrNull()?.message,
-                                            Toast.LENGTH_LONG)
+                                            Toast.LENGTH_LONG
+                                        )
                                             .show()
                                     }
 
                                 }
 
-
                             }
+
                             //Log.i("", Filmes.getAvaliacao.toString())
 
 

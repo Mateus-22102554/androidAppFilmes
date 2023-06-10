@@ -16,6 +16,15 @@ abstract class Operacoes {
 
     abstract fun inserirAvaliacao(filme: Filme, avaliacao: Avaliacao, onFinished: (Result<Filme>) -> Unit)
 
-    //abstract fun getAllAvaliacoesNomes(onFinished: (Result<List<String>>) -> Unit)
+
+    //Cinemas
+
+    abstract fun getCinemasJSON(onFinished: (Result<List<Cinema>>) -> Unit)
+
+    abstract fun inserirCinemas(cinemas : List<Cinema>, onFinished: () -> Unit)
+
+    abstract fun getCinema(cinema : String, onFinished: (Cinema) -> Unit)
+
+    abstract fun getAllCinemasNomes(onFinished: (Result<List<String>>) -> Unit)
 
 }
