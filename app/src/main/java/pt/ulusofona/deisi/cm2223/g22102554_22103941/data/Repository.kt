@@ -54,13 +54,19 @@ class Repository (
         }
     }
 
+    override fun getAvaliacao(id: String, onFinished: (Result<Avaliacao>) -> Unit) {
+        local.getAvaliacao(id){
+            onFinished(it)
+        }
+    }
+
     override fun getFilme(id: String, onFinished: (Result<Filme>) -> Unit) {
         local.getFilme(id) {
             onFinished(it)
         }
     }
 
-    override fun verificarFilme(nome: String, onFinished: (Boolean) -> Unit) {
+    override fun verificarFilme(nome: String, onFinished: (Int) -> Unit) {
         local.verificarFilme(nome){
             onFinished(it)
         }

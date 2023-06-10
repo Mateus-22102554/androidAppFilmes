@@ -79,17 +79,20 @@ class RegistoFilmesFragment : Fragment() {
         })
 
 
-
-      /*  adapterFilmes = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, *//*Filme.nomesFilmesGet()*//* operacoes.getAllAvaliacoesNomes { it.getOrNull() })
+        /*  adapterFilmes = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, *//*Filme.nomesFilmesGet()*//* operacoes.getAllAvaliacoesNomes { it.getOrNull() })
         binding.nomeFilme.setAdapter(adapterFilmes)*/
 
         CoroutineScope(Dispatchers.IO).launch {
             var cinemasNomes = listOf<String>()
-                operacoes.getAllCinemasNomes{
-                    cinemasNomes = it.getOrNull()!!
-                }
+            operacoes.getAllCinemasNomes {
+                cinemasNomes = it.getOrNull()!!
+            }
             CoroutineScope(Dispatchers.Main).launch {
-                adapterCinemas = ArrayAdapter(requireContext(), android.R.layout.simple_dropdown_item_1line, cinemasNomes)
+                adapterCinemas = ArrayAdapter(
+                    requireContext(),
+                    android.R.layout.simple_dropdown_item_1line,
+                    cinemasNomes
+                )
                 binding.cinemaFilme.setAdapter(adapterCinemas)
 
             }
@@ -163,7 +166,7 @@ class RegistoFilmesFragment : Fragment() {
             ) {
                 AlertDialog.Builder(context)
                     .setTitle(getString(R.string.confirRegisto))
-                    .setMessage(getString(R.string.prentendeRegistar)+" ${binding.nomeFilme.text}?")
+                    .setMessage(getString(R.string.prentendeRegistar) + " ${binding.nomeFilme.text}?")
                     .setPositiveButton(R.string.confirmar,
                         DialogInterface.OnClickListener { dialog, which ->
 
@@ -186,9 +189,12 @@ class RegistoFilmesFragment : Fragment() {
 
                                 model.getFilmeIMDB(filme) {
                                     if (it.isSuccess) {
-                                        model.verificarFilme(filme){existe ->
-                                            if(!existe){
-                                                it.onSuccess {
+
+                                        it.onSuccess {
+                                            model.verificarFilme(it.nomeImdb) { existe ->
+
+                                                if (existe == 0) {
+
                                                     val filmeSucesso =
                                                         Filme(
                                                             it.id,
@@ -200,9 +206,9 @@ class RegistoFilmesFragment : Fragment() {
                                                             it.sinopse
                                                         )
 
-                                                    var cinema : Cinema
-                                                    model.getCinemaByNome(nomeCinema){ resultCinema ->
-                                                        resultCinema.onSuccess {cinemaSuccess ->
+                                                    var cinema: Cinema
+                                                    model.getCinemaByNome(nomeCinema) { resultCinema ->
+                                                        resultCinema.onSuccess { cinemaSuccess ->
                                                             cinema = Cinema(
                                                                 cinemaSuccess.cinema_id,
                                                                 cinemaSuccess.cinema_name
@@ -217,9 +223,14 @@ class RegistoFilmesFragment : Fragment() {
                                                                 null,
                                                                 observacoes
                                                             )
-                                                            model.inserirAvaliacao(filmeSucesso, avaliacao) { result ->
+                                                            model.inserirAvaliacao(
+                                                                filmeSucesso,
+                                                                avaliacao
+                                                            ) { result ->
                                                                 if (result.isSuccess) {
-                                                                    NavigationManager.goToListaFilmesFragment(parentFragmentManager)
+                                                                    NavigationManager.goToListaFilmesFragment(
+                                                                        parentFragmentManager
+                                                                    )
                                                                 } else {
                                                                     Toast.makeText(
                                                                         requireContext(),
@@ -230,25 +241,31 @@ class RegistoFilmesFragment : Fragment() {
                                                             }
                                                         }
                                                     }
+                                                } else {
+                                                    CoroutineScope(Dispatchers.Main).launch {
+                                                        Toast.makeText(
+                                                            context,
+                                                            getString(R.string.erroFilmeAv),
+                                                            Toast.LENGTH_SHORT
+                                                        ).show()
+                                                    }
+
                                                 }
-                                            }else{
-                                                Toast.makeText(
-                                                    context,
-                                                    getString(R.string.erroFilmeAv),
-                                                    Toast.LENGTH_SHORT
-                                                ).show()
                                             }
+
 
                                         }
 
                                     } else {
-                                        // Apresenta o erro num Toast
-                                        Toast.makeText(
-                                            requireContext(),
-                                            it.exceptionOrNull()?.message,
-                                            Toast.LENGTH_LONG
-                                        )
-                                            .show()
+                                        CoroutineScope(Dispatchers.Main).launch {
+                                            // Apresenta o erro num Toast
+                                            Toast.makeText(
+                                                requireContext(),
+                                                it.exceptionOrNull()?.message,
+                                                Toast.LENGTH_LONG
+                                            ).show()
+                                        }
+
                                     }
 
                                 }
@@ -258,7 +275,7 @@ class RegistoFilmesFragment : Fragment() {
                             //Log.i("", Filmes.getAvaliacao.toString())
 
 
-                         if (0 == 1) {
+                            if (0 == 1) {
 
                                 binding.nomeFilme.error = getString(R.string.erroFilmeNaoExiste)
                             } else if (0 == 3) {

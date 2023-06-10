@@ -26,9 +26,9 @@ class DashboardFragment : Fragment() {
     }
     private var adapter = DashboardAdapter(::onOperationClick)
 
-    private fun onOperationClick(filme: Avaliacao){
+    private fun onOperationClick(id: String){
         val activity= view?.context as AppCompatActivity
-        NavigationManager.goToDetalheFilmeFragment(activity.supportFragmentManager, filme)
+        NavigationManager.goToDetalheFilmeFragment(activity.supportFragmentManager, id)
     }
 
     override fun onStart() {

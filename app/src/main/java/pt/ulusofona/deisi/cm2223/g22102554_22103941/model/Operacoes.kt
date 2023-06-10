@@ -9,12 +9,14 @@ abstract class Operacoes {
 
     abstract fun getFilme(id: String, onFinished: (Result<Filme>) -> Unit)
 
-    abstract fun verificarFilme(nome: String, onFinished: (Boolean) -> Unit)
+    abstract fun verificarFilme(nome: String, onFinished: (Int) -> Unit)
 
 
 
     //Avaliações
     abstract fun getAllAvaliacoes(onFinished: (Result<List<Avaliacao>>) -> Unit)
+
+    abstract fun getAvaliacao(id : String, onFinished: (Result<Avaliacao>) -> Unit)
 
     abstract fun inserirAvaliacao(filme: Filme, avaliacao: Avaliacao, onFinished: (Result<Filme>) -> Unit)
 

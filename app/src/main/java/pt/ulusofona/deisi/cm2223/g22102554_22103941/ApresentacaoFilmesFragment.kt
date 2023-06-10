@@ -35,9 +35,9 @@ class ApresentacaoFilmesFragment : Fragment() {
     private var adapter = ApresentacaoFilmesAdapter(::onOperationClick)
 
 
-    private fun onOperationClick(avaliacao: Avaliacao){
+    private fun onOperationClick(id: String){
         val activity= view?.context as AppCompatActivity
-        NavigationManager.goToDetalheFilmeFragment(activity.supportFragmentManager, avaliacao)
+        NavigationManager.goToDetalheFilmeFragment(activity.supportFragmentManager, id)
     }
 
     @SuppressLint("SuspiciousIndentation")

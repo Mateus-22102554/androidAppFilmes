@@ -19,8 +19,8 @@ object NavigationManager {
         placeFragment(fm, ApresentacaoFilmesFragment())
     }
 
-    fun goToDetalheFilmeFragment(fm: FragmentManager, avaliacao: Avaliacao) {
-        placeFragment(fm, DetalheFilmeFragment(avaliacao))
+    fun goToDetalheFilmeFragment(fm: FragmentManager, id: String) {
+        placeFragment(fm, DetalheFilmeFragment(id))
     }
 
     fun goToMapaFragment(fm: FragmentManager) {

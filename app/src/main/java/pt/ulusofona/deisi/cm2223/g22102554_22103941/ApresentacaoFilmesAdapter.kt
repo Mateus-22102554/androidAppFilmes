@@ -9,7 +9,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 
 
-class ApresentacaoFilmesAdapter(private val onOperationClick: (Avaliacao) -> Unit, private var items: List<Avaliacao> = listOf()) : RecyclerView.Adapter<ApresentacaoFilmesAdapter.HistoryViewHolder>() {
+class ApresentacaoFilmesAdapter(private val onOperationClick: (String) -> Unit, private var items: List<Avaliacao> = listOf()) : RecyclerView.Adapter<ApresentacaoFilmesAdapter.HistoryViewHolder>() {
 
     class HistoryViewHolder(val binding: ItemExpressionBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -32,7 +32,7 @@ class ApresentacaoFilmesAdapter(private val onOperationClick: (Avaliacao) -> Uni
 
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
-        holder.itemView.setOnClickListener { onOperationClick(items[position]) }
+        holder.itemView.setOnClickListener { onOperationClick(items[position].id) }
         holder.binding.filme.text = items[position].filme.nomeImdb
         val dataVisualizacao: Date = Date(items[position].dataVisualizacao)
         holder.binding.dataVistaFilme.text = SimpleDateFormat("yyyy-MM-dd").format(dataVisualizacao)

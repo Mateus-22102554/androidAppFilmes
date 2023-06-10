@@ -5,17 +5,25 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.Repository
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.databinding.FragmentDetalheFilmeBinding
 import java.io.File
 import java.util.Calendar
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Avaliacao
+import java.text.SimpleDateFormat
+import com.bumptech.glide.Glide
 
-class DetalheFilmeFragment(avaliacao: Avaliacao) : Fragment() {
+class DetalheFilmeFragment(id: String) : Fragment() {
     
     private lateinit var binding: FragmentDetalheFilmeBinding
-    val avaliacao = avaliacao
+    val id = id
+    private val model = Repository.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,13 +42,44 @@ class DetalheFilmeFragment(avaliacao: Avaliacao) : Fragment() {
 
     private fun onOperationClick(img: File){
         val activity= view?.context as AppCompatActivity
-        NavigationManager.goToDetalheFilmeFragment(activity.supportFragmentManager, avaliacao)
+        NavigationManager.goToDetalheFilmeFragment(activity.supportFragmentManager, id)
     }
 
 
 
     override fun onStart() {
         super.onStart()
+
+
+
+
+            CoroutineScope(Dispatchers.IO).launch {
+                model.getAvaliacao(id){
+                    it.onSuccess {avaliacao ->
+
+                        CoroutineScope(Dispatchers.Main).launch{
+                            //Imagem Filme IMDB Detalhe
+                            Glide.with(requireContext())
+                                .load(avaliacao.filme.imgImdb)
+                                .into(binding.imgDetalhe)
+
+
+                            binding.filme.text = avaliacao.filme.nomeImdb
+                            binding.generoValor.text = avaliacao.filme.generoImdb
+                            binding.dataLancamentoValor.text = avaliacao.filme.dataImdb.toString()
+                            binding.avaliacaoImdbValor.text = avaliacao.filme.avaliacaoImdb
+                            binding.sinopseValor.text = avaliacao.filme.sinopse
+                            binding.cinemaValor.text = avaliacao.cinema.cinema_name
+                            binding.dataVisualizacaoValor.text = SimpleDateFormat("yyyy-MM-dd").format(avaliacao.dataVisualizacao)
+                            binding.avaliacaoValor.text = avaliacao.avaliacao.toString()
+                            binding.observacoesValor.text = avaliacao.observacoes
+                        }
+
+                    }
+                }
+
+            }
+
 
             /*for(filmeImdb in FilmesIMDBParte1.getListFilmesImdb){
                 if(filmeImdb.nomeImdb == filme.nome){

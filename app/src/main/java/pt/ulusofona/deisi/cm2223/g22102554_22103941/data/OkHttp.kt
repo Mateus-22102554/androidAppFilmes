@@ -29,6 +29,10 @@ class OkHttp (
         Log.e("APP", "web service is not able to insert characters")
     }
 
+    override fun getAvaliacao(id : String, onFinished: (Result<Avaliacao>) -> Unit) {
+        TODO("Not yet implemented")
+    }
+
     override fun inserirAvaliacao(filme: Filme, avaliacao: Avaliacao, onFinished: (Result<Filme>) -> Unit) {
         Log.e("APP", "web service is not able to insert characters")
     }
@@ -62,7 +66,7 @@ class OkHttp (
         Log.e("APP", "web service is not able to insert characters")
     }
 
-    override fun verificarFilme(nome: String, onFinished: (Boolean) -> Unit) {
+    override fun verificarFilme(nome: String, onFinished: (Int) -> Unit) {
         TODO("Not yet implemented")
     }
 
@@ -86,11 +90,15 @@ class OkHttp (
 
             // Processar a resposta ao pedido
             override fun onResponse(call: Call, response: Response) {
+                val body = response.body?.string()
+
+                val resposta = body?.let { JSONObject(it).getString("Response") }
+
                 // Se a resposta devolver um erro, ex: 403 acesso negado ao web service
-                if (!response.isSuccessful) {
-                    onFinished(Result.failure(IOException("Unexpected code $response")))
+                if (resposta == "False" || resposta == null) {
+                    onFinished(Result.failure(IOException("O filme indicado não existe!")))
                 } else {
-                    val body = response.body?.string()
+
                     if (body != null) {
                         // Estamos a guardar o objeto assinalado a amarelo no exemplo aqui
                         val jsonObject = JSONObject(body)

@@ -61,6 +61,46 @@ class Room (
 
     }
 
+    override fun getAvaliacao(id : String, onFinished: (Result<Avaliacao>) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+
+           val avaliacao = avaliacaoDao.getAvaliacao(id).let { avaliacaoDB ->
+                filmeDao.getFilme(avaliacaoDB.idImdb).let {filmeDB ->
+                    val filme = Filme(
+                        filmeDB.id,
+                        filmeDB.nome,
+                        filmeDB.genero,
+                        filmeDB.data,
+                        filmeDB.avaliacao,
+                        filmeDB.poster,
+                        filmeDB.sinopse
+                    )
+                    cinemaDao.getCinemaById(avaliacaoDB.idCinema).let{cinemaDB ->
+                        val cinema = Cinema(
+                            cinemaDB.id,
+                            cinemaDB.nome
+                        )
+
+                        Avaliacao(
+                            id = avaliacaoDB.id,
+                            filme = filme,
+                            cinema = cinema,
+                            avaliacao = avaliacaoDB.avaliacao,
+                            dataVisualizacao = avaliacaoDB.dataVisualizacao,
+                            fotos = null,
+                            observacoes = avaliacaoDB.observacoes
+
+                        )
+
+                    }
+                }
+
+            }
+            onFinished(Result.success(avaliacao))
+        }
+
+    }
+
     override fun inserirAvaliacao(filme: Filme, avaliacao: Avaliacao, onFinished: (Result<Filme>) -> Unit) {
         TODO("Not yet implemented")
     }
@@ -140,7 +180,7 @@ class Room (
         }
     }
 
-    override fun verificarFilme(nome: String, onFinished: (Boolean) -> Unit) {
+    override fun verificarFilme(nome: String, onFinished: (Int) -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
             val verificarFilme = filmeDao.verificarFilme(nome)
             onFinished(verificarFilme)

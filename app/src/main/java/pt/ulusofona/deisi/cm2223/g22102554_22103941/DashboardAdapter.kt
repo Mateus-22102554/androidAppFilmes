@@ -8,7 +8,7 @@ import java.util.*
 import kotlin.reflect.KFunction1
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Avaliacao
 
-class DashboardAdapter(private val onOperationClick: KFunction1<Avaliacao, Unit>, private var itemsTop: List<Avaliacao> = listOf()) : RecyclerView.Adapter<DashboardAdapter.HistoryViewHolder>() {
+class DashboardAdapter(private val onOperationClick: KFunction1<String, Unit>, private var itemsTop: List<Avaliacao> = listOf()) : RecyclerView.Adapter<DashboardAdapter.HistoryViewHolder>() {
 
     class HistoryViewHolder(val binding: ItemDashboardBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -33,7 +33,7 @@ class DashboardAdapter(private val onOperationClick: KFunction1<Avaliacao, Unit>
 
 
     override fun onBindViewHolder(holder: DashboardAdapter.HistoryViewHolder, position: Int) {
-        holder.itemView.setOnClickListener { onOperationClick(itemsTop[position]) }
+        holder.itemView.setOnClickListener { onOperationClick(itemsTop[position].id) }
         holder.binding.filme.text = itemsTop[position].filme.nomeImdb
         holder.binding.dataVistaFilme.text = itemsTop[position].dataVisualizacao.toString()
         holder.binding.cinema.text = itemsTop[position].cinema.cinema_name
