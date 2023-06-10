@@ -21,12 +21,10 @@ class Room (
 
     }
     override fun getAllAvaliacoes(onFinished: (Result<List<Avaliacao>>) -> Unit){
-        avaliacaoDao.getAllAvaliacoes()
-
 
         CoroutineScope(Dispatchers.IO).launch {
             val avaliacaoDB = avaliacaoDao.getAllAvaliacoes().map {
-                val cinema = cinemaDao.getCinema(it.idCinema).let { Cinema(it.id, it.nome) }
+                val cinema = Cinema(123,"Colombo")//cinemaDao.getCinema(it.idCinema).let { Cinema(it.id, it.nome) }
                 val filme = filmeDao.getFilme(it.idImdb).let {
                     Filme(
                         it.id,
@@ -55,7 +53,7 @@ class Room (
 
     }
 
-    override fun inserirAvaliacao(id: String, avaliacao: Avaliacao, onFinished: (Result<Filme>) -> Unit) {
+    override fun inserirAvaliacao(filme: Filme, avaliacao: Avaliacao, onFinished: (Result<Filme>) -> Unit) {
         TODO("Not yet implemented")
     }
 
@@ -82,8 +80,20 @@ class Room (
         }
     }*/
 
-    override fun getFilme(id: String, onFinished: (Result<Avaliacao>) -> Unit) {
-        filmeDao.getFilme(id)
+    override fun getFilme(id: String, onFinished: (Result<Filme>) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val filme = filmeDao.getFilme(id)
+            val filmeIMDB = Filme(
+                filme.id,
+                filme.nome,
+                filme.genero,
+                filme.data,
+                filme.avaliacao,
+                filme.poster,
+                filme.sinopse
+            )
+            onFinished(Result.success(filmeIMDB))
+        }
     }
 
     override fun inserirFilme(filme: Filme, avaliacao: Avaliacao, onFinished: () -> Unit) {
@@ -141,21 +151,7 @@ class Room (
 
 
     override fun getFilmeIMDB(nome : String, onFinished: (Result<Filme>) -> Unit) {
-
-         CoroutineScope(Dispatchers.IO).launch {
-             val filme = filmeDao.getFilme(nome)
-             val filmeIMDB = Filme(
-                 filme.id,
-                 filme.nome,
-                 filme.genero,
-                 filme.data,
-                 filme.avaliacao,
-                 filme.poster,
-                 filme.sinopse
-             )
-             onFinished(Result.success(filmeIMDB))
-         }
-
+        throw Exception("Illegal operation")
     }
 
 

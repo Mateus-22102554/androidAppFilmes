@@ -44,12 +44,16 @@ class ApresentacaoFilmesFragment : Fragment() {
         val builder = StringBuilder()
 
         CoroutineScope(Dispatchers.IO).launch {
-            var history : List<Avaliacao>? = null
-                model.getAllAvaliacoes { history = it.getOrNull()!! }
-            binding.rvHistory.layoutManager = LinearLayoutManager(requireContext())
-            binding.rvHistory?.adapter = adapter
-            history?.let { adapter.updateItems(it) }
+            var history : List<Avaliacao> = listOf()
+                model.getAllAvaliacoes {
+                    history = it.getOrNull()!!
+                    CoroutineScope(Dispatchers.Main).launch{
+                        binding.rvHistory.layoutManager = LinearLayoutManager(requireContext())
+                        binding.rvHistory.adapter = adapter
+                        adapter.updateItems(history)
+                    }
 
+                }
         }
 
         //binding.tvHistory.text = builder.toString()

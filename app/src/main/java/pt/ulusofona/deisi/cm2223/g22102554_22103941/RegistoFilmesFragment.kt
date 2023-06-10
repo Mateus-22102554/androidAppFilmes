@@ -190,8 +190,14 @@ class RegistoFilmesFragment : Fragment() {
                                                 null,
                                                 binding.obs.text.toString()
                                             )
+                                            model.inserirAvaliacao(filmeSucesso, avaliacao) {result ->
+                                                if(result.isSuccess) {
+                                                    NavigationManager.goToListaFilmesFragment(parentFragmentManager)
+                                                } else {
+                                                    Toast.makeText(requireContext(), result.exceptionOrNull()?.message, Toast.LENGTH_LONG).show()
+                                                }
+                                            }
                                         }
-
 
                                     } else {
                                         // Apresenta o erro num Toast

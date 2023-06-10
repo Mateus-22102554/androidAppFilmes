@@ -28,12 +28,12 @@ class OkHttp (
         Log.e("APP", "web service is not able to insert characters")
     }
 
-    override fun inserirAvaliacao(id: String, avaliacao: Avaliacao, onFinished: (Result<Filme>) -> Unit) {
+    override fun inserirAvaliacao(filme: Filme, avaliacao: Avaliacao, onFinished: (Result<Filme>) -> Unit) {
         Log.e("APP", "web service is not able to insert characters")
     }
 
 
-    override fun getFilme(id: String, onFinished: (Result<Avaliacao>) -> Unit) {
+    override fun getFilme(id: String, onFinished: (Result<Filme>) -> Unit) {
         Log.e("APP", "web service is not able to insert characters")
     }
 

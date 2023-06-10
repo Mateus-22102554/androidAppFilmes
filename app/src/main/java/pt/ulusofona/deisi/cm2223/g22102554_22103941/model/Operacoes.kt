@@ -7,14 +7,14 @@ abstract class Operacoes {
     abstract fun inserirFilme(filme: Filme, avaliacao: Avaliacao, onFinished: () -> Unit)
     abstract fun getFilmeIMDB(nome: String, onFinished: (Result<Filme>) -> Unit)
 
-    abstract fun getFilme(nome: String, onFinished: (Result<Avaliacao>) -> Unit)
+    abstract fun getFilme(id: String, onFinished: (Result<Filme>) -> Unit)
 
 
 
     //Avaliações
     abstract fun getAllAvaliacoes(onFinished: (Result<List<Avaliacao>>) -> Unit)
 
-    abstract fun inserirAvaliacao(id: String, avaliacao: Avaliacao, onFinished: (Result<Filme>) -> Unit)
+    abstract fun inserirAvaliacao(filme: Filme, avaliacao: Avaliacao, onFinished: (Result<Filme>) -> Unit)
 
     //abstract fun getAllAvaliacoesNomes(onFinished: (Result<List<String>>) -> Unit)
 
