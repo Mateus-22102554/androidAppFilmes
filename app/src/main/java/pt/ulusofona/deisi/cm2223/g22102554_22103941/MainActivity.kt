@@ -19,12 +19,20 @@ import androidx.core.view.GravityCompat
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.databinding.ActivityMainBinding
 import android.widget.ArrayAdapter
 import androidx.appcompat.app.AlertDialog
+import com.fondesa.kpermissions.extension.permissionsBuilder
+
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.Repository
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Operacoes
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.MapaFragment
 import java.util.*
+import android.Manifest
+import com.fondesa.kpermissions.allGranted
+import com.fondesa.kpermissions.extension.permissionsBuilder
+import com.fondesa.kpermissions.extension.send
+
 
 
 class MainActivity : AppCompatActivity() {
@@ -40,12 +48,31 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        model = Repository.getInstance()
+        permissionsBuilder(
+            Manifest.permission.ACCESS_FINE_LOCATION,
+            Manifest.permission.ACCESS_COARSE_LOCATION).build().send { result ->
+            if (result.allGranted()) {
+                // Este if já cá estava antes, para garantir que ficamos no
+                // ecrã em caso de ocorrer uma rotação
+                if (!screenRotated(savedInstanceState)) {
+                    NavigationManager.goToDashboardFragment(
+                        supportFragmentManager
+                    )
+                }
+            } else {
+                finish()
+            }
+        }
 
-        if (!screenRotated(savedInstanceState)) {
+
+            model = Repository.getInstance()
+
+        /*if (!screenRotated(savedInstanceState)) {
             NavigationManager.goToDashboardFragment(supportFragmentManager)
 
-        }
+        }*/
+
+
 
         binding.vozButton.setOnClickListener {
 

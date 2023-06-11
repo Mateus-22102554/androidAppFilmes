@@ -32,7 +32,12 @@ class Room (
 
         CoroutineScope(Dispatchers.IO).launch {
             val avaliacaoDB = avaliacaoDao.getAllAvaliacoes().map {
-                val cinema = cinemaDao.getCinemaById(it.idCinema).let { Cinema(it.id, it.nome) }
+                val cinema = cinemaDao.getCinemaById(it.idCinema).let { Cinema(it.id, it.nome,
+                    it.latitude,
+                    it.longitude,
+                    it.morada,
+                    it.localidade
+                ) }
                 val filme = filmeDao.getFilme(it.idImdb).let {
                     Filme(
                         it.id,
@@ -78,7 +83,11 @@ class Room (
                     cinemaDao.getCinemaById(avaliacaoDB.idCinema).let{cinemaDB ->
                         val cinema = Cinema(
                             cinemaDB.id,
-                            cinemaDB.nome
+                            cinemaDB.nome,
+                            cinemaDB.latitude,
+                            cinemaDB.longitude,
+                            cinemaDB.morada,
+                            cinemaDB.localidade
                         )
 
                         Avaliacao(
@@ -113,8 +122,12 @@ class Room (
         CoroutineScope(Dispatchers.IO).launch {
             cinemas.map {
                 CinemaDB(
-                    id = it.cinema_id,
-                    nome = it.cinema_name
+                    it.cinema_id,
+                    it.cinema_name,
+                    it.latitude,
+                    it.longitude,
+                    it.morada,
+                    it.localidade
                 )
             }.forEach {
                 cinemaDao.inserirCinema(it)
@@ -127,8 +140,12 @@ class Room (
         CoroutineScope(Dispatchers.IO).launch {
             val cinemaDB = cinemaDao.getCinemaByNome(cinema)
             val cinema = Cinema(
-                cinema_id = cinemaDB.id,
-                cinema_name = cinemaDB.nome
+                cinemaDB.id,
+                cinemaDB.nome,
+                cinemaDB.latitude,
+                cinemaDB.longitude,
+                cinemaDB.morada,
+                cinemaDB.localidade
             )
             onFinished(Result.success(cinema))
         }
@@ -154,6 +171,10 @@ class Room (
                 Cinema(
                     it.id,
                     it.nome,
+                    it.latitude,
+                    it.longitude,
+                    it.morada,
+                    it.localidade
                 )
             }.forEach{
                 nomeCinema.add(it.cinema_name)
@@ -194,7 +215,11 @@ class Room (
                     cinemaDao.getCinemaById(avaliacaoDB.idCinema).let { cinemaDB->
                         val cinema = Cinema(
                             cinemaDB.id,
-                            cinemaDB.nome
+                            cinemaDB.nome,
+                            cinemaDB.latitude,
+                            cinemaDB.longitude,
+                            cinemaDB.morada,
+                            cinemaDB.localidade
                         )
                         Avaliacao(
                             avaliacaoDB.id,

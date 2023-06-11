@@ -15,7 +15,7 @@ class IMDBApp : Application(){
             super.onCreate()
             Repository.init(initRoom(), initOkHttp(), this)
             Log.i("APP", "Initialized repository")
-
+            //FusedLocation.start(this)
         }
 
     private fun initOkHttp(): OkHttp {

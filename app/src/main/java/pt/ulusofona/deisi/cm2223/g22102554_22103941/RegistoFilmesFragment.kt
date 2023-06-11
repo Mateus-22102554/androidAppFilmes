@@ -218,7 +218,11 @@ class RegistoFilmesFragment : Fragment() {
                                                                 resultCinema.onSuccess { cinemaSuccess ->
                                                                     cinema = Cinema(
                                                                         cinemaSuccess.cinema_id,
-                                                                        cinemaSuccess.cinema_name
+                                                                        cinemaSuccess.cinema_name,
+                                                                        cinemaSuccess.latitude,
+                                                                        cinemaSuccess.longitude,
+                                                                        cinemaSuccess.morada,
+                                                                        cinemaSuccess.localidade
                                                                     )
 
                                                                     val avaliacao = Avaliacao(
