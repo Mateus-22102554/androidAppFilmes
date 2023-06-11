@@ -171,6 +171,51 @@ class Room (
         }
     }
 
+    override fun countAvaliacoes(onFinished: (Result<Int>) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch{
+            onFinished(Result.success(avaliacaoDao.countAvaliacoes()))
+        }
+    }
+
+    override fun top5Avaliacoes(onFinished: (Result<List<Avaliacao>>) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+
+            onFinished(Result.success( avaliacaoDao.top5().map{avaliacaoDB->
+                filmeDao.getFilme(avaliacaoDB.idImdb).let{filmeDB ->
+                    val filme =  Filme(
+                       filmeDB.id,
+                       filmeDB.nome,
+                       filmeDB.genero,
+                       filmeDB.data,
+                       filmeDB.avaliacao,
+                       filmeDB.poster,
+                        filmeDB.sinopse
+                    )
+                    cinemaDao.getCinemaById(avaliacaoDB.idCinema).let { cinemaDB->
+                        val cinema = Cinema(
+                            cinemaDB.id,
+                            cinemaDB.nome
+                        )
+                        Avaliacao(
+                            avaliacaoDB.id,
+                            filme,
+                            cinema,
+                            avaliacaoDB.avaliacao,
+                            avaliacaoDB.dataVisualizacao,
+                            null,
+                            avaliacaoDB.observacoes
+
+                        )
+                    }
+                }
+
+
+            }))
+
+
+        }
+    }
+
     override fun getFilme(id: String, onFinished: (Result<Filme>) -> Unit) {
         CoroutineScope(Dispatchers.IO).launch {
             val filme = filmeDao.getFilme(id)

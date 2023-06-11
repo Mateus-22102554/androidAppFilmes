@@ -20,4 +20,11 @@ interface AvaliacaoDao {
     @Query("DELETE FROM avaliacoes WHERE id=:id")
     fun deleteAvaliacao(id:String)
 
+    @Query("SELECT COUNT(*) FROM avaliacoes")
+    fun countAvaliacoes() : Int
+
+    //ASC - ascendente
+    @Query("SELECT * FROM avaliacoes ORDER BY avaliacao DESC LIMIT 5 ")
+    fun top5() : List<AvaliacaoDB>
+
 }

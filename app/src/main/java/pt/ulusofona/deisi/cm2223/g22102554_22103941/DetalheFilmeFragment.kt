@@ -1,5 +1,7 @@
 package pt.ulusofona.deisi.cm2223.g22102554_22103941
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -73,6 +75,11 @@ class DetalheFilmeFragment(id: String) : Fragment() {
                             binding.dataVisualizacaoValor.text = SimpleDateFormat("yyyy-MM-dd").format(avaliacao.dataVisualizacao)
                             binding.avaliacaoValor.text = avaliacao.avaliacao.toString()
                             binding.observacoesValor.text = avaliacao.observacoes
+                            binding.buttonIMDB.setOnClickListener(){
+                                val url = "https://www.imdb.com/title/${avaliacao.filme.id}"
+                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                                startActivity(intent)
+                            }
                         }
 
                     }

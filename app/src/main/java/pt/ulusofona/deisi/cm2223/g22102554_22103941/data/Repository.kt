@@ -140,6 +140,18 @@ class Repository (
         TODO("Not yet implemented")
     }
 
+    override fun countAvaliacoes(onFinished: (Result<Int>) -> Unit) {
+        local.countAvaliacoes {
+            onFinished(it)
+        }
+    }
+
+    override fun top5Avaliacoes(onFinished: (Result<List<Avaliacao>>) -> Unit) {
+        local.top5Avaliacoes {
+            onFinished(it)
+        }
+    }
+
 
     override fun inserirAvaliacao(filme: Filme, avaliacao: Avaliacao, onFinished: (Result<Filme>) -> Unit) {
 
@@ -147,42 +159,7 @@ class Repository (
             onFinished(Result.success(filme))
         }
 
-        /*if (ConnectivityUtil.isOnline(context)) {
-            // Se tenho acesso à Internet, vou buscar os registos ao web service
-            // e atualizo a base de dados com os novos registos eliminando os
-            // antigos, porque podem ter eliminado o filme do web service
 
-            local.inserirFilme(filme, avaliacao) {
-                onFinished(Result.success(filme))
-            }
-
-            *//*remote.getFilmeIMDB(id) { result ->
-
-                if (result.isSuccess) {
-                    result.getOrNull()?.let { filme ->
-                        // Se tiver personagens para apresentar entra aqui
-                        Log.i("APP", "Got ${filme} characters from the server")
-                        // Retirar esta linha quando forem fazer o exercício 1 da ficha
-                        //onFinished(Result.success(characters))
-
-                        Log.i("APP", "Cleared DB")
-                        local.inserirFilme(filme, avaliacao) {
-                            onFinished(Result.success(filme))
-                        }
-
-                    }
-                } else {
-                    Log.w("APP", "Error getting characters from server")
-                    onFinished(result)  // propagate the remote failure
-                }
-            }*//*
-
-        } else {
-            // O que fazer se não houver Internet?
-            // Devolver os personagens que estão guardados na base de dados
-            Log.i("APP", "App is offline. Getting characters from the database")
-            local.getFilme(filme.id, onFinished)
-        }*/
     }
 
 

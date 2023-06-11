@@ -116,7 +116,7 @@
                 </LinearLayout>
 
                 <Button
-                    android:id="@+id/button_img"
+                    android:id="@+id/button_IMDB"
                     android:layout_width="140dp"
                     android:layout_height="wrap_content"
 

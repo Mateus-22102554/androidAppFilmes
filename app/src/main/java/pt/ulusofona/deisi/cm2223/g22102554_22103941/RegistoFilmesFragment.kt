@@ -6,6 +6,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
 import android.app.DatePickerDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
 import android.net.Uri
@@ -16,9 +17,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethod
+import android.view.inputmethod.InputMethodManager
 import android.widget.*
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.core.content.FileProvider
 import androidx.fragment.app.Fragment
 import kotlinx.coroutines.CoroutineScope
@@ -141,6 +145,10 @@ class RegistoFilmesFragment : Fragment() {
 
         binding.buttonSubmit.setOnClickListener {
 
+            val ocultarTeclado = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            ocultarTeclado.hideSoftInputFromWindow(requireView().windowToken,0)
+
+
             if (binding.nomeFilme.text.isEmpty()) {
                 binding.nomeFilme.error = getString(R.string.erroOBG)
             }
@@ -170,14 +178,8 @@ class RegistoFilmesFragment : Fragment() {
                     .setPositiveButton(R.string.confirmar,
                         DialogInterface.OnClickListener { dialog, which ->
 
-                            /*val result = Filmes.historySet(
-                                binding.nomeFilme.text.toString(),
-                                binding.cinemaFilme.text.toString(),
-                                binding.valorAvaliacaoFilme.text.toString().toInt(),
-                                calendario,
-                                Filmes.listImgGet,
-                                binding.obs.text.toString()
-                            )*/
+
+
 
                             val filme: String = binding.nomeFilme.text.toString()
                             val nomeCinema: String = binding.cinemaFilme.text.toString()
@@ -277,7 +279,7 @@ class RegistoFilmesFragment : Fragment() {
                                             // Apresenta o erro num Toast
                                             Toast.makeText(
                                                 requireContext(),
-                                                it.exceptionOrNull()?.message,
+                                                getString(R.string.erroFilmeNaoExiste),
                                                 Toast.LENGTH_LONG
                                             ).show()
                                         }

@@ -36,4 +36,8 @@ abstract class Operacoes {
 
     abstract fun clearAllCinemas(onFinished: () -> Unit)
 
+    abstract fun countAvaliacoes(onFinished: (Result<Int>) -> Unit)
+
+    abstract fun top5Avaliacoes(onFinished: (Result<List<Avaliacao>>) -> Unit)
+
 }

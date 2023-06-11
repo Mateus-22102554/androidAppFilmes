@@ -3,6 +3,7 @@ package pt.ulusofona.deisi.cm2223.g22102554_22103941.data
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.entidades.AvaliacaoDB
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.entidades.CinemaDB
 
 @Dao
@@ -24,4 +25,5 @@ interface CinemaDao {
 
     @Query("SELECT COUNT(*) FROM cinemas WHERE nome=:nome")
     fun verificarCinema (nome: String) : Int
+
 }

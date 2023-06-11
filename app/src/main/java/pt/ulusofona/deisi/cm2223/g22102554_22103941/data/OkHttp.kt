@@ -65,6 +65,14 @@ class OkHttp (
         TODO("Not yet implemented")
     }
 
+    override fun countAvaliacoes(onFinished: (Result<Int>) -> Unit) {
+        TODO("Not yet implemented")
+    }
+
+    override fun top5Avaliacoes(onFinished: (Result<List<Avaliacao>>) -> Unit) {
+        TODO("Not yet implemented")
+    }
+
 
     override fun getFilme(id: String, onFinished: (Result<Filme>) -> Unit) {
         Log.e("APP", "web service is not able to insert characters")

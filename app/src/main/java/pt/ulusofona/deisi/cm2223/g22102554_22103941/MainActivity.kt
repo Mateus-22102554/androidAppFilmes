@@ -73,6 +73,11 @@ class MainActivity : AppCompatActivity() {
 
             }.start()
         }
+
+        CoroutineScope(Dispatchers.IO).launch {
+            // call getCharacters on the "IO Thread"
+            model.getCinemasJSON { it.getOrNull() }
+        }
     }
 
     override fun onStart() {
@@ -81,12 +86,6 @@ class MainActivity : AppCompatActivity() {
         setupDrawerMenu()
 
         //NavigationManager.goToDashboardFragment(supportFragmentManager)
-
-        CoroutineScope(Dispatchers.IO).launch {
-            // call getCharacters on the "IO Thread"
-            model.getCinemasJSON { it.getOrNull() }
-        }
-
 
 
     }
