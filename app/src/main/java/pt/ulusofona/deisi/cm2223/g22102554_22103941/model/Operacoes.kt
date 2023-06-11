@@ -30,6 +30,8 @@ abstract class Operacoes {
     abstract fun getCinemaByNome(cinema : String, onFinished: (Result<Cinema>) -> Unit)
     abstract fun getCinemaById(idCinema : Int, onFinished: (Result<Cinema>) -> Unit)
 
+    abstract fun verificarCinema(nome : String, onFinished: (Int) -> Unit)
+
     abstract fun getAllCinemasNomes(onFinished: (Result<List<String>>) -> Unit)
 
     abstract fun clearAllCinemas(onFinished: () -> Unit)

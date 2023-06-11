@@ -21,4 +21,7 @@ interface CinemaDao {
 
     @Query("DELETE FROM cinemas")
     fun deleteAll()
+
+    @Query("SELECT COUNT(*) FROM cinemas WHERE nome=:nome")
+    fun verificarCinema (nome: String) : Int
 }

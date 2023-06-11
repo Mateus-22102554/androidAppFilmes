@@ -138,6 +138,13 @@ class Room (
         TODO("Not yet implemented")
     }
 
+    override fun verificarCinema(nome: String, onFinished: (Int) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch{
+           val verificarCinema = cinemaDao.verificarCinema(nome)
+            onFinished(verificarCinema)
+        }
+    }
+
 
     override fun getAllCinemasNomes(onFinished: (Result<List<String>>) -> Unit) {
         val nomeCinema = mutableListOf<String>()

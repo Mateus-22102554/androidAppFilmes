@@ -53,6 +53,10 @@ class OkHttp (
         TODO("Not yet implemented")
     }
 
+    override fun verificarCinema(nome: String, onFinished: (Int) -> Unit) {
+        TODO("Not yet implemented")
+    }
+
     override fun getAllCinemasNomes(onFinished: (Result<List<String>>) -> Unit) {
         TODO("Not yet implemented")
     }
