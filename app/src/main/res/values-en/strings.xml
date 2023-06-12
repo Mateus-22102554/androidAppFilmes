@@ -83,4 +83,12 @@
     <string name="avaliacaoFilmeMedio">Average</string>
     <string name="avaliacaoFilmeBom">Good</string>
     <string name="avaliacaoFilmeExcelente">Great</string>
+
+
+    //voz
+    <string name="pesquisaVoz">Voice Search</string>
+    <string name="desejaProcurarFilme">"Do you want to search for the movie "</string>
+    <string name="falar">Speak</string>
+    <string name="naoAvaliado">This movie has not been rated yet</string>
+    <string name="botaoFalar">Click the Speak button</string>
 </resources>

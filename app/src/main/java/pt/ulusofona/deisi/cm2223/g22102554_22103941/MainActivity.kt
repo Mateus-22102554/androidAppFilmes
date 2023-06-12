@@ -29,6 +29,7 @@ import pt.ulusofona.deisi.cm2223.g22102554_22103941.MapaFragment
 import java.util.*
 import android.Manifest
 import android.app.Activity
+import android.app.Dialog
 import android.speech.RecognizerIntent
 import android.speech.RecognizerIntent.EXTRA_RESULTS
 import android.speech.SpeechRecognizer
@@ -49,9 +50,8 @@ class MainActivity : AppCompatActivity() {
     private lateinit var model: Operacoes
     private lateinit var speechRecognizer: SpeechRecognizer
     private val REQUEST_CODE_SPEECH = 100
-    private var pesquisaVoz = ""
     private lateinit var bindingVoz: PopVozBinding
-
+    private var popUpVoz: AlertDialog? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -90,51 +90,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.vozButton.setOnClickListener {
 
-            bindingVoz = PopVozBinding.inflate(layoutInflater)
-
-            val dialog = AlertDialog.Builder(this)
-                .setView(bindingVoz.root)
-                .create()
-            dialog.show()
-
-            bindingVoz.voiceDetect.setOnClickListener {
-                val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-                intent.putExtra(
-                    RecognizerIntent.EXTRA_LANGUAGE_MODEL,
-                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
-                )
-
-                // Iniciar a atividade de reconhecimento de fala
-                startActivityForResult(intent, REQUEST_CODE_SPEECH)
-
-            }
-
-            bindingVoz.voiceConfirm.setOnClickListener {
-                if (pesquisaVoz != "") {
-                    CoroutineScope(Dispatchers.IO).launch {
-                        model.getAvaliacaoIdFromFilmeName(pesquisaVoz) {
-                            val idPesquisa = it.getOrNull()
-
-                            if (idPesquisa != null) {
-                                NavigationManager.goToDetalheFilmeFragment(supportFragmentManager, idPesquisa)
-                            } else {
-                                Toast.makeText(
-                                    this@MainActivity,
-                                    "Esse filme ainda não foi avaliado",
-                                    Toast.LENGTH_LONG
-                                ).show()
-                            }
-                        }
-                    }
-                } else {
-                    Toast.makeText(
-                        this@MainActivity,
-                        "Clique no botão \"Falar",
-                        Toast.LENGTH_LONG
-                    ).show()
-                }
-
-            }
+            exibirPopUp("")
 
         }
             CoroutineScope(Dispatchers.IO).launch {
@@ -144,15 +100,70 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun exibirPopUp (nomeFilme: String){
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(getString(R.string.pesquisaVoz))
+
+
+        if (nomeFilme != ""){
+            builder.setMessage(getString(R.string.desejaProcurarFilme) + nomeFilme + "?")
+        }
+
+        builder.setNeutralButton(R.string.falar){
+            dialog, which ->
+
+            dialog.dismiss()
+
+            val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
+
+            // Iniciar a atividade de reconhecimento de fala
+            startActivityForResult(intent, REQUEST_CODE_SPEECH)
+        }
+        builder.setNegativeButton(R.string.confirmar){
+                dialog, which ->
+
+            if (nomeFilme != "") {
+
+                CoroutineScope(Dispatchers.IO).launch {
+                    model.getAvaliacaoIdFromFilmeName(nomeFilme) {
+                        val idPesquisa = it.getOrNull()
+                        CoroutineScope(Dispatchers.Main).launch {
+                            if (idPesquisa != null) {
+                                dialog.dismiss()
+                                NavigationManager.goToDetalheFilmeFragment(supportFragmentManager, idPesquisa)
+                            } else {
+
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    R.string.naoAvaliado,
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
+                        }
+
+                    }
+                }
+            } else {
+                Toast.makeText(
+                    this@MainActivity,
+                    R.string.botaoFalar,
+                    Toast.LENGTH_LONG
+                ).show()
+            }
+        }
+        popUpVoz = builder.create()
+        popUpVoz!!.show()
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
-            val result = data?.getStringArrayExtra(EXTRA_RESULTS)
-            val textoVoz = result?.get(0)
-            if (textoVoz != null) {
-                pesquisaVoz = textoVoz
-            }
+            val result = data?.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS)
+            val textoVoz = result?.getOrNull(0) ?: ""
+
+           exibirPopUp(textoVoz)
         }
     }
 

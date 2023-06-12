@@ -81,4 +81,11 @@
     <string name="avaliacaoFilmeBom">Bien</string>
     <string name="avaliacaoFilmeExcelente">Super</string>
 
+    //Voz
+    <string name="pesquisaVoz">Recherche vocale</string>
+    <string name="desejaProcurarFilme">"Voulez-vous rechercher le film "</string>
+    <string name="falar">Parler</string>
+    <string name="naoAvaliado">Ce film n a pas encore été évalué</string>
+    <string name="botaoFalar">Cliquez sur le bouton Parler</string>
+
 </resources>

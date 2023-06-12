@@ -84,5 +84,12 @@
     <string name="avaliacaoFilmeBom">Bom</string>
     <string name="avaliacaoFilmeExcelente">Excelente</string>
 
+    //voz
+    <string name="pesquisaVoz">Pesquisa por voz</string>
+    <string name="desejaProcurarFilme">"Deseja procurar o filme "</string>
+    <string name="falar">Falar</string>
+    <string name="naoAvaliado">Este filme ainda não foi avaliado</string>
+    <string name="botaoFalar">Clique no botão Falar</string>
+
 
 </resources>
