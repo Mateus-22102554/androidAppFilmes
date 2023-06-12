@@ -66,33 +66,18 @@ class MapaFragment : Fragment(), OnLocationChangedListener {
                                 in 7..8 -> grau = getString(R.string.avaliacaoFilmeBom)
                                 in 9..10 -> grau = getString(R.string.avaliacaoFilmeExcelente)
                             }
-                            CoroutineScope(Dispatchers.IO).launch {
-                                model.getAvaliacaoCheckCinema(avaliacao.cinema.cinema_id) {
-                                    it.onSuccess {
-                                        if (it > 0) {
-                                            // O cinema existe na lista avaliações
-                                            Log.i("Avaliações: ", "O cinema existe nas avalicoes")
-                                        } else {
-                                            CoroutineScope(Dispatchers.Main).launch {
-                                                map.addMarker(
-                                                    MarkerOptions()
-                                                        .position(
-                                                            LatLng(
-                                                                avaliacao.cinema.latitude,
-                                                                avaliacao.cinema.longitude
-                                                            )
-                                                        )
-                                                        .title(avaliacao.filme.nomeImdb)
-                                                        .snippet(grau)
-                                                )
-                                            }
-                                        }
-
-                                    }
-
-
-                                }
-
+                            CoroutineScope(Dispatchers.Main).launch {
+                                map.addMarker(
+                                    MarkerOptions()
+                                        .position(
+                                            LatLng(
+                                                avaliacao.cinema.latitude,
+                                                avaliacao.cinema.longitude
+                                            )
+                                        )
+                                        .title(avaliacao.filme.nomeImdb)
+                                        .snippet(grau)
+                                )
                             }
                         }
                     }
@@ -100,11 +85,11 @@ class MapaFragment : Fragment(), OnLocationChangedListener {
             }
 
             map.setOnMarkerClickListener { marker ->
-                    marker.showInfoWindow()
+                marker.showInfoWindow()
                 true
             }
 
-            map.setOnInfoWindowClickListener  { marker ->
+            map.setOnInfoWindowClickListener { marker ->
                 model.getAvaliacaoIdFromFilmeName(marker.title.toString()) { result ->
                     result.onSuccess { idAvaliacao ->
                         val activity = view?.context as AppCompatActivity
@@ -116,27 +101,6 @@ class MapaFragment : Fragment(), OnLocationChangedListener {
                 }
                 true
             }
-
-            /*map.setOnMarkerClickListener { marker ->
-                if (marker == lastMarker) {
-
-                    model.getAvaliacaoIdFromFilmeName(marker.title.toString()) { result ->
-                        result.onSuccess { idAvaliacao ->
-                            val activity = view?.context as AppCompatActivity
-                            NavigationManager.goToDetalheFilmeFragment(
-                                activity.supportFragmentManager,
-                                idAvaliacao
-                            )
-                        }
-                    }
-
-
-                } else {
-                    marker.showInfoWindow()
-                    lastMarker = marker
-                }
-                true
-            }*/
 
             FusedLocation.registerListener(this)
 

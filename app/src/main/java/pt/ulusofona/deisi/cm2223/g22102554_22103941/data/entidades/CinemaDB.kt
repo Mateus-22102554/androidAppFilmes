@@ -8,10 +8,10 @@ import androidx.room.PrimaryKey
 class CinemaDB(
     @PrimaryKey val id: Int,
     val nome: String,
-    @ColumnInfo(name = "latitude") val latitude: Double,
-    @ColumnInfo(name = "longitude") val longitude: Double,
-    @ColumnInfo(name = "morada") val morada: String,
-    @ColumnInfo(name = "localidade") val localidade: String
+    val latitude: Double,
+    val longitude: Double,
+    val morada: String,
+    val localidade: String
 
 )
 

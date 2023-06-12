@@ -11,7 +11,7 @@ interface FotoDao {
     @Insert
     fun inserirFoto(foto: FotoDB)
 
-    @Query("SELECT * FROM fotos WHERE idAvaliacao=:idAvaliacao")
+    @Query("SELECT * FROM fotos WHERE id_avaliacao=:idAvaliacao")
     fun getAllFotosFromAvaliacao(idAvaliacao: String) : List<FotoDB>
 
 }

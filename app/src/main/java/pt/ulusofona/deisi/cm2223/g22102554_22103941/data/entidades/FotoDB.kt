@@ -1,5 +1,6 @@
 package pt.ulusofona.deisi.cm2223.g22102554_22103941.data.entidades
 
+import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -7,7 +8,7 @@ import androidx.room.PrimaryKey
 class FotoDB(
     @PrimaryKey val id: String,
     val caminho: String,
-    val idAvaliacao: String
+    @ColumnInfo(name = "id_avaliacao") val idAvaliacao: String
 )
 
 

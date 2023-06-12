@@ -28,10 +28,10 @@ interface AvaliacaoDao {
     @Query("SELECT * FROM avaliacoes ORDER BY avaliacao DESC LIMIT 5 ")
     fun top5() : List<AvaliacaoDB>
 
-    @Query("SELECT id FROM avaliacoes WHERE idImdb=:idImbd")
+    @Query("SELECT id FROM avaliacoes WHERE id_imbd=:idImbd")
     fun getIdByImbdId(idImbd:String) : String
 
-    @Query("SELECT COUNT(*) FROM avaliacoes WHERE idCinema=:idCinema")
+    @Query("SELECT COUNT(*) FROM avaliacoes WHERE id_cinema=:idCinema")
     fun getAvaliacaoCheckCinema(idCinema : Int) : Int
 
 
