@@ -15,7 +15,7 @@ class IMDBApp : Application(){
             super.onCreate()
             Repository.init(initRoom(), initOkHttp(), this)
             Log.i("APP", "Initialized repository")
-            //FusedLocation.start(this)
+            FusedLocation.start(this)
         }
 
     private fun initOkHttp(): OkHttp {
@@ -31,8 +31,8 @@ class IMDBApp : Application(){
         return Room(
             CinemaDatabase.getInstance(applicationContext).filmeDao(),
             CinemaDatabase.getInstance(applicationContext).avaliacaoDao(),
-            CinemaDatabase.getInstance(applicationContext).cinemaDao()
-
+            CinemaDatabase.getInstance(applicationContext).cinemaDao(),
+            CinemaDatabase.getInstance(applicationContext).fotoDao()
         )
     }
 }

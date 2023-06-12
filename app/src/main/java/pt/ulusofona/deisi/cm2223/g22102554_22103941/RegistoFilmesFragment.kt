@@ -48,6 +48,15 @@ class RegistoFilmesFragment : Fragment() {
     private lateinit var photoFile: File
     private lateinit var adapterCinemas: ArrayAdapter<String>
     private lateinit var operacoes: Operacoes
+    private val listImg = mutableListOf<File>()
+
+    val listImgGet get() = listImg.toList()
+
+    val clearList = listImg.clear()
+
+    fun imagemSet (imgFile: File){
+        listImg.add(imgFile)
+    }
 
 
     @SuppressLint("SetTextI18n")
@@ -178,9 +187,6 @@ class RegistoFilmesFragment : Fragment() {
                     .setPositiveButton(R.string.confirmar,
                         DialogInterface.OnClickListener { dialog, which ->
 
-
-
-
                             val filme: String = binding.nomeFilme.text.toString()
                             val nomeCinema: String = binding.cinemaFilme.text.toString()
                             val avaliacaoFilme = binding.valorAvaliacaoFilme.text.toString().toInt()
@@ -251,6 +257,11 @@ class RegistoFilmesFragment : Fragment() {
                                                                             ).show()
                                                                         }
                                                                     }
+
+                                                                    model.inserirFotosAvaliacao(listImgGet, avaliacao.id) {
+                                                                        clearList
+                                                                    }
+
                                                                 }
                                                             }
                                                         } else {
@@ -278,6 +289,15 @@ class RegistoFilmesFragment : Fragment() {
 
                                         }
 
+                                    } else if (it.isFailure) {
+                                        CoroutineScope(Dispatchers.Main).launch {
+                                            // Apresenta o erro num Toast
+                                            Toast.makeText(
+                                                requireContext(),
+                                                "Não tem ligação à internet",
+                                                Toast.LENGTH_LONG
+                                            ).show()
+                                        }
                                     } else {
                                         CoroutineScope(Dispatchers.Main).launch {
                                             // Apresenta o erro num Toast
@@ -355,8 +375,8 @@ class RegistoFilmesFragment : Fragment() {
 
                 // Use a URI para exibir a imagem capturada
                 binding.img.setImageURI(uri)
-                FilmesParte1.imagemSet(photoFile)
-                binding.imgsCount.text = FilmesParte1.listImgGet.size.toString()
+                imagemSet(photoFile)
+                binding.imgsCount.text = listImgGet.size.toString()
             }
         }
 

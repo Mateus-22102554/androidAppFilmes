@@ -15,6 +15,7 @@ import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Filme
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.CinemaDao
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Operacoes
 import java.io.BufferedReader
+import java.io.File
 import java.io.InputStream
 import java.io.InputStreamReader
 import kotlin.Result
@@ -156,7 +157,6 @@ class Repository (
         }
     }
 
-
     override fun inserirAvaliacao(filme: Filme, avaliacao: Avaliacao, onFinished: (Result<Filme>) -> Unit) {
 
         local.inserirFilme(filme, avaliacao) {
@@ -164,6 +164,24 @@ class Repository (
         }
 
 
+    }
+
+    override fun getAvaliacaoIdFromFilmeName(nome: String, onFinished: (Result<String>) -> Unit) {
+        local.getAvaliacaoIdFromFilmeName(nome) {
+            onFinished(it)
+        }
+    }
+
+    override fun inserirFotosAvaliacao(fotos: List<File>, idAvaliacao: String, onFinished: () -> Unit) {
+        local.inserirFotosAvaliacao(fotos, idAvaliacao) {
+            onFinished()
+        }
+    }
+
+    override fun getAllFotosFromAvaliacao(id: String, onFinished: (Result<List<File>>) -> Unit) {
+        local.getAllFotosFromAvaliacao(id) {
+            onFinished(it)
+        }
     }
 
 

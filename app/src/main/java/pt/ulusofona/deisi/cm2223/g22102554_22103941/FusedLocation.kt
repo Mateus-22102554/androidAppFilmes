@@ -1,4 +1,3 @@
-/*
 package pt.ulusofona.deisi.cm2223.g22102554_22103941
 
 import android.annotation.SuppressLint
@@ -79,4 +78,4 @@ class FusedLocation private constructor(context: Context) : LocationCallback() {
     }
 
 }
-*/
+

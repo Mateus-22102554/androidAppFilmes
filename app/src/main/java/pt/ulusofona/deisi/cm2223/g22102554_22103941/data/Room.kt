@@ -1,26 +1,32 @@
 package pt.ulusofona.deisi.cm2223.g22102554_22103941.data
 
 import android.content.Context
+import android.util.Log
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.entidades.AvaliacaoDB
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.entidades.CinemaDB
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.entidades.FilmeDB
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.entidades.FotoDB
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Avaliacao
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Cinema
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Filme
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Operacoes
 import java.io.BufferedReader
+import java.io.File
 import java.io.InputStream
 import java.io.InputStreamReader
+import java.net.URI
 import java.util.Calendar
+import java.util.UUID
 
 class Room (
 
     private val filmeDao: FilmeDao,
     private val avaliacaoDao: AvaliacaoDao,
     private val cinemaDao: CinemaDao,
+    private val fotoDao: FotoDao,
 
 
 
@@ -90,13 +96,23 @@ class Room (
                             cinemaDB.localidade
                         )
 
+                        var fotos = listOf<File>()
+                        getAllFotosFromAvaliacao(avaliacaoDB.id) {result ->
+                            result.onSuccess {
+                                fotos = it
+                            }
+                            result.onFailure {
+                                fotos = emptyList()
+                            }
+                        }
+
                         Avaliacao(
                             id = avaliacaoDB.id,
                             filme = filme,
                             cinema = cinema,
                             avaliacao = avaliacaoDB.avaliacao,
                             dataVisualizacao = avaliacaoDB.dataVisualizacao,
-                            fotos = null,
+                            fotos = fotos,
                             observacoes = avaliacaoDB.observacoes
 
                         )
@@ -112,6 +128,40 @@ class Room (
 
     override fun inserirAvaliacao(filme: Filme, avaliacao: Avaliacao, onFinished: (Result<Filme>) -> Unit) {
         TODO("Not yet implemented")
+    }
+
+    override fun getAvaliacaoIdFromFilmeName(nome: String, onFinished: (Result<String>) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch() {
+            filmeDao.getFilmeId(nome).let { idFilme ->
+                avaliacaoDao.getIdByImbdId(idFilme).let { idAvaliacao ->
+                    onFinished(Result.success(idAvaliacao))
+                }
+            }
+        }
+    }
+
+    override fun inserirFotosAvaliacao(fotos: List<File>, idAvaliacao: String, onFinished: () -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch() {
+            fotos.forEach { foto ->
+                val caminho: String = foto.toURI().toString()
+                val fotoDb = FotoDB(
+                    UUID.randomUUID().toString(),
+                    caminho,
+                    idAvaliacao
+                )
+                fotoDao.inserirFoto(fotoDb)
+            }
+        }
+    }
+
+    override fun getAllFotosFromAvaliacao(id: String, onFinished: (Result<List<File>>) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            val fotos = fotoDao.getAllFotosFromAvaliacao(id).map {
+                File(URI(it.caminho))
+            }
+
+            onFinished(Result.success(fotos))
+        }
     }
 
     override fun getCinemasJSON(onFinished: (Result<List<Cinema>>) -> Unit) {

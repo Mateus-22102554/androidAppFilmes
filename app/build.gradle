@@ -62,7 +62,7 @@ dependencies {
     //Mapa
 
 
-   // implementation 'com.google.android.gms:play-services-location:19.0.1'
+    implementation 'com.google.android.gms:play-services-location:19.0.1'
 
     implementation 'com.github.fondesa:kpermissions:3.3.0'
 

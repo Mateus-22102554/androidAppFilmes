@@ -40,10 +40,8 @@ class ApresentacaoFilmesFragment : Fragment() {
         NavigationManager.goToDetalheFilmeFragment(activity.supportFragmentManager, id)
     }
 
-    @SuppressLint("SuspiciousIndentation")
     override fun onStart() {
         super.onStart()
-        val builder = StringBuilder()
 
         CoroutineScope(Dispatchers.IO).launch {
             var history : List<Avaliacao> = listOf()

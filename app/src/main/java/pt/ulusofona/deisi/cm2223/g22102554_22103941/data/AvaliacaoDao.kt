@@ -27,4 +27,7 @@ interface AvaliacaoDao {
     @Query("SELECT * FROM avaliacoes ORDER BY avaliacao DESC LIMIT 5 ")
     fun top5() : List<AvaliacaoDB>
 
+    @Query("SELECT id FROM avaliacoes WHERE idImdb=:idImbd")
+    fun getIdByImbdId(idImbd:String) : String
+
 }

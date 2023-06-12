@@ -22,5 +22,7 @@ interface FilmeDao {
     @Query("SELECT COUNT(*) FROM filmes WHERE nome=:nome")
     fun verificarFilme(nome:String) : Int
 
+    @Query("SELECT id FROM filmes WHERE nome=:nome")
+    fun getFilmeId(nome:String) : String
 
 }

@@ -3,6 +3,7 @@ package pt.ulusofona.deisi.cm2223.g22102554_22103941
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -81,11 +82,24 @@ class DetalheFilmeFragment(id: String) : Fragment() {
                                 startActivity(intent)
                             }
                         }
-
                     }
                 }
-
             }
+
+        CoroutineScope(Dispatchers.IO).launch() {
+            model.getAllFotosFromAvaliacao(id) {
+                it.onSuccess { fotos ->
+                    CoroutineScope(Dispatchers.Main).launch() {
+                        binding.rvHistory.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+                        binding.rvHistory?.adapter = adapter
+                        adapter.updateItems(fotos)
+                    }
+                }
+            }
+        }
+
+
+
 
 
             /*for(filmeImdb in FilmesIMDBParte1.getListFilmesImdb){

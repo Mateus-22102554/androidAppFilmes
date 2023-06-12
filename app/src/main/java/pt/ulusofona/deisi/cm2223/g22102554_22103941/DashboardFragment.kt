@@ -61,7 +61,6 @@ class DashboardFragment : Fragment() {
                         binding.rvHistory.adapter = adapter
                         adapter.updateItems(it)
                     }
-
                 }
             }
         }

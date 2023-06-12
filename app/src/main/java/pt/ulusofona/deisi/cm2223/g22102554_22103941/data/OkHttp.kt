@@ -11,6 +11,7 @@ import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Cinema
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Filme
 
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Operacoes
+import java.io.File
 
 class OkHttp (
     val baseUrl: String = IMDB_API_BASE_URL,
@@ -35,6 +36,18 @@ class OkHttp (
 
     override fun inserirAvaliacao(filme: Filme, avaliacao: Avaliacao, onFinished: (Result<Filme>) -> Unit) {
         Log.e("APP", "web service is not able to insert characters")
+    }
+
+    override fun getAvaliacaoIdFromFilmeName(nome: String, onFinished: (Result<String>) -> Unit) {
+        TODO("Not yet implemented")
+    }
+
+    override fun inserirFotosAvaliacao(fotos: List<File>, idAvaliacao: String, onFinished: () -> Unit) {
+        TODO("Not yet implemented")
+    }
+
+    override fun getAllFotosFromAvaliacao(id: String, onFinished: (Result<List<File>>) -> Unit) {
+        TODO("Not yet implemented")
     }
 
     override fun getCinemasJSON(onFinished: (Result<List<Cinema>>) -> Unit) {

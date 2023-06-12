@@ -1,5 +1,7 @@
 package pt.ulusofona.deisi.cm2223.g22102554_22103941.model
 
+import java.io.File
+
 abstract class Operacoes {
 
     //Filmes
@@ -20,6 +22,10 @@ abstract class Operacoes {
 
     abstract fun inserirAvaliacao(filme: Filme, avaliacao: Avaliacao, onFinished: (Result<Filme>) -> Unit)
 
+    abstract fun getAvaliacaoIdFromFilmeName(nome: String, onFinished: (Result<String>) -> Unit)
+
+    abstract fun inserirFotosAvaliacao(fotos: List<File>, idAvaliacao: String, onFinished: () -> Unit)
+    abstract fun getAllFotosFromAvaliacao(id: String, onFinished: (Result<List<File>>) -> Unit)
 
     //Cinemas
 

@@ -3,6 +3,7 @@ package pt.ulusofona.deisi.cm2223.g22102554_22103941
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,25 +11,32 @@ import android.view.ViewGroup
 import android.widget.SeekBar
 import android.widget.Switch
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
+import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.OnLocationChangedListener
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.Repository
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.databinding.FragmentMapaBinding
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Operacoes
 
 
-class MapaFragment : Fragment() {
+class MapaFragment : Fragment(), OnLocationChangedListener {
     private lateinit var binding: FragmentMapaBinding
     private var map: GoogleMap? = null
     private val model = Repository.getInstance()
+    private var lastMarker: Marker? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
     }
+
     @SuppressLint("MissingPermission")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,16 +52,14 @@ class MapaFragment : Fragment() {
             this.map = map
             // Coloca um ponto azul no mapa com a localização do utilizador
             map.isMyLocationEnabled = true
-            // Adiciona um marker na universidade com o nome ULHT ao clicar
 
             CoroutineScope(Dispatchers.IO).launch {
                 model.getAllAvaliacoes {
-                    it.onSuccess { listAvaliacoes->
-                        listAvaliacoes.forEach { avaliacao->
+                    it.onSuccess { listAvaliacoes ->
+                        listAvaliacoes.forEach { avaliacao ->
+                            var grau: String = ""
 
-                            var grau : String = ""
-
-                            when (avaliacao.avaliacao){
+                            when (avaliacao.avaliacao) {
                                 in 1..2 -> grau = "Muito Fraco"
                                 in 3..4 -> grau = "Fraco"
                                 in 5..6 -> grau = "Médio"
@@ -64,35 +70,97 @@ class MapaFragment : Fragment() {
                             CoroutineScope(Dispatchers.Main).launch {
                                 map.addMarker(
                                     MarkerOptions()
-                                        .position(LatLng(avaliacao.cinema.latitude, avaliacao.cinema.longitude))
+                                        .position(
+                                            LatLng(
+                                                avaliacao.cinema.latitude,
+                                                avaliacao.cinema.longitude
+                                            )
+                                        )
                                         .title(avaliacao.filme.nomeImdb)
                                         .snippet(grau)
                                 )
                             }
+                        }
 
-                       }
                     }
                 }
             }
 
-        }
+            map.setOnMarkerClickListener { marker ->
+                    marker.showInfoWindow()
+                true
+            }
 
-        map.setOnMarkerClickListener { marker->
+            map.setOnInfoWindowClickListener  { marker ->
+                model.getAvaliacaoIdFromFilmeName(marker.title.toString()) { result ->
+                    result.onSuccess { idAvaliacao ->
+                        val activity = view?.context as AppCompatActivity
+                        NavigationManager.goToDetalheFilmeFragment(
+                            activity.supportFragmentManager,
+                            idAvaliacao
+                        )
+                    }
+                }
+                true
+            }
 
+            /*map.setOnMarkerClickListener { marker ->
+                if (marker == lastMarker) {
+
+                    model.getAvaliacaoIdFromFilmeName(marker.title.toString()) { result ->
+                        result.onSuccess { idAvaliacao ->
+                            val activity = view?.context as AppCompatActivity
+                            NavigationManager.goToDetalheFilmeFragment(
+                                activity.supportFragmentManager,
+                                idAvaliacao
+                            )
+                        }
+                    }
+
+
+                } else {
+                    marker.showInfoWindow()
+                    lastMarker = marker
+                }
+                true
+            }*/
+
+            FusedLocation.registerListener(this)
 
         }
 
         return binding.root
     }
+
+    // Este método será invocado sempre que a posição alterar
+    override fun onLocationChanged(latitude: Double, longitude: Double) {
+        placeCamera(latitude, longitude)
+    }
+
+    // Atualiza e faz zoom no mapa de acordo com a localização
+    private fun placeCamera(latitude: Double, longitude: Double) {
+        val cameraPosition = CameraPosition.Builder()
+            .target(LatLng(latitude, longitude))
+            .zoom(12f)
+            .build()
+
+        map?.animateCamera(
+            CameraUpdateFactory.newCameraPosition(cameraPosition)
+        )
+    }
+
+    // Se o fragmento do mapa for destruído queremos parar de receber a
+    // localização, se não podemos ter uma NullPointerException
+    override fun onDestroy() {
+        super.onDestroy()
+        FusedLocation.unregisterListener()
+    }
+
+
     override fun onResume() {
         super.onResume()
         binding.map.onResume()
     }
 
-    private var adapter = ApresentacaoFilmesAdapter(::onOperationClick)
-    private fun onOperationClick(id: String){
-        val activity= view?.context as AppCompatActivity
-        NavigationManager.goToDetalheFilmeFragment(activity.supportFragmentManager, id)
-    }
 
 }
