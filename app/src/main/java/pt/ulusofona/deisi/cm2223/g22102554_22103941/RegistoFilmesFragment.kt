@@ -258,6 +258,12 @@ class RegistoFilmesFragment : Fragment() {
                                                                         }
                                                                     }
 
+                                                                    Toast.makeText(
+                                                                        context,
+                                                                        "Filme avaliado com sucesso",
+                                                                        Toast.LENGTH_SHORT
+                                                                    ).show()
+
                                                                     model.inserirFotosAvaliacao(listImgGet, avaliacao.id) {
                                                                         clearList
                                                                     }
