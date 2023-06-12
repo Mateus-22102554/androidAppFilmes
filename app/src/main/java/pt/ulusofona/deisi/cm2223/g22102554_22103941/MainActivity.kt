@@ -1,7 +1,6 @@
 package pt.ulusofona.deisi.cm2223.g22102554_22103941
 
 
-
 import android.content.Intent
 import android.os.Bundle
 import android.os.CountDownTimer
@@ -29,10 +28,16 @@ import pt.ulusofona.deisi.cm2223.g22102554_22103941.model.Operacoes
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.MapaFragment
 import java.util.*
 import android.Manifest
+import android.app.Activity
+import android.speech.RecognizerIntent
+import android.speech.RecognizerIntent.EXTRA_RESULTS
+import android.speech.SpeechRecognizer
+import android.text.Layout
+import android.view.LayoutInflater
 import com.fondesa.kpermissions.allGranted
 import com.fondesa.kpermissions.extension.permissionsBuilder
 import com.fondesa.kpermissions.extension.send
-
+import pt.ulusofona.deisi.cm2223.g22102554_22103941.databinding.PopVozBinding
 
 
 class MainActivity : AppCompatActivity() {
@@ -41,7 +46,11 @@ class MainActivity : AppCompatActivity() {
     private var tView: TextView? = null
     private var textViewYourCurrentRating: TextView? = null
     private var isDataLoaded = false
-    private lateinit var model : Operacoes
+    private lateinit var model: Operacoes
+    private lateinit var speechRecognizer: SpeechRecognizer
+    private val REQUEST_CODE_SPEECH = 100
+    private var pesquisaVoz = ""
+    private lateinit var bindingVoz: PopVozBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,7 +59,8 @@ class MainActivity : AppCompatActivity() {
 
         permissionsBuilder(
             Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION).build().send { result ->
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ).build().send { result ->
             if (result.allGranted()) {
                 // Este if já cá estava antes, para garantir que ficamos no
                 // ecrã em caso de ocorrer uma rotação
@@ -64,8 +74,12 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        speechRecognizer = SpeechRecognizer.createSpeechRecognizer(this)
 
-            model = Repository.getInstance()
+
+
+
+        model = Repository.getInstance()
 
         /*if (!screenRotated(savedInstanceState)) {
             NavigationManager.goToDashboardFragment(supportFragmentManager)
@@ -76,34 +90,76 @@ class MainActivity : AppCompatActivity() {
 
         binding.vozButton.setOnClickListener {
 
+            val popUp = LayoutInflater.from(this).inflate(R.layout.pop_voz, null)
+
+            bindingVoz = PopVozBinding.inflate(layoutInflater)
 
             val builder = AlertDialog.Builder(this)
-            builder.setMessage(R.string.voice)
+                .setView(popUp)
 
-            val popupText = TextView(this)
-            popupText.textSize = 30f
-            popupText.gravity = Gravity.CENTER
-            builder.setView(popupText)
+            val dialog = builder.create()
 
-            val alert = builder.create()
-            alert.show()
+            dialog.show()
 
-            // Calcular o tempo restante em segundos.
-            object : CountDownTimer(10000, 1000) {
-                override fun onTick(milisSegundos: Long) {
-                    popupText.text = "${milisSegundos / 1000}"
+            bindingVoz.voiceDetect.setOnClickListener {
+                val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+                intent.putExtra(
+                    RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM
+                )
+
+                // Iniciar a atividade de reconhecimento de fala
+                startActivityForResult(intent, REQUEST_CODE_SPEECH)
+
+            }
+
+            bindingVoz.voiceConfirm.setOnClickListener {
+                CoroutineScope(Dispatchers.IO).launch {
+                    model.getAvaliacaoIdFromFilmeName(pesquisaVoz) {
+                        it.onSuccess {
+
+
+                            NavigationManager.goToDetalheFilmeFragment(supportFragmentManager, it)
+
+                        }
+                        it.onFailure {
+                            Toast.makeText(
+                                this@MainActivity,
+                                "Filme não encontrado",
+                                Toast.LENGTH_LONG
+                            ).show()
+                        }
+
+                    }
+
+
                 }
 
-                override fun onFinish() {
-                    alert.dismiss()
-                }
+                // Criar um Intent para a atividade de reconhecimento de fala
+                /*val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
 
-            }.start()
+            // Iniciar a atividade de reconhecimento de fala
+            startActivityForResult(intent, REQUEST_CODE_SPEECH)*/
+
+            }
         }
+            CoroutineScope(Dispatchers.IO).launch {
+                // call getCharacters on the "IO Thread"
+                model.getCinemasJSON { it.getOrNull() }
+            }
 
-        CoroutineScope(Dispatchers.IO).launch {
-            // call getCharacters on the "IO Thread"
-            model.getCinemasJSON { it.getOrNull() }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
+            val result = data?.getStringArrayExtra(EXTRA_RESULTS)
+            val textoVoz = result?.get(0)
+            if (textoVoz != null) {
+                pesquisaVoz = textoVoz
+            }
         }
     }
 
@@ -112,17 +168,19 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(binding.toolbar)
         setupDrawerMenu()
 
+
         //NavigationManager.goToDashboardFragment(supportFragmentManager)
 
 
     }
 
     private fun setupDrawerMenu() {
-        val toggle = ActionBarDrawerToggle(this,
+        val toggle = ActionBarDrawerToggle(
+            this,
             binding.drawer, binding.toolbar,
             R.string.drawer_open, R.string.drawer_close
         )
-        binding.navDrawer.setNavigationItemSelectedListener{
+        binding.navDrawer.setNavigationItemSelectedListener {
             onClickNavigationItem(it)
         }
         binding.drawer.addDrawerListener(toggle)
@@ -130,8 +188,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onClickNavigationItem(item: MenuItem): Boolean {
-        when(item.itemId) {
-            R.id.nav_registo ->NavigationManager.goToRegistoFilmesFragment(supportFragmentManager)
+        when (item.itemId) {
+            R.id.nav_registo -> NavigationManager.goToRegistoFilmesFragment(supportFragmentManager)
             R.id.nav_lista -> NavigationManager.goToListaFilmesFragment(supportFragmentManager)
             R.id.nav_mapa -> NavigationManager.goToMapaFragment(supportFragmentManager)
             R.id.nav_dashboard -> NavigationManager.goToDashboardFragment(supportFragmentManager)
@@ -144,8 +202,6 @@ class MainActivity : AppCompatActivity() {
     private fun screenRotated(savedInstanceState: Bundle?): Boolean {
         return savedInstanceState != null
     }
-
-
 
 
 }
