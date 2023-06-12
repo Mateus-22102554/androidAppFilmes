@@ -52,7 +52,10 @@ class RegistoFilmesFragment : Fragment() {
 
     val listImgGet get() = listImg.toList()
 
-    val clearList = listImg.clear()
+    fun clearList() {
+        listImg.clear()
+        binding.imgsCount.text = listImgGet.size.toString()
+    }
 
     fun imagemSet (imgFile: File){
         listImg.add(imgFile)
@@ -267,7 +270,7 @@ class RegistoFilmesFragment : Fragment() {
                                                                     }
 
                                                                     model.inserirFotosAvaliacao(listImgGet, avaliacao.id) {
-                                                                        clearList
+                                                                        clearList()
                                                                     }
 
                                                                 }
