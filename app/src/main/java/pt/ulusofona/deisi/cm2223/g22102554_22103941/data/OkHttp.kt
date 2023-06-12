@@ -50,6 +50,10 @@ class OkHttp (
         TODO("Not yet implemented")
     }
 
+    override fun getAvaliacaoCheckCinema(idCinema: Int, onFinished: (Result<Int>) -> Unit) {
+        TODO("Not yet implemented")
+    }
+
     override fun getCinemasJSON(onFinished: (Result<List<Cinema>>) -> Unit) {
         TODO("Not yet implemented")
     }

@@ -164,6 +164,12 @@ class Room (
         }
     }
 
+    override fun getAvaliacaoCheckCinema(idCinema: Int, onFinished: (Result<Int>) -> Unit) {
+        CoroutineScope(Dispatchers.IO).launch {
+            onFinished(Result.success(avaliacaoDao.getAvaliacaoCheckCinema(idCinema)))
+        }
+    }
+
     override fun getCinemasJSON(onFinished: (Result<List<Cinema>>) -> Unit) {
         TODO("Not yet implemented")
     }

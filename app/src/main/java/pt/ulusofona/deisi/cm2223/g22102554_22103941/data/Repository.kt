@@ -184,6 +184,12 @@ class Repository (
         }
     }
 
+    override fun getAvaliacaoCheckCinema(idCinema: Int, onFinished: (Result<Int>) -> Unit) {
+        local.getAvaliacaoCheckCinema(idCinema){
+            onFinished(it)
+        }
+    }
+
 
     companion object {
 

@@ -27,6 +27,8 @@ abstract class Operacoes {
     abstract fun inserirFotosAvaliacao(fotos: List<File>, idAvaliacao: String, onFinished: () -> Unit)
     abstract fun getAllFotosFromAvaliacao(id: String, onFinished: (Result<List<File>>) -> Unit)
 
+    abstract fun getAvaliacaoCheckCinema(idCinema: Int, onFinished: (Result<Int>) -> Unit)
+
     //Cinemas
 
     abstract fun getCinemasJSON(onFinished: (Result<List<Cinema>>) -> Unit)

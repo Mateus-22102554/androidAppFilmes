@@ -30,4 +30,8 @@ interface AvaliacaoDao {
     @Query("SELECT id FROM avaliacoes WHERE idImdb=:idImbd")
     fun getIdByImbdId(idImbd:String) : String
 
+    @Query("SELECT COUNT(*) FROM avaliacoes WHERE idCinema=:idCinema")
+    fun getAvaliacaoCheckCinema(idCinema : Int) : Int
+
+
 }

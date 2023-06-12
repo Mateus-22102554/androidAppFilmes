@@ -62,10 +62,11 @@ class MapaFragment : Fragment(), OnLocationChangedListener {
                             when (avaliacao.avaliacao) {
                                 in 1..2 -> grau = getString(R.string.avaliacaoFilmeMuitoFraco)
                                 in 3..4 -> grau = getString(R.string.avaliacaoFilmeFraco)
-                                    in 5..6 -> grau = getString(R.string.avaliacaoFilmeMedio)
+                                in 5..6 -> grau = getString(R.string.avaliacaoFilmeMedio)
                                 in 7..8 -> grau = getString(R.string.avaliacaoFilmeBom)
                                 in 9..10 -> grau = getString(R.string.avaliacaoFilmeExcelente)
                             }
+
 
                             CoroutineScope(Dispatchers.Main).launch {
                                 map.addMarker(
@@ -80,8 +81,35 @@ class MapaFragment : Fragment(), OnLocationChangedListener {
                                         .snippet(grau)
                                 )
                             }
-                        }
+                            /*CoroutineScope(Dispatchers.IO).launch {
+                                model.getAvaliacaoCheckCinema(avaliacao.cinema.cinema_id) {
+                                    it.onSuccess {
+                                        if (it > 0) {
+                                            // O cinema existe na lista avaliações
+                                            Log.i("Avaliações: ", "O cinema existe nas avalicoes")
+                                        } else {
+                                            CoroutineScope(Dispatchers.Main).launch {
+                                                map.addMarker(
+                                                    MarkerOptions()
+                                                        .position(
+                                                            LatLng(
+                                                                avaliacao.cinema.latitude,
+                                                                avaliacao.cinema.longitude
+                                                            )
+                                                        )
+                                                        .title(avaliacao.filme.nomeImdb)
+                                                        .snippet(grau)
+                                                )
+                                            }
+                                        }
 
+                                    }
+
+
+                                }
+
+                            }*/
+                        }
                     }
                 }
             }
