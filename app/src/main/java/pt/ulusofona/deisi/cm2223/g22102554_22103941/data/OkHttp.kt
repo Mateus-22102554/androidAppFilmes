@@ -99,7 +99,7 @@ class OkHttp (
 
         // Aqui estamos a preparar o pedido. Precisamos da apiKey e do url
         val request: Request = Request.Builder()
-            .url("$baseUrl/?type=movie&t=$id&apikey=$apiKey")
+            .url("$baseUrl/?type=movie&t=$&idapikey=$apiKey")
 
             //.addHeader("Authorization", "Bearer $apiKey")
             .build()

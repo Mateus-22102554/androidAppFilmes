@@ -75,4 +75,12 @@
     <string name="prentendeRegistar">Do you want to register the movie</string>
     <string name="confirmar">Confirm</string>
     <string name="cancelar">Cancel</string>
+
+    <string name="semInternet">Does not have internet connection</string>
+
+    <string name="avaliacaoFilmeMuitoFraco">Very weak</string>
+    <string name="avaliacaoFilmeFraco">Weak</string>
+    <string name="avaliacaoFilmeMedio">Average</string>
+    <string name="avaliacaoFilmeBom">Good</string>
+    <string name="avaliacaoFilmeExcelente">Great</string>
 </resources>

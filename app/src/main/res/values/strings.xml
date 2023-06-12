@@ -75,8 +75,14 @@
     <string name="confirmar">Confirmar</string>
     <string name="cancelar">Cancelar</string>
 
+    <string name="semInternet">Não tem ligação à internet</string>
 
 
+    <string name="avaliacaoFilmeMuitoFraco">Muito Fraco</string>
+    <string name="avaliacaoFilmeFraco">Fraco</string>
+    <string name="avaliacaoFilmeMedio">Médio</string>
+    <string name="avaliacaoFilmeBom">Bom</string>
+    <string name="avaliacaoFilmeExcelente">Excelente</string>
 
 
 </resources>

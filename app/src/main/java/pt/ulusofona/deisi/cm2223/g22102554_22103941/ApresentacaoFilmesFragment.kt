@@ -40,6 +40,7 @@ class ApresentacaoFilmesFragment : Fragment() {
         NavigationManager.goToDetalheFilmeFragment(activity.supportFragmentManager, id)
     }
 
+    @SuppressLint("SuspiciousIndentation")
     override fun onStart() {
         super.onStart()
 

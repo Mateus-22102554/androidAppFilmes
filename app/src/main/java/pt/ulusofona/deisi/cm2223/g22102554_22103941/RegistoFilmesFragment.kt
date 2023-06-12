@@ -294,7 +294,7 @@ class RegistoFilmesFragment : Fragment() {
                                             // Apresenta o erro num Toast
                                             Toast.makeText(
                                                 requireContext(),
-                                                "Não tem ligação à internet",
+                                                getString(R.string.semInternet),
                                                 Toast.LENGTH_LONG
                                             ).show()
                                         }

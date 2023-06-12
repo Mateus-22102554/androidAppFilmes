@@ -60,11 +60,11 @@ class MapaFragment : Fragment(), OnLocationChangedListener {
                             var grau: String = ""
 
                             when (avaliacao.avaliacao) {
-                                in 1..2 -> grau = "Muito Fraco"
-                                in 3..4 -> grau = "Fraco"
-                                in 5..6 -> grau = "Médio"
-                                in 7..8 -> grau = "Bom"
-                                in 9..10 -> grau = "Excelente"
+                                in 1..2 -> grau = getString(R.string.avaliacaoFilmeMuitoFraco)
+                                in 3..4 -> grau = getString(R.string.avaliacaoFilmeFraco)
+                                    in 5..6 -> grau = getString(R.string.avaliacaoFilmeMedio)
+                                in 7..8 -> grau = getString(R.string.avaliacaoFilmeBom)
+                                in 9..10 -> grau = getString(R.string.avaliacaoFilmeExcelente)
                             }
 
                             CoroutineScope(Dispatchers.Main).launch {
