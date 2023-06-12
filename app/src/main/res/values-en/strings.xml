@@ -76,6 +76,8 @@
     <string name="confirmar">Confirm</string>
     <string name="cancelar">Cancel</string>
 
+    <string name="filmeAvalidadoSucesso">Movie rated successfully</string>
+
     <string name="semInternet">Does not have internet connection</string>
 
     <string name="avaliacaoFilmeMuitoFraco">Very weak</string>

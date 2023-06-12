@@ -261,7 +261,7 @@ class RegistoFilmesFragment : Fragment() {
                                                                     CoroutineScope(Dispatchers.Main).launch {
                                                                         Toast.makeText(
                                                                             context,
-                                                                            "Filme avaliado com sucesso",
+                                                                            getString(R.string.filmeAvalidadoSucesso),
                                                                             Toast.LENGTH_SHORT
                                                                         ).show()
                                                                     }

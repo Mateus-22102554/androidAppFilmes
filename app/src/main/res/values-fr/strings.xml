@@ -73,6 +73,8 @@
     <string name="confirmar">Confirmer</string>
     <string name="cancelar">Annuler</string>
 
+    <string name="filmeAvalidadoSucesso">Film évalué avec succès</string>
+
     <string name="semInternet">N a pas de connexion Internet</string>
 
     <string name="avaliacaoFilmeMuitoFraco">Très faible</string>
