@@ -42,11 +42,9 @@ class Repository (
     }
 
     override fun getFilmeIMDB(nome: String, onFinished: (Result<Filme>) -> Unit) {
-
-         remote.getFilmeIMDB(nome){
-             onFinished(it)
-         }
-
+        remote.getFilmeIMDB(nome) {
+            onFinished(it)
+        }
     }
 
     override fun getAllAvaliacoes(onFinished: (Result<List<Avaliacao>>) -> Unit) {
