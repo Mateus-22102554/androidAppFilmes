@@ -3,6 +3,7 @@ package pt.ulusofona.deisi.cm2223.g22102554_22103941.data
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.Query
+import androidx.room.Update
 import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.entidades.AvaliacaoDB
 
 @Dao
@@ -32,6 +33,9 @@ interface AvaliacaoDao {
 
     @Query("SELECT COUNT(*) FROM avaliacoes WHERE idCinema=:idCinema")
     fun getAvaliacaoCheckCinema(idCinema : Int) : Int
+
+
+    //@Query("UPDATE avaliacoes SET id = id +1 WHERE id=:id")
 
 
 }

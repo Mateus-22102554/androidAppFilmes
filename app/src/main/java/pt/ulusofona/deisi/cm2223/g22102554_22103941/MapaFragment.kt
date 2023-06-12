@@ -66,22 +66,7 @@ class MapaFragment : Fragment(), OnLocationChangedListener {
                                 in 7..8 -> grau = getString(R.string.avaliacaoFilmeBom)
                                 in 9..10 -> grau = getString(R.string.avaliacaoFilmeExcelente)
                             }
-
-
-                            CoroutineScope(Dispatchers.Main).launch {
-                                map.addMarker(
-                                    MarkerOptions()
-                                        .position(
-                                            LatLng(
-                                                avaliacao.cinema.latitude,
-                                                avaliacao.cinema.longitude
-                                            )
-                                        )
-                                        .title(avaliacao.filme.nomeImdb)
-                                        .snippet(grau)
-                                )
-                            }
-                            /*CoroutineScope(Dispatchers.IO).launch {
+                            CoroutineScope(Dispatchers.IO).launch {
                                 model.getAvaliacaoCheckCinema(avaliacao.cinema.cinema_id) {
                                     it.onSuccess {
                                         if (it > 0) {
@@ -108,7 +93,7 @@ class MapaFragment : Fragment(), OnLocationChangedListener {
 
                                 }
 
-                            }*/
+                            }
                         }
                     }
                 }
