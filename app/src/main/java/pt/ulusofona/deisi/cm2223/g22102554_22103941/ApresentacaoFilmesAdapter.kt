@@ -1,5 +1,6 @@
 package pt.ulusofona.deisi.cm2223.g22102554_22103941
 
+import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -32,6 +33,10 @@ class ApresentacaoFilmesAdapter(private val onOperationClick: (String) -> Unit, 
 
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
+        if (position % 2 != 0) {
+            holder.binding.fundo.setBackgroundColor(Color.parseColor("#DDDDDD"))
+        }
+
         holder.itemView.setOnClickListener { onOperationClick(items[position].id) }
         holder.binding.filme.text = items[position].filme.nomeImdb
         val dataVisualizacao: Date = Date(items[position].dataVisualizacao)
