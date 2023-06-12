@@ -90,15 +90,11 @@ class MainActivity : AppCompatActivity() {
 
         binding.vozButton.setOnClickListener {
 
-            val popUp = LayoutInflater.from(this).inflate(R.layout.pop_voz, null)
-
             bindingVoz = PopVozBinding.inflate(layoutInflater)
 
-            val builder = AlertDialog.Builder(this)
-                .setView(popUp)
-
-            val dialog = builder.create()
-
+            val dialog = AlertDialog.Builder(this)
+                .setView(bindingVoz.root)
+                .create()
             dialog.show()
 
             bindingVoz.voiceDetect.setOnClickListener {
@@ -114,35 +110,32 @@ class MainActivity : AppCompatActivity() {
             }
 
             bindingVoz.voiceConfirm.setOnClickListener {
-                CoroutineScope(Dispatchers.IO).launch {
-                    model.getAvaliacaoIdFromFilmeName(pesquisaVoz) {
-                        it.onSuccess {
+                if (pesquisaVoz != "") {
+                    CoroutineScope(Dispatchers.IO).launch {
+                        model.getAvaliacaoIdFromFilmeName(pesquisaVoz) {
+                            val idPesquisa = it.getOrNull()
 
-
-                            NavigationManager.goToDetalheFilmeFragment(supportFragmentManager, it)
-
+                            if (idPesquisa != null) {
+                                NavigationManager.goToDetalheFilmeFragment(supportFragmentManager, idPesquisa)
+                            } else {
+                                Toast.makeText(
+                                    this@MainActivity,
+                                    "Esse filme ainda não foi avaliado",
+                                    Toast.LENGTH_LONG
+                                ).show()
+                            }
                         }
-                        it.onFailure {
-                            Toast.makeText(
-                                this@MainActivity,
-                                "Filme não encontrado",
-                                Toast.LENGTH_LONG
-                            ).show()
-                        }
-
                     }
-
-
+                } else {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Clique no botão \"Falar",
+                        Toast.LENGTH_LONG
+                    ).show()
                 }
 
-                // Criar um Intent para a atividade de reconhecimento de fala
-                /*val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH)
-            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-
-            // Iniciar a atividade de reconhecimento de fala
-            startActivityForResult(intent, REQUEST_CODE_SPEECH)*/
-
             }
+
         }
             CoroutineScope(Dispatchers.IO).launch {
                 // call getCharacters on the "IO Thread"
