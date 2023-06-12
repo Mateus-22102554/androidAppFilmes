@@ -297,15 +297,15 @@ class RegistoFilmesFragment : Fragment() {
 
                                         }
 
-                                    } else if (it.isFailure) {
-                                        CoroutineScope(Dispatchers.Main).launch {
-                                            // Apresenta o erro num Toast
-                                            Toast.makeText(
-                                                requireContext(),
-                                                getString(R.string.semInternet),
-                                                Toast.LENGTH_LONG
-                                            ).show()
-                                        }
+                                        /* } else if (it.isFailure) {
+                                             CoroutineScope(Dispatchers.Main).launch {
+                                                 // Apresenta o erro num Toast
+                                                 Toast.makeText(
+                                                     requireContext(),
+                                                     getString(R.string.semInternet),
+                                                     Toast.LENGTH_LONG
+                                                 ).show()
+                                             }*/
                                     } else {
                                         CoroutineScope(Dispatchers.Main).launch {
                                             // Apresenta o erro num Toast
