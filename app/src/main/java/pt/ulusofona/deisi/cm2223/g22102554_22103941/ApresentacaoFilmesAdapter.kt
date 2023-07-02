@@ -33,6 +33,7 @@ class ApresentacaoFilmesAdapter(private val onOperationClick: (String) -> Unit, 
 
 
     override fun onBindViewHolder(holder: HistoryViewHolder, position: Int) {
+
         if (position % 2 != 0) {
             holder.binding.fundo.setBackgroundColor(Color.parseColor("#DDDDDD"))
         }

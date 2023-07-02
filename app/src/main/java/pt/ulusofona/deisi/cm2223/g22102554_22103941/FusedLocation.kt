@@ -10,6 +10,9 @@ import pt.ulusofona.deisi.cm2223.g22102554_22103941.data.OnLocationChangedListen
 @SuppressLint("MissingPermission")
 class FusedLocation private constructor(context: Context) : LocationCallback() {
 
+    private var latitude: Double = 0.0
+    private var longitude: Double = 0.0
+
     private val TAG = FusedLocation::class.java.simpleName
 
     // Intervalos de tempo em que a localização é verificada, 20 segundos
@@ -47,7 +50,14 @@ class FusedLocation private constructor(context: Context) : LocationCallback() {
     override fun onLocationResult(locationResult: LocationResult) {
         Log.i(TAG, locationResult?.lastLocation.toString())
         notifyListeners(locationResult)
+
+        locationResult.lastLocation?.let { location ->
+            latitude = location.latitude
+            longitude = location.longitude
+            notifyListeners(locationResult)
+        }
     }
+
 
     companion object {
         // Se quisermos ter vários listeners isto tem de ser uma lista
@@ -74,6 +84,17 @@ class FusedLocation private constructor(context: Context) : LocationCallback() {
                 if (instance == null) FusedLocation(context)
                 else instance
         }
+
+        fun getLatitude(): Double {
+
+            return instance!!.latitude
+        }
+
+        fun getLongitude(): Double {
+            return instance!!.longitude
+        }
+
+
 
     }
 

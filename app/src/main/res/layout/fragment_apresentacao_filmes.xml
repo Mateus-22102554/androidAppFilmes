@@ -5,6 +5,103 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/title_nome_filme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/titulo_filme" />
+
+        <AutoCompleteTextView
+            android:id="@+id/nome_filme"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="ex: Avatar"
+            android:inputType="text"
+            android:completionThreshold="1" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_proximidade"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/proximidade" />
+
+            <Button
+                android:id="@+id/button_proximidade500"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/distancia_500_metros"/>
+
+
+            <Button
+                android:id="@+id/button_proximidade1000"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/distancia_1000_metros"/>
+
+        </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/darker_gray"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title_ordenacao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/ordenacao" />
+
+            <Button
+                android:id="@+id/button_crescente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/crescente"/>
+
+
+            <Button
+                android:id="@+id/button_decrescente"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/decrescente"/>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@android:color/darker_gray"
+        android:layout_margin="10dp"/>
+
 
     <LinearLayout
         android:layout_width="match_parent"

@@ -28,6 +28,9 @@ abstract class Operacoes {
     abstract fun getAllFotosFromAvaliacao(id: String, onFinished: (Result<List<File>>) -> Unit)
 
     abstract fun getAvaliacaoCheckCinema(idCinema: Int, onFinished: (Result<Int>) -> Unit)
+    abstract fun countAvaliacoes(onFinished: (Result<Int>) -> Unit)
+
+    abstract fun top5Avaliacoes(onFinished: (Result<List<Avaliacao>>) -> Unit)
 
     //Cinemas
 
@@ -44,8 +47,8 @@ abstract class Operacoes {
 
     abstract fun clearAllCinemas(onFinished: () -> Unit)
 
-    abstract fun countAvaliacoes(onFinished: (Result<Int>) -> Unit)
 
-    abstract fun top5Avaliacoes(onFinished: (Result<List<Avaliacao>>) -> Unit)
+
+
 
 }

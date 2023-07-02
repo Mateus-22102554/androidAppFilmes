@@ -30,6 +30,11 @@ import java.util.*
 import android.Manifest
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
 import android.speech.RecognizerIntent
 import android.speech.RecognizerIntent.EXTRA_RESULTS
 import android.speech.SpeechRecognizer
@@ -52,10 +57,46 @@ class MainActivity : AppCompatActivity() {
     private val REQUEST_CODE_SPEECH = 100
     private lateinit var bindingVoz: PopVozBinding
     private var popUpVoz: AlertDialog? = null
+
+    private lateinit var sensorManager: SensorManager
+    private var accelerometerSensor: Sensor? = null
+    private val shakeThreshold = 200 // Ajuste o valor conforme necessário
+
+
+
+    private val shakeListener = object : SensorEventListener {
+        override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {}
+
+        override fun onSensorChanged(event: SensorEvent?) {
+            if (event?.sensor?.type == Sensor.TYPE_ACCELEROMETER) {
+                val accelerationX = event.values[0]
+                val accelerationY = event.values[1]
+                val accelerationZ = event.values[2]
+
+                val magnitude = accelerationX * accelerationX + accelerationY * accelerationY + accelerationZ * accelerationZ
+
+                if (magnitude > shakeThreshold) {
+                    // Mudar de pagina agitando o telemovel
+                    NavigationManager.goToRegistoFilmesFragment(supportFragmentManager)
+                }
+            }
+        }
+    }
+
+
+
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+
+        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        accelerometerSensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+
+
 
         permissionsBuilder(
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -98,6 +139,18 @@ class MainActivity : AppCompatActivity() {
                 model.getCinemasJSON { it.getOrNull() }
             }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        accelerometerSensor?.let {
+            sensorManager.registerListener(shakeListener, it, SensorManager.SENSOR_DELAY_NORMAL)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        sensorManager.unregisterListener(shakeListener)
     }
 
     fun exibirPopUp (nomeFilme: String){
