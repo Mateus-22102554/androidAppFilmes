@@ -93,4 +93,12 @@
     <string name="falar">Speak</string>
     <string name="naoAvaliado">This movie has not been rated yet</string>
     <string name="botaoFalar">Click the Speak button</string>
+
+    <string name="proximidade">Proximity</string>
+    <string name="ordenacao">Sorting</string>
+    <string name="distancia_500_metros">500 meters</string>
+    <string name="distancia_1000_metros">1000 meters</string>
+    <string name="crescente">Ascending</string>
+    <string name="decrescente">Descending</string>
+
 </resources>

@@ -90,4 +90,11 @@
     <string name="naoAvaliado">Ce film n a pas encore été évalué</string>
     <string name="botaoFalar">Cliquez sur le bouton Parler</string>
 
+    <string name="proximidade">Proximité</string>
+    <string name="ordenacao">Tri</string>
+    <string name="distancia_500_metros">500 mètres</string>
+    <string name="distancia_1000_metros">1000 mètres</string>
+    <string name="crescente">Croissant</string>
+    <string name="decrescente">Décroissant</string>
+
 </resources>
